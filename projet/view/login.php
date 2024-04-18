@@ -1,0 +1,155 @@
+<?php
+
+require '../controler/loginc.php';
+require '../Model/login.php';
+
+
+
+
+if(isset($_POST['submit'])) {
+    $e=new loginc();
+    $user = $_POST['user1'];
+    $mdp = $_POST['mdp1'];
+  
+      if ($e->checkUserExists($user, $mdp)) {
+  
+          if ($e->checkAdmin($user)) {
+              header("Location: backend_1.php");
+          } else {
+              header("Location: index.php");
+          }
+      }
+      exit(); 
+  }
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $e=new loginc();
+    $l=new login();
+    
+
+    $userNom = $_POST['userNom'];
+    $userPrenom = $_POST['userPrenom'];
+    $mdp = $_POST['mdp'];
+    $email= $_POST['email'];
+    $l->setuser($userNom);
+    $l->setPrenom($userPrenom);
+    $l->setEmail($email);
+    $l->setmdp($mdp);
+
+    $e->addaccount($l->getuser() ,$l->getPrenom(), $l->getEmail(), $l->getmdp()); 
+
+    
+}
+       
+
+
+
+  
+
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="login_1.css">
+    <link rel="icon" href="10.png">
+    <script src="login_1.js"></script>
+    
+ 
+    <title>Login</title>
+</head>
+
+<body>
+    
+<div id="creationCompte" style="display: none;">  
+<div class="container" id="form-container" >
+        <div class="header">
+        <h1>Création du compte</h1>
+            
+
+    <form action="" method="post" onsubmit="return validateForm()">
+        
+        <div class="form-control ">
+        <input type="text" placeholder="Nom" id="userNom" name="userNom">
+        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-exclamation"></i>
+        <br>
+        <small>Message d'erreur</small>
+        </div>
+        <div class="form-control ">
+        <input type="text" placeholder="Prénom" id="userPrenom" name="userPrenom">
+        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-exclamation"></i>
+        <br>
+        <small>Message d'erreur</small>
+        </div>
+        <div class="form-control ">
+        <input type="email" placeholder="StudyGo@exemple.com" id="email" name="email">
+        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-exclamation"></i>
+        <br>
+        <small>Message d'erreur</small>
+        </div>
+        <div class="form-control ">
+        <input type="password" placeholder="Mot de passe" id="mdp" name="mdp">
+        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-exclamation"></i>
+        <br>
+        <small>Message d'erreur</small>
+        </div>
+        
+        <input type="submit" name="submit2" value="S'inscrire" id="btn">
+        <br>
+        <br>
+        <hr>
+        <h3>Si vous avez deja un compte</h3>
+        <button type="button" id="btnConnexion">Se connecter</button>
+    </form>
+</div></div></div>
+
+<div id="connexion" style="display: flex;">
+<div class="container" id="form-container" >
+        <div class="header">
+        <h1>Se Connecter</h1>
+    <form action="" method="post">
+        <div class="form-control "> 
+        <input type="text" placeholder="User" name="user1" id="user"></div>
+        <div class="form-control ">  
+        <input type="password" placeholder="Mot de passe" name="mdp1" id="motdp"></div>
+        
+        <input type="submit" name="submit" value="Se connecter" id="clickin">
+        <br><br><br><br>
+        <a href="#">Forget Your Password?</a>
+        <br>
+        <br>
+        <hr>
+        <h3>Si vous etes new</h3>
+        <button type="button" id="btnCreation">Créer un compte</button>
+    </form>
+</div></div></div>
+
+ 
+
+
+</body>
+<script>document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("btnConnexion").addEventListener("click", function() {
+        document.getElementById("connexion").style.display = "flex";
+        document.getElementById("creationCompte").style.display = "none";
+    });
+
+    document.getElementById("btnCreation").addEventListener("click", function() {
+        document.getElementById("connexion").style.display = "none";
+        document.getElementById("creationCompte").style.display = "block";
+    });
+});</script>
+
+
+
+</html>
