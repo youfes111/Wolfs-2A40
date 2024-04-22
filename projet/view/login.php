@@ -25,8 +25,6 @@ if(isset($_POST['submit'])) {
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $e=new loginc();
     $l=new login();
-    
-
     $userNom = $_POST['userNom'];
     $userPrenom = $_POST['userPrenom'];
     $mdp = $_POST['mdp'];
@@ -119,9 +117,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1>Se Connecter</h1>
     <form action="" method="post">
         <div class="form-control "> 
-        <input type="text" placeholder="User" name="user1" id="user"></div>
+        <input type="text" placeholder="User" name="user1" id="user" required></div>
         <div class="form-control ">  
-        <input type="password" placeholder="Mot de passe" name="mdp1" id="motdp"></div>
+        <input type="password" placeholder="Mot de passe" name="mdp1" id="motdp" required></div>
         
         <input type="submit" name="submit" value="Se connecter" id="clickin">
         <br><br><br><br>

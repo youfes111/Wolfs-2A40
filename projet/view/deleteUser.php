@@ -7,7 +7,7 @@ if(isset($_POST['delete'])) {
     $idUser = $_POST['id_user'];
 
     $l->deleteuser($idUser);
-    header("Location: backend_1.php");
+    header("Location: users.php");
 
 } else {
     echo "Error: No user id provided";

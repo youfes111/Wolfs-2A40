@@ -13,6 +13,7 @@
 //     }
 // });
 
+
 function validateForm() {
     
     let nom = document.getElementById('userNom').value.trim();
@@ -26,6 +27,7 @@ function validateForm() {
     if (nom === '') {
         isValid = false;
         setErrorFor(document.getElementById('userNom'), 'Le nom  ne doit pas etre vide');
+        
     } else if(!/^[a-zA-Z]{1,30}$/.test(nom)) {
         isValid = false;
 

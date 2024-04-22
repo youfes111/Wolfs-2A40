@@ -13,6 +13,7 @@ $list=$e->listlogin();
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="users2.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" href="10.png">
     <title>StudyGo|Les clients</title>
     <script>
@@ -24,7 +25,28 @@ $list=$e->listlogin();
 
        
     }
+
 }
+function confirmDelete() {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si l'utilisateur confirme, le formulaire est soumis normalement
+                return true;
+            } else {
+                // Si l'utilisateur annule, le formulaire n'est pas soumis
+                return false;
+            }
+        });
+       
+    }
 
 </script>
 
@@ -61,7 +83,7 @@ $list=$e->listlogin();
         
         </div>
         <div class="tables">
-            <h1></h1>
+            
 
             <table border='1'>
                 
@@ -74,7 +96,7 @@ $list=$e->listlogin();
                             <td><?= $loginc['user']; ?></td>
                             <td><?= $loginc['userPrenom']; ?></td>
                             <td><?= $loginc['email']; ?></td>
-                            <td><?= $loginc['mdp']; ?></td>
+                            <td><?= str_repeat('*', strlen($loginc['mdp'])); ?></td>                            
                             <td align="center">
                                 <form method="POST" action="">
                                 <!-- <a href="updatelogin.php?id=<?= $loginc['idUser']; ?>">update</a>   -->
@@ -82,10 +104,11 @@ $list=$e->listlogin();
                                 </form>
                             </td>
                             <td>
-                                <form action="deleteUser.php" method="post">
-                                    <input type="hidden" name="id_user" value="<?php echo $loginc['idUser'];?>">
-                                    <button type="submit" name="delete">Delete</button>
-                                </form>
+                            <form action="deleteUser.php" method="post" onsubmit="return confirmDelete()">
+    <input type="hidden" name="id_user" value="<?php echo $loginc['idUser']; ?>">
+    <button type="submit" name="delete">Delete</button>
+</form>
+
                             </td>                
                         </tr>
                     <?php
