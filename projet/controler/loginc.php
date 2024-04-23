@@ -129,7 +129,7 @@ class loginc{
             $sql = "SELECT * FROM login WHERE user = :user";
             $conn = config::getConnexion();
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':user', $user, PDO::PARAM_INT);
+            $stmt->bindParam(':user', $user, PDO::PARAM_STR);
             $stmt->execute();
     
             $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);

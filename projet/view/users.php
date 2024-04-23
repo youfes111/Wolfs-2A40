@@ -4,6 +4,8 @@ require '../controler/loginc.php';
 $e=new loginc();
 $list=$e->listlogin();
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,37 +19,26 @@ $list=$e->listlogin();
     <link rel="icon" href="10.png">
     <title>StudyGo|Les clients</title>
     <script>
-   function deleteUser(idUser) {
-    if (confirm("Are you sure you want to delete this user?")) {
-        // Supprimer la ligne du tableau HTML
-        var row = document.getElementById("row_" + idUser);
-        row.parentNode.removeChild(row);
-
-       
-    }
-
+        
+ function checkdelete() {
+    
+    Swal.fire({
+        title: 'Confirmation',
+        text: 'Are you sure you want to delete this user?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            
+            document.getElementById('deleteForm').submit();
+        }
+    });
+    
+    return false; // Empêche la soumission du formulaire par défaut
 }
-function confirmDelete() {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Si l'utilisateur confirme, le formulaire est soumis normalement
-                return true;
-            } else {
-                // Si l'utilisateur annule, le formulaire n'est pas soumis
-                return false;
-            }
-        });
-       
-    }
-
 </script>
 
 </head>
@@ -104,9 +95,10 @@ function confirmDelete() {
                                 </form>
                             </td>
                             <td>
-                            <form action="deleteUser.php" method="post" onsubmit="return confirmDelete()">
-                            <input type="hidden" name="id_user" value="<?php echo $loginc['idUser']; ?>">
-                             <button type="submit" name="delete">Delete</button>
+                            
+                            <form id="deleteForm" action="deleteUser.php" method="post" onsubmit="return checkdelete()">
+                            <input type="hidden" name="id_user" id="id_user" data-id="<?php echo $loginc['idUser']; ?>"value="<?php echo $loginc['idUser']; ?>">
+                            <button type="submit" name="delete">Delete</button>
                             </form>
 
                             </td>                

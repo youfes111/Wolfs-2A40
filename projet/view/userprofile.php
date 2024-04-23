@@ -6,11 +6,15 @@ require '../controler/loginc.php';
 
 
 if(isset($_SESSION['user1']))
-{   $e=new loginc();
+{   
     $user=$_SESSION['user1'];
-    $list=$e->selectuser($user);
-    var_dump($list);
+   
     }
+    $e=new loginc();
+    $list=$e->selectuser($user);
+    
+    
+    
 
 
 ?>
@@ -91,34 +95,26 @@ function confirmDelete() {
 
             <table border='1'>
                 
-            <tr><th>Iduser</th><th>Nom</th><th>Prenom</th><th>Email</th><th>Mot de passe</th><th>Modifier</th><th>Supprimer</th></tr>
+            <tr><th>Iduser</th><th>Nom</th><th>Prenom</th><th>Email</th><th>Mot de passe</th><th>Modifier</th></tr>
             <?php   
                     
-                    foreach ($list as $loginc) {
+                   
                     ?>
-                        <!-- <tr id="row_<?php echo $user['idUser']; ?>"> -->
-                            <td><?= $loginc['idUser']; ?></td>
-                            <td><?= $loginc['user']; ?></td>
-                            <td><?= $loginc['userPrenom']; ?></td>
-                            <td><?= $loginc['email']; ?></td>
-                            <td><?= str_repeat('*', strlen($loginc['mdp'])); ?></td>                            
+                        <tr id="row_<?php echo $list['idUser']; ?>">
+                            <td><?= $list['idUser']; ?></td>
+                            <td><?= $list['user']; ?></td>
+                            <td><?= $list['userPrenom']; ?></td>
+                            <td><?= $list['email']; ?></td>
+                            <td><?= $list['mdp']; ?></td>                            
                             <td align="center">
                                 <form method="POST" action="">
-                                <!-- <a href="updatelogin.php?id=<?= $loginc['idUser']; ?>">update</a>   -->
-                                <input type="button" value="Update" onclick="window.location.href='updatelogin.php?id=<?= $loginc['idUser']; ?>'">
+                                <!-- <a href="updatelogin.php?id=<?= $list['idUser']; ?>">update</a>   -->
+                                <input type="button" value="Update" onclick="window.location.href='updatelogin.php?id=<?= $list['idUser']; ?>'">
                                 </form>
                             </td>
-                            <td>
-                            <form action="deleteUser.php" method="post" onsubmit="return confirmDelete()">
-                            <input type="hidden" name="id_user" value="<?php echo $loginc['idUser']; ?>">
-                             <button type="submit" name="delete">Delete</button>
-                            </form>
-
-                            </td>                
+                                      
                         </tr>
-                    <?php
-                    }
-                    ?>
+                   
             </table>
         </div>
     </div>

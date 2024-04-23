@@ -13,8 +13,8 @@ if(isset($_POST['submit'])) {
     $mdp = $_POST['mdp1'];
   
       if ($e->checkUserExists($user, $mdp)) {
-  
-          if ($e->checkAdmin($user)) {
+        $userDetails=$e->selectuser($user);
+          if ($userDetails['etat'] == 1) {
               header("Location: backend_1.php");
           } else {
               $_SESSION['user1']= $user;
