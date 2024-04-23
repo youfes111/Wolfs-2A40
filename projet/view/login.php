@@ -1,4 +1,5 @@
 <?php
+session_start(); // Assurez-vous de démarrer la session
 
 require '../controler/loginc.php';
 require '../Model/login.php';
@@ -16,7 +17,8 @@ if(isset($_POST['submit'])) {
           if ($e->checkAdmin($user)) {
               header("Location: backend_1.php");
           } else {
-              header("Location: index.php");
+              $_SESSION['user1']= $user;
+              header("Location: userprofile.php");
           }
       }
       exit(); 

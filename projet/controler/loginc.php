@@ -123,6 +123,23 @@ class loginc{
             return false;
         }
     }
+    public static function selectuser($user) {
+        
+        try {
+            $sql = "SELECT * FROM login WHERE user = :user";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':user', $user, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $userDetails;
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
 
 }
 
