@@ -1,0 +1,251 @@
+*{
+    box-sizing: border-box;
+}
+:root{
+    --color-first:#132A3E;
+    --color-second:#dfdede;
+    --color-white:#fff;
+    --color-success:#2ecc71;
+    --color-error:#e74c3c;
+}
+body{
+    background: var(--color-first);
+    font-family: "Open sabs" sans-serif;
+   
+}
+
+.header{
+    background: #f7f7f7;
+    border-bottom: 1px solid var(--color-second);
+    padding: 20px 40px;
+}
+.header h2{
+    margin: 0;
+    text-align: center;
+    font-style: italic;
+}
+.titre h2{
+    position: relative;
+    bottom : 1%; /* Déplace l'élément à 50% de la hauteur de la page */
+    left: 5%; /* Déplace l'élément à 50% de la largeur de la page */
+    transform: translate(-180%, -80%);
+    font-family: "Open sabs" sans-serif;
+}
+.form{
+    padding: 20px 30px;
+}
+.form-control{
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    position: relative;
+}
+.form-control label{
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.form-control input{
+    border:  2px solid var(--color-second);
+    border-radius: 4px;
+    display: block;
+    font-family: inherit;
+    font-size: 12px;
+    width: 100%;
+    height: 40px;
+    padding-left: 5px;
+}
+.form-control i{
+    position: absolute;
+    top: 33px;
+    right: 10px;
+    visibility: hidden;
+}
+.form-control small{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    visibility: hidden;
+}
+.form button{
+    background: var(--color-first);
+    border: 2px solid var(--color-first);
+    color: var(--color-white);
+    display: block;
+    font-family: inherit;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+}
+.form-control.success input{
+    border-color: var(--color-success);
+}
+.form-control.error input{
+    border-color: var(--color-error);
+}
+.form-control.success i.fa-check-circle{
+    color: var(--color-success);
+    visibility: visible;
+}
+.form-control.error i.fa-exclamation{
+    color: var(--color-error);
+    visibility: visible;width: 20px;
+    padding-top: 15px;
+}
+.form-control.error small{
+    color: var(--color-error);
+    visibility: visible;
+   
+}
+.container{
+    background: var(--color-white);
+
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.5);
+    
+}
+#overlay {
+    position: fixed;
+    top: 55%; /* Déplace l'élément à 50% de la hauteur de la page */
+    left: 60%; /* Déplace l'élément à 50% de la largeur de la page */
+    transform: translate(-60%, -50%); /* Centre l'élément en utilisant la moitié de sa largeur et de sa hauteur */
+    width: 100%;
+    height: 10%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    
+  }
+#overlay2 {
+    position: fixed;
+    top: 55%; /* Déplace l'élément à 50% de la hauteur de la page */
+    left: 60%; /* Déplace l'élément à 50% de la largeur de la page */
+    transform: translate(-60%, -50%); /* Centre l'élément en utilisant la moitié de sa largeur et de sa hauteur */
+    width: 100%;
+    height: 10%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+#form-container {
+    background-color: rgb(239, 239, 239);
+    border-radius: 5px;
+    position: relative;
+    width: 400px;
+    max-width: 60%;
+    
+    height: 630px;
+}
+#close-form {
+position: absolute;
+top: 5px;
+right: 5px;
+font-size: 26px;
+cursor: pointer;
+color: rgb(4, 6, 26);
+}
+#close-form2 {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 26px;
+    cursor: pointer;
+    color:  rgb(4, 6, 26);
+    }
+
+    #close-form2:hover {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 30px;
+        cursor: pointer;
+        color:  rgb(224, 131, 9);
+        }
+        #close-form:hover {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 30px;
+            cursor: pointer;
+            color:  rgb(224, 131, 9);
+            }
+    /* Ajout de styles pour centrer la table avec un arrière-plan blanc */
+  
+
+    #tablePartenariat th,
+    #tablePartenariat td {
+        padding: 10px;
+        text-align: center;
+    }
+    .icon {
+        font-size: 20px;
+        cursor: pointer;
+    }
+    
+    .custom-button {
+        background-color: #4CAF50; /* Couleur de fond */
+        border: none; /* Supprime les bordures */
+        color: white; /* Couleur du texte */
+        padding: 10px 20px; /* Espacement intérieur (haut et bas) de 10 pixels, espacement intérieur (gauche et droite) de 20 pixels */
+        text-align: center; /* Centrer le texte */
+        text-decoration: none; /* Supprime le soulignement du texte */
+        display: inline-block; /* Affichage en ligne pour s'adapter à la largeur du contenu */
+        font-size: 16px; /* Taille de la police */
+        margin-bottom: 20px; /* Marge inférieure de 20 pixels */
+    }
+    
+    .custom-button:hover {
+        background-color: #edb302; /* Changement de couleur de fond au survol */
+    }
+    #tablePartenariat {
+        position: relative;
+    bottom: 5%; /* Déplace l'élément à 50% de la hauteur de la page */
+    left: 5%; /* Déplace l'élément à 50% de la largeur de la page */
+        background-color: #f7f7f7;
+        border-radius: 15px;
+        width: 80%;
+        height: 50%;
+   
+    }
+    #btnAjouter{
+        position: relative;
+    top : 5%; /* Déplace l'élément à 50% de la hauteur de la page */
+    left: 45%; /* Déplace l'élément à 50% de la largeur de la page */
+    transform: translate(-60%, -50%);
+        border-radius: 4px;
+        border: none;
+        margin-bottom: 5px;
+        width: 100px;
+        height: 32px;
+        background-color: #edb302;
+    }
+    #btnAjouter:hover{
+        background-color: #dfa804;
+    }
+    #bouton_modifier{
+        
+        border-radius: 4px;
+        border: none;
+        margin-bottom: 5px;
+        width: 100px;
+        height: 30px;
+        background-color: #edb302;
+    }
+    #bouton_modifier:hover{
+        background-color: #dfa804;
+    }
+    /* Modifier l'emplacement du bouton */
+
+    a {
+        color: #050430; /* Couleur rouge pour les liens */
+        /* Vous pouvez remplacer #FF0000 par n'importe quelle couleur CSS valide */
+        /* Par exemple, vous pouvez utiliser des noms de couleur comme 'red', 'blue', 'green', etc. */
+        /* Ou des valeurs RGB, HSL, HEX, etc. */
+    }
+    a :hover{
+        color: #f4810e; /* Couleur rouge pour les liens */
+        /* Vous pouvez remplacer #FF0000 par n'importe quelle couleur CSS valide */
+        /* Par exemple, vous pouvez utiliser des noms de couleur comme 'red', 'blue', 'green', etc. */
+        /* Ou des valeurs RGB, HSL, HEX, etc. */
+    }
