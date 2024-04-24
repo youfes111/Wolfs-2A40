@@ -12,14 +12,12 @@ class loginc{
     
             $login = $query->fetch(PDO::FETCH_ASSOC);
     
-            if ($login && $mdp === $login['mdp']) {
-                
-                return true; 
-            } else if ($login && $mdp !== $login['mdp']) {
+            if ($login && password_verify($mdp, $login['mdp'])) {
+                return true;
+            } else if ($login && !password_verify($mdp, $login['mdp'])) {
                 echo 'Mot de passe incorrect';
                 return false;
             } else {
-                
                 echo 'L\'utilisateur n\'existe pas dans la base de données';
                 return false;
             }

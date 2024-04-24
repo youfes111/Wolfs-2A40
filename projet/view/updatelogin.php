@@ -32,7 +32,7 @@ if(isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="login_1.css">
+    <link rel="stylesheet" href="login_2.css">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -75,8 +75,8 @@ if(isset($_GET['id'])) {
         <small>Message d'erreur</small>
         </div>
         
-        <input type="submit" name="submit" value="Update user" id="btn">
-<input type="button" value="cancel" onclick="window.location.href='users.php';">
+        <input type="submit" name="submit" value="Mettre a jour client" id="btn">
+        <input type="button" value="Retouner" id="btn" onclick="window.location.href='users.php';">
        
         
     </form>

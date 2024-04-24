@@ -15,8 +15,10 @@ if(isset($_POST['submit'])) {
       if ($e->checkUserExists($user, $mdp)) {
         $userDetails=$e->selectuser($user);
           if ($userDetails['etat'] == 1) {
+
               header("Location: backend_1.php");
           } else {
+
               $_SESSION['user1']= $user;
               header("Location: userprofile.php");
           }
@@ -31,10 +33,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $userPrenom = $_POST['userPrenom'];
     $mdp = $_POST['mdp'];
     $email= $_POST['email'];
+    $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
+
     $l->setuser($userNom);
     $l->setPrenom($userPrenom);
     $l->setEmail($email);
-    $l->setmdp($mdp);
+    $l->setmdp($hashedPassword);
 
     $e->addaccount($l->getuser() ,$l->getPrenom(), $l->getEmail(), $l->getmdp()); 
 
@@ -57,9 +61,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="login_1.css">
+    <link rel="stylesheet" href="login_2.css">
     <link rel="icon" href="10.png">
     <script src="login_1.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+
     
  
     <title>Login</title>
@@ -108,7 +114,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <br>
         <br>
         <hr>
-        <h3>Si vous avez deja un compte</h3>
+        <h3>Connectez-vous à votre espace</h3>
         <button type="button" id="btnConnexion">Se connecter</button>
     </form>
 </div></div></div>
@@ -129,7 +135,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <br>
         <br>
         <hr>
-        <h3>Si vous etes new</h3>
+        <h3>Devenez membre dès maintenant</h3>
         <button type="button" id="btnCreation">Créer un compte</button>
     </form>
 </div></div></div>
@@ -138,7 +144,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 </body>
-<script>document.addEventListener("DOMContentLoaded", function() {
+<script>
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("btnConnexion").addEventListener("click", function() {
         document.getElementById("connexion").style.display = "flex";
         document.getElementById("creationCompte").style.display = "none";
@@ -148,7 +158,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         document.getElementById("connexion").style.display = "none";
         document.getElementById("creationCompte").style.display = "block";
     });
-});</script>
+});
+</script>
 
 
 
