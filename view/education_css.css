@@ -1,0 +1,37 @@
+/* education.css */
+
+/* Styles for education section */
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 24px;
+    color: #333;
+}
+
+.description {
+    font-size: 16px;
+    color: #777;
+}
+
+/* Add more CSS rules specific to the education section */  
+        .profile-photo-preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin-bottom: 10px;
+        }
+
+        .diploma-container {
+            margin-top: 10px;
+        }
+
+        .add-diploma-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+   
