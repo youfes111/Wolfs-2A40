@@ -14,7 +14,7 @@ $list=$e->listlogin();
     <meta name=viewport content="width=device-width", initial-scale="1.0">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="users2.css">
+    <link rel="stylesheet" href="users3.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" href="10.png">
     <title>StudyGo|Les clients</title>
@@ -76,7 +76,7 @@ $list=$e->listlogin();
         <div class="tables">
             
 
-            <table border='1'>
+            <table border='1' class="my-table">
                 
             <tr><th>Iduser</th><th>Nom</th><th>Prenom</th><th>Email</th><th>Mot de passe</th><th>Modifier</th><th>Supprimer</th></tr>
             <?php

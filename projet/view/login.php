@@ -16,33 +16,34 @@ if(isset($_POST['submit'])) {
         $userDetails=$e->selectuser($user);
           if ($userDetails['etat'] == 1) {
 
-              header("Location: backend_1.php");
+               header("Location: backend_1.php");
+             
           } else {
 
               $_SESSION['user1']= $user;
               header("Location: userprofile.php");
           }
       }
-      exit(); 
+    //   exit(); 
   }
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-    $e=new loginc();
-    $l=new login();
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $e = new loginc();
+    $l = new login();
     $userNom = $_POST['userNom'];
     $userPrenom = $_POST['userPrenom'];
     $mdp = $_POST['mdp'];
-    $email= $_POST['email'];
+    $email = $_POST['email'];
     $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
 
-    $l->setuser($userNom);
-    $l->setPrenom($userPrenom);
-    $l->setEmail($email);
-    $l->setmdp($hashedPassword);
+    if ($e->isEmailUnique($email)) {
+        $l->setuser($userNom);
+        $l->setPrenom($userPrenom);
+        $l->setEmail($email);
+        $l->setmdp($hashedPassword);
 
-    $e->addaccount($l->getuser() ,$l->getPrenom(), $l->getEmail(), $l->getmdp()); 
-
-    
+        $e->addaccount($l->getuser(), $l->getPrenom(), $l->getEmail(), $l->getmdp());
+    } 
 }
        
 
@@ -65,8 +66,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="icon" href="10.png">
     <script src="login_1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
  
     <title>Login</title>
 </head>
@@ -79,7 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1>Création du compte</h1>
             
 
-    <form action="" method="post" onsubmit="return validateForm()">
+    <form id="updateForm1"action="" method="post" onsubmit="return validateForm()" >
         
         <div class="form-control ">
         <input type="text" placeholder="Nom" id="userNom" name="userNom">
@@ -110,7 +110,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <small>Message d'erreur</small>
         </div>
         
-        <input type="submit" name="submit2" value="S'inscrire" id="btn">
+        <input type="submit" name="submit2" value="S'inscrire" id="btn" >
         <br>
         <br>
         <hr>
@@ -123,13 +123,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container" id="form-container" >
         <div class="header">
         <h1>Se Connecter</h1>
-    <form action="" method="post">
+    <form action="" method="post" name="form" id="form" onsubmit="return checkdelete()">
         <div class="form-control "> 
         <input type="text" placeholder="User" name="user1" id="user" required></div>
         <div class="form-control ">  
         <input type="password" placeholder="Mot de passe" name="mdp1" id="motdp" required></div>
         
-        <input type="submit" name="submit" value="Se connecter" id="clickin">
+        <input type="submit"  name="submit" value="Se connecter" id="clickin" >
         <br><br><br><br>
         <a href="#">Forget Your Password?</a>
         <br>
@@ -145,6 +145,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </body>
 <script>
+ /*function checkdelete() {
+  Swal.fire({
+    position: "block",
+    icon: "success",
+    title: "Your work has been saved",
+    showConfirmButton: false,
+    timer: 1500
+    
+  }).then(() => {
+    document.getElementById("form").submit();
+    return true;
+  });
+
+  return false;
+}*/
 
 
 

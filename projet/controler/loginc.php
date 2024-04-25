@@ -95,7 +95,7 @@ class loginc{
     {
         $conn = config::getConnexion();
   try {
-    $query = $conn->prepare("SELECT * from login where user!='admin'");
+    $query = $conn->prepare("SELECT * from login where etat=0");
     $query->execute();
     $result = $query->fetchAll();
   } catch (PDOException $e) {
@@ -138,6 +138,30 @@ class loginc{
             return false;
         }
     }
+    public function isEmailUnique($email) {
+        try {
+            $sql = "SELECT * FROM login WHERE email = :email";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            $rowCount = $stmt->rowCount();
+    
+            if ($rowCount === 0) {
+                return true;
+            } else {
+                echo "<script>
+                        alert('L adresse e-mail existe déja.');
+                     </script>";
+                return false;
+            }
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            // return false;
+        }
+    }
+
 
 }
 

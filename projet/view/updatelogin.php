@@ -68,7 +68,7 @@ if(isset($_GET['id'])) {
         <small>Message d'erreur</small>
         </div>
         <div class="form-control ">
-        <input type="password" placeholder="Mot de passe" id="mdp1" name="mdp" value="<?= $mdp; ?>">
+        <input type="password" placeholder="Mot de passe" id="mdp1" name="mdp" value="<?= $mdp; ?>" readonly>
         <i class="fas fa-check-circle"></i>
         <i class="fas fa-exclamation"></i>
         <br>
