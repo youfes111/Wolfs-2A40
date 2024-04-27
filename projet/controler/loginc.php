@@ -161,6 +161,43 @@ class loginc{
             // return false;
         }
     }
+    function selectemail($email) {
+        
+        try {
+            $sql = "SELECT * FROM login WHERE email = :email";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+    
+             $rowCount = $stmt->rowCount();
+
+             if( $rowCount > 0){
+              return true;
+             }else{
+               return false;
+             }          
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+    function updatepass($pass,$email) {
+        
+        try {
+            $sql =  "UPDATE login SET mdp='$pass' WHERE email='$email'";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+                    
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
 
 
 }

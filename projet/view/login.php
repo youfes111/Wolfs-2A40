@@ -15,10 +15,24 @@ if(isset($_POST['submit'])) {
       if ($e->checkUserExists($user, $mdp)) {
         $userDetails=$e->selectuser($user);
           if ($userDetails['etat'] == 1) {
+            ?> <script>
+            Swal.fire({
+    title: "Login avec succés",
+    icon: "success",
+    showCancelButton: false,
+    confirmButtonColor: "#3085d6",
+    confirmButtonText: "OK"
+}).then((result) => {
+    if (result.isConfirmed) {
+        window.location.replace("backend_1.php");
+    }
+});
+            
+        </script>
+        
 
-               header("Location: backend_1.php");
              
-          } else {
+        <?php } else {
 
               $_SESSION['user1']= $user;
               header("Location: userprofile.php");
@@ -27,7 +41,7 @@ if(isset($_POST['submit'])) {
     //   exit(); 
   }
 
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['userNom']) && isset($_POST['userPrenom']) && isset($_POST['mdp']) && isset($_POST['email'])) {
     $e = new loginc();
     $l = new login();
     $userNom = $_POST['userNom'];
@@ -65,8 +79,7 @@ if(isset($_POST['submit'])) {
     <link rel="stylesheet" href="login_2.css">
     <link rel="icon" href="10.png">
     <script src="login_1.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  
     <title>Login</title>
 </head>
@@ -131,7 +144,7 @@ if(isset($_POST['submit'])) {
         
         <input type="submit"  name="submit" value="Se connecter" id="clickin" >
         <br><br><br><br>
-        <a href="#">Forget Your Password?</a>
+        <a href="recoverpass.php" >Mot de passe oublié?</a>
         <br>
         <br>
         <hr>
