@@ -140,7 +140,7 @@ form.addEventListener('submit',(event)  => {
     if (mdp === '' ) {
         event.preventDefault();
         setErrorFor(document.getElementById('mdp1'), 'Mot de passe ne doit pas etre vide');
-    } else if(!/^[a-zA-Z0-9 ]{1,30}$/.test(pays)){
+    } else if(!preg_match('/^(1|200)$/', $mdp)) {
         event.preventDefault();
         setErrorFor(document.getElementById('mdp1'), 'Mot de passe  doit contenir uniquement des lettres ,des chiffres et ne pas dépasser 30 caractères');
     }
@@ -153,7 +153,7 @@ form.addEventListener('submit',(event)  => {
     if (email === '') {
         ievent.preventDefault();
         setErrorFor(document.getElementById('email1'), 'Email ne peut pas être vide');
-    } else if (!isValidEmail(emailpart)) {
+    } else if (!isValidEmail(email)) {
         event.preventDefault();
         setErrorFor(document.getElementById('email1'), 'Email  invalide');
     } else {

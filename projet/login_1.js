@@ -46,7 +46,7 @@ function validateForm() {
     if (mdp === '' ) {
         isValid = false;
         setErrorFor(document.getElementById('mdp'), 'Mot de passe ne doit pas etre vide');
-    } else if(!/^[a-zA-Z0-9 ]{1,30}$/.test(pays)){
+    } else if(!/^[a-zA-Z0-9 ]{1,30}$/.test(mdp)){
         isValid = false;
         setErrorFor(document.getElementById('mdp'), 'Mot de passe  doit contenir uniquement des lettres ,des chiffres et ne pas dépasser 30 caractères');
     }
@@ -59,7 +59,7 @@ function validateForm() {
     if (email === '') {
         isValid = false;
         setErrorFor(document.getElementById('email'), 'Email ne peut pas être vide');
-    } else if (!isValidEmail(emailpart)) {
+    } else if (!isValidEmail(email)) {
         isValid = false;
         setErrorFor(document.getElementById('email'), 'Email  invalide');
     } else {

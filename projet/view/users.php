@@ -14,32 +14,79 @@ $list=$e->listlogin();
     <meta name=viewport content="width=device-width", initial-scale="1.0">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="users3.css">
+    <link rel="stylesheet" href="users4.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.11.4/i18n/French.json"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+
     <link rel="icon" href="10.png">
     <title>StudyGo|Les clients</title>
     <script>
         
- function checkdelete() {
-    
+        
+        function checkdelete(userName, userPrenom) {
     Swal.fire({
         title: 'Confirmation',
-        text: 'Are you sure you want to delete this user?',
+        text: 'Êtes-vous sûr de vouloir supprimer ' + userName.toUpperCase() + ' ' + userPrenom.toUpperCase() + ' ?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel',
+        confirmButtonText: 'Oui, supprimer !',
+        cancelButtonText: 'Non, annuler',
         reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
-            
             document.getElementById('deleteForm').submit();
         }
     });
-    
+
     return false; // Empêche la soumission du formulaire par défaut
 }
+
 </script>
+<script>
+
+$(document).ready(function() {
+    $('.my-table').DataTable({
+        "language": {
+            "sEmptyTable": "Aucune donnée disponible dans le tableau",
+            "sInfo": "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+            "sInfoEmpty": "Affichage de l'élément 0 à 0 sur 0 élément",
+            "sInfoFiltered": "(filtré à partir de _MAX_ éléments au total)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ",",
+            "sLengthMenu": "Afficher _MENU_ éléments",
+            "sLoadingRecords": "Chargement...",
+            "sProcessing": "Traitement...",
+            "sSearch": "Rechercher :",
+            "sZeroRecords": "Aucun élément correspondant trouvé",
+            "oPaginate": {
+                "sFirst": "Premier",
+                "sLast": "Dernier",
+                "sNext": "Suivant",
+                "sPrevious": "Précédent"
+            },
+            "oAria": {
+                "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+            },
+            "select": {
+                "rows": {
+                    "_": "%d lignes sélectionnées",
+                    "0": "Aucune ligne sélectionnée",
+                    "1": "1 ligne sélectionnée"
+                }
+            }
+        }
+
+    });
+});
+</script>
+
+
 
 </head>
 <body>
@@ -76,27 +123,30 @@ $list=$e->listlogin();
         <div class="tables">
             
 
-            <table border='1' class="my-table">
+            <table border='1' class="my-table" id="my-table" >
                 
-            <tr><th>Iduser</th><th>Nom</th><th>Prenom</th><th>Email</th><th>Mot de passe</th><th>Modifier</th><th>Supprimer</th></tr>
-            <?php
+            <thead>
+        <tr>
+            <th data-column="nom" data-order="desc">Nom</th>
+            <th data-column="prenom" data-order="desc">Prenom</th>
+            <th data-column="email" data-order="desc">Email</th>
+            <th>Supprimer</th>
+        </tr>
+    </thead>  
+    <tbody>   
+                <?php
                     foreach ($list as $loginc) {
                     ?>
                         <tr id="row_<?php echo $loginc['idUser']; ?>">
-                            <td><?= $loginc['idUser']; ?></td>
+                            <!-- <td><?= $loginc['idUser']; ?></td> -->
                             <td><?= $loginc['user']; ?></td>
                             <td><?= $loginc['userPrenom']; ?></td>
                             <td><?= $loginc['email']; ?></td>
-                            <td><?= str_repeat('*', strlen($loginc['mdp'])); ?></td>                            
-                            <td align="center">
-                                <form method="POST" action="">
-                                <!-- <a href="updatelogin.php?id=<?= $loginc['idUser']; ?>">update</a>   -->
-                                <input type="button" value="Update" onclick="window.location.href='updatelogin.php?id=<?= $loginc['idUser']; ?>'">
-                                </form>
-                            </td>
+                            <!-- <td?= str_repeat('*', strlen($loginc['mdp'])); ?></td>                             -->
+                            
                             <td>
                             
-                            <form id="deleteForm" action="deleteUser.php" method="post" onsubmit="return checkdelete()">
+                            <form id="deleteForm" action="deleteUser.php" method="post"  onsubmit="return checkdelete('<?php echo $loginc['user']; ?>', '<?php echo $loginc['userPrenom']; ?>')">
                             <input type="hidden" name="id_user" id="id_user" data-id="<?php echo $loginc['idUser']; ?>"value="<?php echo $loginc['idUser']; ?>">
                             <button type="submit" name="delete">Delete</button>
                             </form>
@@ -106,7 +156,8 @@ $list=$e->listlogin();
                     <?php
                     }
                     ?>
-            </table>
+                    </tbody> 
+                </table>
         </div>
     </div>
  </div>
