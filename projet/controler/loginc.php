@@ -198,6 +198,36 @@ class loginc{
             
         }
     }
+    function updatebloque($id) {
+        
+        try {
+            $sql ="UPDATE login SET bloquage=1 WHERE idUser='$id'";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+                    
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+    function updatedebloque($id) {
+        
+        try {
+            $sql ="UPDATE login SET bloquage=0 WHERE idUser='$id'";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+                    
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
 
 
 }

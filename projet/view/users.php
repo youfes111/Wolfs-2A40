@@ -14,7 +14,7 @@ $list=$e->listlogin();
     <meta name=viewport content="width=device-width", initial-scale="1.0">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="users4.css">
+    <link rel="stylesheet" href="users5.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -46,9 +46,55 @@ $list=$e->listlogin();
     return false; // Empêche la soumission du formulaire par défaut
 }
 
+
+
 </script>
 <script>
+    function checkbloquer(userName, userPrenom) {
+    Swal.fire({
+        title: 'Confirmation',
+        text: 'Êtes-vous sûr de vouloir bloquer ' + userName.toUpperCase() + ' ' + userPrenom.toUpperCase() + ' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Oui, bloquer !',
+        cancelButtonText: 'Non, annuler',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var selectedTd = document.querySelector('column-to-color');
+            if (selectedTd) {
+                selectedTd.style.color = 'red';
+            }
+            document.getElementById('bloquerForm').submit();
+            
+        }
+    });
 
+    return false; // Empêche la soumission du formulaire par défaut
+}
+</script>
+<script>
+    function checkdebloquer(userName, userPrenom) {
+    Swal.fire({
+        title: 'Confirmation',
+        text: 'Êtes-vous sûr de vouloir debloquer ' + userName.toUpperCase() + ' ' + userPrenom.toUpperCase() + ' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Oui, debloquer !',
+        cancelButtonText: 'Non, annuler',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            
+            document.getElementById('debloquerForm').submit();
+            
+        }
+    });
+
+    return false; // Empêche la soumission du formulaire par défaut
+}
+</script>
+<script>
 $(document).ready(function() {
     $('.my-table').DataTable({
         "language": {
@@ -131,6 +177,9 @@ $(document).ready(function() {
             <th data-column="prenom" data-order="desc">Prenom</th>
             <th data-column="email" data-order="desc">Email</th>
             <th>Supprimer</th>
+            <th>Bloquer</th>
+            <th>Debloquer</th>
+            
         </tr>
     </thead>  
     <tbody>   
@@ -139,19 +188,34 @@ $(document).ready(function() {
                     ?>
                         <tr id="row_<?php echo $loginc['idUser']; ?>">
                             <!-- <td><?= $loginc['idUser']; ?></td> -->
-                            <td><?= $loginc['user']; ?></td>
-                            <td><?= $loginc['userPrenom']; ?></td>
-                            <td><?= $loginc['email']; ?></td>
+                            <td id="column-to-color"><?= $loginc['user']; ?></td>
+                            <td id="column-to-color"><?= $loginc['userPrenom']; ?></td>
+                            <td id="column-to-color"><?= $loginc['email']; ?></td>
                             <!-- <td?= str_repeat('*', strlen($loginc['mdp'])); ?></td>                             -->
                             
                             <td>
                             
                             <form id="deleteForm" action="deleteUser.php" method="post"  onsubmit="return checkdelete('<?php echo $loginc['user']; ?>', '<?php echo $loginc['userPrenom']; ?>')">
                             <input type="hidden" name="id_user" id="id_user" data-id="<?php echo $loginc['idUser']; ?>"value="<?php echo $loginc['idUser']; ?>">
-                            <button type="submit" name="delete">Delete</button>
+                            <button type="submit" name="delete">Supprimer</button>
                             </form>
 
-                            </td>                
+                            </td> 
+                            
+                            
+                            <td><form id="bloquerForm" action="bloquer.php" method="post"  onsubmit="return checkbloquer('<?php echo $loginc['user']; ?>', '<?php echo $loginc['userPrenom']; ?>')">
+                            <input type="hidden" name="iduser1" value="<?php echo $loginc['idUser']; ?>">
+                            <button type="submit" name="delete">Bloquer</button>
+                            </form></td>
+
+
+                            <td><form id="debloquerForm" action="debloquer.php" method="post"  onsubmit="return checkdebloquer('<?php echo $loginc['user']; ?>', '<?php echo $loginc['userPrenom']; ?>')">
+                            <input type="hidden" name="iduser2" value="<?php echo $loginc['idUser']; ?>">
+                            <button type="submit" name="debloquer">Debloquer</button>
+                            </form></td>
+                            
+                            
+                                   
                         </tr>
                     <?php
                     }
@@ -164,7 +228,6 @@ $(document).ready(function() {
 
 </body>
 </html>
-
 
 
 

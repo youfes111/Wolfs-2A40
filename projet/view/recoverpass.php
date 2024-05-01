@@ -77,17 +77,15 @@ Formulaire de connexion</title>
 
         $l=new loginc();
         $etat=$l->selectemail($email);
+
+
        
         
         
 
         if($etat==false){
-            echo $etat;
-            ?>
-           
-            <?php
+            echo "mail n existe pas";
         }else{
-            // generate token by binaryhexa 
             $token = bin2hex(random_bytes(50));
 
             //session_start ();
@@ -108,7 +106,7 @@ Formulaire de connexion</title>
             $mail->Password='Youssef135798642';
 
             // send by h-hotel email
-            $mail->setFrom('email', 'Password Reset');
+            $mail->setFrom('youssef.dhib@esprit.tn', 'Password Reset');
             // get email from input
             $mail->addAddress($_POST["email"]);
 

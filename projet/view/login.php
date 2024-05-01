@@ -12,36 +12,33 @@ if(isset($_POST['submit'])) {
     $user = $_POST['user1'];
     $mdp = $_POST['mdp1'];
   
-      if ($e->checkUserExists($user, $mdp)) {
+      if ($e->checkUserExists($user, $mdp))  {
         $userDetails=$e->selectuser($user);
-          if ($userDetails['etat'] == 1) {
-            ?> <script>
-            Swal.fire({
-    title: "Login avec succés",
-    icon: "success",
-    showCancelButton: false,
-    confirmButtonColor: "#3085d6",
-    confirmButtonText: "OK"
-}).then((result) => {
-    if (result.isConfirmed) {
-        window.location.replace("backend_1.php");
-    }
-});
-            
-        </script>
-        
+        if($userDetails['bloquage']==1){
+            ?><script>
+           alert("votre compte est bloqué!!")</script>
+           
+              
+        <?php
+       
 
-             
-        <?php } else {
 
-              $_SESSION['user1']= $user;
-              header("Location: userprofile.php");
-          }
+        }
+        else{if ($userDetails['etat'] == 1) {
+
+            header("Location: backend_1.php");
+          
+       } else {
+
+           $_SESSION['user1']= $user;
+           header("Location: userprofile.php");
+       }}
+          
       }
-    //   exit(); 
+      exit(); 
   }
 
-  if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['userNom']) && isset($_POST['userPrenom']) && isset($_POST['mdp']) && isset($_POST['email'])) {
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $e = new loginc();
     $l = new login();
     $userNom = $_POST['userNom'];
