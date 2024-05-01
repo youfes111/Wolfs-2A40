@@ -3,6 +3,7 @@ require '../config.php';
 class diplomec{
  
    public static function deletediplome($id) {
+   
         $db = config::getConnexion();
         $sql = "DELETE FROM diplome WHERE ID_DIPLOME = :id";
         try {
@@ -23,7 +24,7 @@ class diplomec{
             
             $query->bindParam(':nom', $nom, PDO::PARAM_STR);
             $query->bindParam(':document', $document, PDO::PARAM_STR);
-            $query->bindParam(':moyenne', $moyenne, PDO::PARAM_INT);
+            $query->bindParam(':moyenne', $moyenne, PDO::PARAM_STR);
             $query->bindParam(':date_diplome', $date_diplome, PDO::PARAM_STR);
             $query->execute();
             
@@ -37,12 +38,12 @@ class diplomec{
     try {
 
         $query = $conn->prepare("UPDATE diplome SET nom=:nom,
-       document=:document,moyenne=:moyenne,date_diplome=:date_diplome  where ID_DIPLOME=:ID_DIPLOME");
-       $query->bindParam(':ID_DIPLOME', $ID_DIPLOME, PDO::PARAM_STR);
+       document=:document,Moyenne=:moyenne,date_diplome=:date_diplome  where ID_DIPLOME=:ID_DIPLOME");
+       $query->bindParam(':ID_DIPLOME', $ID_DIPLOME, PDO::PARAM_INT);
        $query->bindParam(':nom', $nom, PDO::PARAM_STR);
-       $query->bindParam(':document', $prenom, PDO::PARAM_STR);
-       $query->bindParam(':moyenne', $email, PDO::PARAM_STR);
-       $query->bindParam(':date_diplome', $mdp, PDO::PARAM_STR);
+       $query->bindParam(':document', $document, PDO::PARAM_STR);
+       $query->bindParam(':moyenne', $moyenne, PDO::PARAM_STR);
+       $query->bindParam(':date_diplome', $date_diplome, PDO::PARAM_STR);
 
         $query->execute();
     } catch (Exception $e) {
@@ -63,7 +64,24 @@ class diplomec{
 
  return $result;
     }
+    public static function selectdiplome($user) {
+        
+        try {
+            $sql = "SELECT * FROM diplome WHERE ID_DIPLOME = :user";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':user', $user, PDO::PARAM_STR);
+            $stmt->execute();
     
+            $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $userDetails;
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
 
 }
 
