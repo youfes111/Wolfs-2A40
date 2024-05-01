@@ -222,7 +222,18 @@ require "../config.php";
                    
                     </div>
                 </div>
-            
+                <script>
+window.embeddedChatbotConfig = {
+chatbotId: "jNFrPacHuBO0YyqNyMhPJ",
+domain: "www.chatbase.co"
+}
+</script>
+<script
+src="https://www.chatbase.co/embed.min.js"
+chatbotId="jNFrPacHuBO0YyqNyMhPJ"
+domain="www.chatbase.co"
+defer>
+</script>
     </header>
     <footer>
         <div class="foufou">
@@ -277,7 +288,7 @@ require "../config.php";
         
     </footer>
     
-   
+
 </body>
 
 </html>

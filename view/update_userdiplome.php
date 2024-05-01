@@ -1,31 +1,65 @@
 <?php
-
-
-
 require '../controler/diplomec.php';
+
 require '../Model/diplome.php';
+require '../Model/login.php';
 
-if(isset($_POST['diplome_enregistrer']))
- {
-    $e=new diplomec();
-    $l=new diplome();
-    $nom = $_POST['nom_diploma'];
-    $document = $_FILES['document']['tmp_name'];
-    $photodocument = file_get_contents($document);
-    $documentString = base64_encode($photodocument);
-    $Moyenne = $_POST['moyenne'];
-    $date= $_POST['date_obtention'];
-    $l->setNom($nom);
-    $l->setDocument($documentString);
-    $l->setMoyenne($Moyenne);
-    $l->setdate_diplome($date);
+$conn = config::getConnexion();
 
-    $e->adddiplome($l->getNom() ,$l->getDocument(), $l->getMoyenne(), $l->getdate_diplome());
+// Prepare and execute the query
+
+// if (isset($_POST['diplome_enregistrer'])) {
+//     // Retrieve the first diploma from the input field
+//     if (isset($_POST['diplome']) && !empty($_POST['diplome'])) {
+//         $diplomeValue = $_POST['diplome'];
+//     }
+// }
+
+/*if(isset($_POST['enregistrer_education'])) {
+    $e = new educationc();
+    $l = new education();
+    $photoString = ''; // Default value for photo string
   
-   header("Location: userEducation.php?added_id=$nom");
+    if (isset($_FILES['profile_photo']['tmp_name']) && !empty($_FILES['profile_photo']['tmp_name'])) {
+        $photo = $_FILES['profile_photo']['tmp_name']; // Get the temporary location of the uploaded file
+        $photoData = file_get_contents($photo); // Read the contents of the file into a string
+        $photoString = base64_encode($photoData);
+    }
+
+    $Etat = $_POST['etat'];
+    $emplacement = $_POST['emplacement'];
+    $diplome = $_POST['diplome'];
+
+    $e->addeducation($photoString, $Etat, $emplacement, $diplome);
+
+    $diplomeValue = '';
+
+    $e = new educationc();
+    $list = $e->listeducation();
+}*/
+$l=new diplomec();
+
+if(isset($_GET['ID_DIPLOME'])) {
+    $userId = $_GET['ID_DIPLOME'];
+  
+    $userDetails = $l->selectdiplome($userId);
+
+    if($userDetails) {
+    
+        $nom = $userDetails['nom'];
+        $document = $userDetails['document'];
+        $Moyenne = $userDetails['Moyenne'];
+        $date_diplome = $userDetails['date_diplome'];
+
+    } else {
+        echo "User details not found";
+    }
+
+    
+} else {
+    echo "User ID not provided";
 }
 
- 
 
 ?>
 
@@ -72,40 +106,44 @@ if(isset($_POST['diplome_enregistrer']))
                 <!-- Navbar content -->
             </div>
             <div class="form-container">
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" action='updatediplome.php'>
                     <!-- Remaining form fields for the diploma -->
-                   
+                   <input type="hidden" id="ID_DIPLOME" name="ID_DIPLOME" value ="<?php echo $userId ; ?>">
                     <div class="diploma-container">
                         <div class="form-group">
                             <label for="nom-diploma-1">Nom du diplôme:</label>
                             <select id="nom-diploma-1" name="nom_diploma">
-        <option value="">Select a diploma</option>
-        <option value="Computer Science">Computer Science</option>
-        <option value="Electrical Engineering">Electrical Engineering</option>
-        <option value="Mechanical Engineering">Mechanical Engineering</option>
-        <option value="Physics">Physics</option>
-        <option value="bac_math">bac math</option>
-        <option value="bac_science">bac science</option>
-        <option value="bac_tech">bac tech</option>
-        <option value="bac_eco">bac eco</option>
-        <option value="bac_lettre">bac lettre</option>
+   
+      
+    <option value="Select a diploma" <?php if ($nom == 'Select a diploma') echo 'selected'; ?>>Select a diploma</option>
+    <option value="Computer Science" <?php if ($nom == 'Computer Science') echo 'selected'; ?>>Computer Science</option>
+    <option value="Electrical Engineering" <?php if ($nom == 'Electrical Engineering') echo 'selected'; ?>>Electrical Engineering</option>
+    <option value="Mechanical Engineering" <?php if ($nom == 'Mechanical Engineering') echo 'selected'; ?>>Mechanical Engineering</option>
+    <option value="Physics" <?php if ($nom == 'Physics') echo 'selected'; ?>>Physics</option>
+    <option value="bac math" <?php if ($nom == 'bac_math') echo 'selected'; ?>>bac math</option>
+    <option value="bac science" <?php if ($nom == 'bac_science') echo 'selected'; ?>>bac science</option>
+    <option value="bac tech" <?php if ($nom == 'bac_tech') echo 'selected'; ?>>bac tech</option>
+    <option value="bac eco" <?php if ($nom == 'bac_eco') echo 'selected'; ?>>bac eco</option>
+    <option value="bac lettre" <?php if ($nom == 'bac_lettre') echo 'selected'; ?>>bac lettre</option>
+   
     </select>
                         </div>
                         <div class="form-group">
                             <label for="document-1">Document (file/pdf):</label>
-                            <input type="file" id="document-1" name="document">
+                            <input type="file" id="document-1" name="document" value="<?php echo $document ?> ">
                         </div>
                       
-                        <div class="form-group">
-                        <label>moyenne :  </label>
-                       <input type="radio" id="moyenne-1" name="moyenne" value="Excellent"> Excellent</label>
-                       <input type="radio" id="moyenne-2" name="moyenne" value="Très bien"> Très bien</label>
-                       <input type="radio" id="moyenne-3" name="moyenne" value="Bien"> Bien</label>
-                       <input type="radio" id="moyenne-4" name="moyenne" value="Passable"> Passable</label>
-                    </div>
+                    <div class="form-group">
+    <label>moyenne : </label>
+    <input type="radio" id="moyenne-1" name="moyenne" value="Excellent"<?php if ($Moyenne === 'Excellent') echo ' checked'; ?>> Excellent</label>
+    <input type="radio" id="moyenne-2" name="moyenne" value="Très bien"<?php if ($Moyenne === 'Très bien') echo ' checked'; ?>> Très bien</label>
+    <input type="radio" id="moyenne-3" name="moyenne" value="Bien"<?php if ($Moyenne === 'Bien') echo ' checked'; ?>> Bien</label>
+    <input type="radio" id="moyenne-4" name="moyenne" value="Passable"<?php if ($Moyenne === 'Passable') echo ' checked'; ?>> Passable</label>
+
+</div>
                         <div class="form-group">
                             <label for="date-obtention-1">Date d'obtention:</label>
-                            <input type="date" id="date-obtention-1" name="date_obtention">
+                            <input type="date" id="date-obtention-1" name="date_obtention" value="<?php echo $date_diplome ?>" >
                         </div>
                     </div>
                     <div>

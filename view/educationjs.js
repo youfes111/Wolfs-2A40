@@ -4,8 +4,7 @@ function showForm() {
   }
 
 
-var form = document.getElementById('test_ajouter');
-form.addEventListener('submit',(event) => {
+  function validateForm() {
 
  
     
@@ -21,11 +20,11 @@ form.addEventListener('submit',(event) => {
     
     if (photo === '') {
         isValid = false;
-        setErrorFor(document.getElementById('photo'), 'Le photo  ne doit pas etre vide');
+        setErrorFor(document.getElementById('profile-photo'), 'Le photo  ne doit pas etre vide');
         
     } else
     {
-        setSuccessFor(document.getElementById('photo'));
+        setSuccessFor(document.getElementById('profile-photo'));
     }
 
     // Validation pour le emplacement 
@@ -38,9 +37,18 @@ form.addEventListener('submit',(event) => {
         setSuccessFor(document.getElementById('emplacement'));
 
     }
+    if (diplome === '') {
+      isValid = false;
+      setErrorFor(document.getElementById('diplome'), 'Sélectionnez un diplome !!!!');
+
+  } 
+  else{
+      setSuccessFor(document.getElementById('diplome'));
+
+  }
+   return isValid;
    
-   
-  })
+  }
 
  
   

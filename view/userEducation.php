@@ -4,9 +4,14 @@ require '../Model/education.php';
 require '../Model/login.php';
 
 $conn = config::getConnexion();
+ 
 
-// Prepare and execute the query
-$query = $conn->prepare("SELECT user, userPrenom, email FROM login WHERE user = 'aymen'");
+
+
+$query = $conn->prepare("SELECT user, userPrenom, email FROM login WHERE user =:user  and mdp =:mdp ");
+
+$query->bindParam(':user', $user);
+$query->bindParam(':mdp', $mdp);
 $query->execute();
 $result = $query->fetchAll();
 
@@ -17,14 +22,7 @@ if ($result) {
     $email = $result[0]['email'];
 }
 
-$diplomeValue = "No DIPLOMA provided";
 
-if (isset($_POST['diplome_enregistrer'])) {
-    // Retrieve the first diploma from the input field
-    if (isset($_POST['diplome']) && !empty($_POST['diplome'])) {
-        $diplomeValue = $_POST['diplome'];
-    }
-}
 
 
 if(isset($_POST['enregistrer_education'])) {
@@ -150,7 +148,7 @@ if(isset($_POST['enregistrer_education'])) {
 </div>
                     <div class="form-group">
                         <label>Diplôme:</label>
-                        <input type="text" id="diplome" name="diplome" value="<?php echo $diplomeValue; ?>"readonly>
+                        <input type="text" id="diplome" name="diplome" value="<?php echo $_GET['added_id'] ?? ''; ?>"readonly>
                     </div>
                     <button id="ajouter-diplome-button" type="button">Ajouter un diplôme</button>
                     <button type="submit" name="enregistrer_education">Enregistrer</button>

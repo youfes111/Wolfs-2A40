@@ -1,5 +1,5 @@
 <?php
-session_start(); // Assurez-vous de démarrer la session
+session_start();
 
 require '../controler/loginc.php';
 require '../Model/login.php';
