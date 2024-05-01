@@ -4,14 +4,14 @@ class Diplome {
     private int $ID_DIPLOME;
     private string $nom;
     private string $document;
-    private float $moyenne;
+    private string $moyenne;
     private string $date_diplome;
 
     public function __construct() {
         $this->ID_DIPLOME = 0;
         $this->nom = "";
         $this->document = "";
-        $this->moyenne = 0.0;
+        $this->moyenne = "";
         $this->date_diplome = date('Y-m-d');
     }
 
