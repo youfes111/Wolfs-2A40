@@ -1,6 +1,5 @@
 <?php
-require '../config/connexion.php';
-require '../config/commandes.php';
+require_once '../Controller/formationC.php' ;
 
 
 if (isset($_GET['id']))
@@ -8,8 +7,16 @@ if (isset($_GET['id']))
     $id=$_GET['id'];
 }
 
-supprimer($id);
-header('location:backendNadine.php');
+    $form=new formationC();
+    $res= $form -> deleteFormation($id);
+    if ($res) {
+        header('location:backendNadine.php');
+        exit();
+    }
+    else {
+        echo 'formation laaaa ' ;
+    }
+    
 
 
 ?>

@@ -1,54 +1,79 @@
 function validateForm() {
-    let idlangue = document.getElementById('idlangue').value.trim();
-    let iduser = document.getElementById('iduser').value.trim();
-    let idniveau = document.getElementById('idniveau').value.trim();
-    let duree = document.getElementById('duree').value.trim();
+    let idformation = document.getElementById('idformation').value.trim();
+    let langue= document.getElementById('langue').value.trim();
+    let niveau = document.getElementById('niveau').value.trim();
+    let date_de_debut= document.getElementById('date_de_debut').value.trim();
   
-
+    let date_de_fin = document.getElementById('date_de_fin').value.trim();
+    let duree = document.getElementById('duree').value.trim();
+    let prix = document.getElementById('prix').value.trim();
+    let titre = document.getElementById('titre').value.trim();
+    let description = document.getElementById('description').value.trim();
+  
     let isValid = true;
 
     // Validation pour l'ID du partenaire
-    if (idlangue === '') {
+    if (idformation === '') {
         isValid = false;
-        setErrorFor(document.getElementById('idlangue'), 'ID formation  ne doit pas etre vide');
-    } else if(!/^[A-Z][a-zA-Z0-9]{3}$/.test(idlangue)) {
+        setErrorFor(document.getElementById('idformation'), 'ID formation  ne doit pas etre vide');
+    } else if(!/^[A-Z][a-zA-Z0-9]{3}$/.test(idformation)) {
         isValid = false;
 
-        setErrorFor(document.getElementById('idlangue'), 'ID formation doit commencer par une lettre majuscule et être exactement de 4 caractères');
+        setErrorFor(document.getElementById('idformation'), 'ID formation doit commencer par une lettre majuscule et être exactement de 4 caractères');
 
     }
     else{
-        setSuccessFor(document.getElementById('idlangue'));
+        setSuccessFor(document.getElementById('idformation'));
     }
 
-    // Validation pour le nom du partenaire
-    if (iduser === '') {
+    // Validation pour le id user
+    if (langue === '') {
         isValid = false;
-        setErrorFor(document.getElementById('iduser'), 'Nom formation ne doit pas etre vide');
+        setErrorFor(document.getElementById('langue'), 'Nom formation ne doit pas etre vide');
 
-    } else if(!/^[A-Z][a-zA-Z0-9]{3}$/.test(iduser)){
+    } else if(!/^[A-Z][a-zA-Z0-9]{3}$/.test(langue)){
         isValid = false;
-        setErrorFor(document.getElementById('iduser'), 'Nom formation doit contenir uniquement des lettres et ne pas dépasser 30 caractères');
+        setErrorFor(document.getElementById('langue'), 'Nom formation doit contenir uniquement des lettres et ne pas dépasser 30 caractères');
     }
     else{
-        setSuccessFor(document.getElementById('iduser'));
+        setSuccessFor(document.getElementById('langue'));
 
     }
-    // Validation pour le pays
+    // Validation pour le id niveau
    
-    if (idniveau === '') {
+    if (niveau === '') {
         isValid = false;
-        setErrorFor(document.getElementById('idniveau'), 'Nom formation ne doit pas etre vide');
+        setErrorFor(document.getElementById('niveau'), 'Nom formation ne doit pas etre vide');
 
-    } else if(!/^[A-Z][a-zA-Z0-9]{3}$/.test(idniveau)){
+    } else if(!/^[A-Z][a-zA-Z0-9]{3}$/.test(niveau)){
         isValid = false;
-        setErrorFor(document.getElementById('idniveau'), 'Nom formation doit contenir uniquement des lettres et ne pas dépasser 30 caractères');
+        setErrorFor(document.getElementById('niveau'), 'Nom formation doit contenir uniquement des lettres et ne pas dépasser 30 caractères');
     }
     else{
-        setSuccessFor(document.getElementById('idniveau'));
+        setSuccessFor(document.getElementById('niveau'));
 
     }
-    // Validation pour la ville
+     // Validation pour la duree
+     if (date_de_debut=== '') {
+        isValid = false;
+        setErrorFor(document.getElementById('date_de_debut'), 'Duree ne doit pas etre vide');
+    } else if (isNaN(date_de_debut) || parseInt(date_de_debut) < 0 || parseInt(date_de_debut) > 6  ) {
+        isValid = false;
+        setErrorFor(document.getElementById('date_de_debut'), 'Duree doit être un nombre numérique inférieur ou égal à 6');
+    } else {
+        setSuccessFor(document.getElementById('date_de_debut'));
+    }
+    // Validation pour la duree
+    if (date_de_fin=== '') {
+        isValid = false;
+        setErrorFor(document.getElementById('date_de_fin'), 'Duree ne doit pas etre vide');
+    } else if (isNaN(date_de_fin) || parseInt(date_de_fin) < 0 || parseInt(date_de_fin) > 6  ) {
+        isValid = false;
+        setErrorFor(document.getElementById('date_de_fin'), 'Duree doit être un nombre numérique inférieur ou égal à 6');
+    } else {
+        setSuccessFor(document.getElementById('date_de_fin'));
+    }
+    // Validation pour la duree
     if (duree === '') {
         isValid = false;
         setErrorFor(document.getElementById('duree'), 'Duree ne doit pas etre vide');
@@ -58,7 +83,36 @@ function validateForm() {
     } else {
         setSuccessFor(document.getElementById('duree'));
     }
-
+// Validation pour la duree
+if (prix=== '') {
+    isValid = false;
+    setErrorFor(document.getElementById('prix'), 'Duree ne doit pas etre vide');
+} else if (isNaN(prix) || parseInt(prix) < 0 || parseInt(prix) > 6  ) {
+    isValid = false;
+    setErrorFor(document.getElementById('prix'), 'Duree doit être un nombre numérique inférieur ou égal à 6');
+} else {
+    setSuccessFor(document.getElementById('prix'));
+}
+// Validation pour la duree
+if (titre=== '') {
+    isValid = false;
+    setErrorFor(document.getElementById('titre'), 'Duree ne doit pas etre vide');
+} else if (isNaN(titre) || parseInt(titre) < 0 || parseInt(titre) > 6  ) {
+    isValid = false;
+    setErrorFor(document.getElementById('titre'), 'Duree doit être un nombre numérique inférieur ou égal à 6');
+} else {
+    setSuccessFor(document.getElementById('titre'));
+}
+// Validation pour la duree
+if (description=== '') {
+    isValid = false;
+    setErrorFor(document.getElementById('description'), 'Duree ne doit pas etre vide');
+} else if (isNaN(description) || parseInt(description) < 0 || parseInt(description) > 6  ) {
+    isValid = false;
+    setErrorFor(document.getElementById('description'), 'Duree doit être un nombre numérique inférieur ou égal à 6');
+} else {
+    setSuccessFor(document.getElementById('description'));
+}
    /* // Validation pour l'email du partenaire
     if (emailpart === '') {
         isValid = false;

@@ -1,27 +1,43 @@
 <?php
-require '../config/commandes.php';
-require_once '../controller/formationC.php';
-require_once '../model/formation.php';
 
+require_once '../Controller/formationC.php';
+require_once '../Model/formation.php';
+require_once '../Controller/niveauC.php' ;
+require_once '../Model/niveau.php';
+require_once '../config.php';
 
+$formationC = new formationC();
+$listsforms = $formationC->list_formations() ;
+
+$niveauC = new niveauC();
+$listsNiveau = $niveauC->ListNiveaux() ;
 
 // Vérification si le formulaire est soumiss
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Récupération des données du formulaire
-    $idlangue = $_POST["idlangue"];
-    $iduser = $_POST["iduser"];
-    $idniveau = $_POST["idniveau"];
+    $idformation = $_POST["idformation"];
+    $langue = $_POST["langue"];
+    $niveau = $_POST["niveau"];
+    $date_de_debut = $_POST["date_de_debut"];
+    $date_de_fin = $_POST["date_de_fin"];
     $duree = $_POST["duree"];
+    $prix = $_POST["prix"];
+    $titre = $_POST["titre"];
+    $description = $_POST["description"];
 
 
     // Création de l'objet Employe avec les données du formulaire
     $formationC = new Formation();
-    $formationC->setidlangue($idlangue);
-    $formationC->setiduser($iduser);
-    $formationC->setidniveau($idniveau);
+    $formationC->setidformation($idformation);
+    $formationC->setlangue($langue);
+    $formationC->setniveau($niveau);
+    $formationC->setdate_de_debut($date_de_debut);
+    $formationC->setdate_de_fin($date_de_fin);
     $formationC->setduree($duree);
-    
-    ajouter($formationC->getidlangue(), $formationC->getiduser(),$formationC->getidniveau(),$formationC->getduree());
+    $formationC->setprix($prix);
+    $formationC->settitre($titre);
+    $formationC->setdescription($description);
+    ajouter($formationC->getidformation(), $formationC->getlangue(),$formationC->getniveau(),$formationC->getdate_de_debut(),$formationC->getdate_de_fin(),$formationC->getduree(),$formationC->getprix(),$formationC->gettitre(),$formationC->getdescription());
 
 }
 
@@ -31,10 +47,10 @@ if(isset($_GET['id'])){
     
     // Récupérer l'ID du partenaire depuis les paramètres de requête
     $id = $_GET['id'];
-
+    $conn = config::getConnexion();
     // Récupérer les données du partenaire à partir de l'ID
     // Utilisez votre propre logique pour récupérer les données du partenaire à partir de la base de données
-    $query = $access->prepare('SELECT * FROM formation WHERE idlangue = :id');
+    $query = $conn->prepare('SELECT * FROM formation WHERE id_formation = :id');
     $query->bindValue(':id', $id);
     $query->execute();
     $formationdata = $query->fetch(PDO::FETCH_ASSOC);
@@ -65,43 +81,115 @@ if(isset($_GET['id'])){
         <li><a href="#"><i class="lni lni-bubble"></i> Reclamation & Réponse</a></li>
         <li><a href="login.php"></i>Log out</a></li>
     
-    </ul>
-            </ul>
+        </ul>
+        </ul>
+    </div>
+    <div class="contenu">
+        <div class="navbar">
+            
         </div>
-        <div class="contenu">
-            <div class="navbar">
-                
-            </div>
-            <div class="tables">
-
+        <div class="tables">
     <div id="overlay2">
+    <div class="container">
+    <h2>Modifier la formation</h2>
 
-    <div class="container" id="form-container" >
-        <h2>Modifier la formation</h2>
-
-        <form method="POST" action="update_formation.php">
-            <input type="hidden" name="idlangue" value="'.$formationdata['idlangue'].'">
-            <div class="form-control">
+    <form method="POST" action="update_formation.php">
+        <input type="hidden" name="id_formation" value="'.$formationdata['id_formation'].'">
+        
+        <div class="form-control">
+            <div class="left-label">
                 <label for="iduser">ID user </label>
-                <input type="text" id="iduser" name="iduser" value="'.$formationdata['iduser'].'">
+                <label for="niveau">Niveau</label>
+                <label for="date_de_debut">Date de début</label>
+                <label for="date_de_fin">Date de fin</label>
+                <label for="duree">Durée</label>
             </div>
-            <div class="form-control">
-                <label for="idniveau">id niveau</label>
-                <input type="text" id="idniveau" name="idniveau" value="'.$formationdata['idniveau'].'">
+            <div class="right-label">
+                <label for="prix">Prix</label>
+                <label for="titre">Titre</label>
+                <label for="description">Description</label>
             </div>
-            <div class="form-control">
-                <label for="duree">duree</label>
+        </div>
+        
+        <div class="form-control">
+            <div class="left-input">
+                <input type="text" id="langue" name="langue" value="'.$formationdata['langue'].'">
+                <input type="text" id="niveau" name="niveau" value="'.$formationdata['niveau'].'">
+                <input type="text" id="date_de_debut" name="date_de_debut" value="'.$formationdata['date_de_debut'].'">
+                <input type="text" id="date_de_fin" name="date_de_fin" value="'.$formationdata['date_de_fin'].'">
                 <input type="text" id="duree" name="duree" value="'.$formationdata['duree'].'">
             </div>
-           
-            <button type="submit" id="bouton_modifier">Modifier</button>
-        </form> </div></div></div></div></div>
-    ';
-    echo '      <script>var overlay = document.getElementById("overlay2");
-    overlay.style.display = "flex";
+            <div class="right-input">
+                <input type="text" id="prix" name="prix" value="'.$formationdata['prix'].'">
+                <input type="text" id="titre" name="titre" value="'.$formationdata['titre'].'">
+                <input type="text" id="description" name="description" value="'.$formationdata['description'].'">
+            </div>
+        </div>
 
-    
-    </script>  ';
+        <button type="submit" id="bouton_modifier">Modifier</button>
+    </form>
+</div>
+
+    </div>
+</div>
+<style>
+.container {
+    width: 20%;
+    margin-left:100px;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-control {
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.left-label, .right-label {
+    flex: 1;
+}
+
+.left-input, .right-input {
+    flex: 1;
+    margin-left: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+
+</style>
+';
+echo '      <script>var overlay = document.getElementById("overlay2");
+overlay.style.display = "flex";
+
+
+</script>  ';
 }
 ?>
 
@@ -126,7 +214,12 @@ if(isset($_GET['id'])){
 </head>
 
 <body>
-       
+       <table>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+       </table>
 <div class="wrapper">
     
     <div class="sidebar">
@@ -159,47 +252,44 @@ if(isset($_GET['id'])){
                 
             </div>
             <div class="tables">
-
-    <button id="btnAjouter">Ajouter</button>
- <div class="titre"><h2>Les formations</h2></div>
-          
-    <table id="tablePartenariat">
-        <thead>
-            
-        </thead>
-        <tbody>
-            <?php
-            try {
-                // Connexion à la base de données
-                $access = new PDO("mysql:host=localhost;dbname=projet;charset=utf8", "root", "");
-                $access->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-
-                // Récupération des données de la table "formation"
-                $query = $access->query('SELECT * FROM formation');
-                 echo "<tr>";
-                    echo "<td>id langue</td>";
-                    echo "<td>id user</td>";
-                    echo "<td>id niveau</td>";
-                    echo "<td>duree</td>";
-                    echo "</tr>";
-                while ($row = $query->fetch()) {
-                   
-                    echo "<tr>";
-                    echo "<td>".$row['idlangue']."</td>";
-                    echo "<td>".$row['iduser']."</td>";
-                    echo "<td>".$row['idniveau']."</td>";
-                    echo "<td>".$row['duree']."</td>";
-                    echo '<td> <a href="?id='.$row['idlangue'].'"> <i class="fas fa-edit icon"" ></i> </a> </td>';
-                    echo '<td> <a href="delete_formation.php?id='.$row['idlangue'].'"> <i class="fas fa-trash-alt icon" ></i> </a> </td>';
-                    echo "</tr>";
-
-                }
-            } catch (PDOException $e) {
-                echo "Erreur de connexion à la base de données : " . $e->getMessage();
-            }
-            ?>
-        </tbody>
-    </table>
+                <form action="ajouterFormation.php" method="post" >
+                    <button type="submit" id="btnAjouter">Ajouter formation</button>
+                </form>
+            <div class="titre"><h2>Les formations</h2></div>
+                    
+                <table id="tableFormation">
+                    <thead>
+                        
+                    </thead
+                    <tbody>
+                        <?php
+                        
+                        echo $listsforms ;
+                        ?>
+                    </tbody>
+                </table>
+                
+<br>
+<br>
+<br>
+<br>
+<form action="ajouterNiveau.php" method="post" >
+                    <button type="submit" id="btnAjouter">Ajouter Niveau</button>
+                </form>
+                <div class="titre"><h2>Les Niveaux</h2></div>
+                    
+                    <table id="tableFormation">
+                        <thead>
+                            
+                        </thead>
+                        <tbody>
+                            <?php
+                            
+                            echo $listsNiveau ;
+                            ?>
+                        </tbody>
+                    </table>
+                
 
     <div id="overlay">
 
@@ -214,7 +304,7 @@ if(isset($_GET['id'])){
             
         <div class="form-control ">
                 <label for="">ID formation</label>
-                <input type="text" id="idlangue"  name="idlangue" placeholder="id langue">
+                <input type="text" id="idformation"  name="idformation" placeholder="id formation">
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation"></i>
                 <br>
@@ -222,8 +312,8 @@ if(isset($_GET['id'])){
             </div>
 
             <div class="form-control">
-                <label for="">ID user</label>
-                <input type="text" id="iduser"  name="iduser" placeholder="id user">
+                <label for="">Langue</label>
+                <input type="text" id="langue"  name="langue" placeholder="langue">
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation"></i>
                 <br>
@@ -231,13 +321,32 @@ if(isset($_GET['id'])){
             </div>
 
             <div class="form-control">
-                <label for="">ID Niveau</label>
-                <input type="text" id="idniveau"  name="idniveau" placeholder="id niveau">
+                <label for=""> Niveau</label>
+                <input type="text" id="niveau"  name="niveau" placeholder="niveau">
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation"></i>
                 <br>
                 <small>Message d'erreur</small>
             </div>
+
+            <div class="form-control">
+                <label for="">Date de debut</label>
+                <input type="text" id=date_de_debut"  name="date_de_debut" placeholder="date_de_debut">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation"></i>
+                <br>
+                <small>Message d'erreur</small>
+            </div>
+
+            <div class="form-control">
+                <label for="">Date de fin/label>
+                <input type="text" id="date_de_fin"  name="date_de_fin" placeholder="date_de_fin">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation"></i>
+                <br>
+                <small>Message d'erreur</small>
+            </div>
+
 
             <div class="form-control">
                 <label for="">Duree</label>
@@ -248,7 +357,33 @@ if(isset($_GET['id'])){
                 <small>Message d'erreur</small>
             </div>
 
-            
+            <div class="form-control">
+                <label for="">Prix</label>
+                <input type="text" id="prix"  name="prix" placeholder="prix">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation"></i>
+                <br>
+                <small>Message d'erreur</small>
+            </div>
+
+            <div class="form-control">
+                <label for="">Titre</label>
+                <input type="text" id="titre"  name="titre" placeholder="titre">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation"></i>
+                <br>
+                <small>Message d'erreur</small>
+            </div>
+
+            <div class="form-control">
+                <label for="">Description</label>
+                <input type="text" id="description"  name="description" placeholder="description">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation"></i>
+                <br>
+                <small>Message d'erreur</small>
+            </div>
+
            
             
             <button type="submit" > <i class="fas fa-user-plus"></i> Ajouter</button>
