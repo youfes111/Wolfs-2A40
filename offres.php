@@ -5,9 +5,10 @@ require("C:/xampp/htdocs/PROJET WEB NOUHA/config/connexion.php");
 
 require_once "C:/xampp/htdocs/PROJET WEB NOUHA/controller/PartenariatC.php";
 require_once "C:/xampp/htdocs/PROJET WEB NOUHA/model/partenariat.php";
+require_once "C:/xampp/htdocs/PROJET WEB NOUHA/model/offree.php";
 
-$n=new Partenariat();
-$list=$n->listpartenariat();
+$n=new Offre();
+$list=$n->listoffre();
 
 ?>
 <!DOCTYPE html>
@@ -47,6 +48,7 @@ $list=$n->listpartenariat();
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style></style>
 </head>
 
 <body>
@@ -71,9 +73,9 @@ $list=$n->listpartenariat();
 
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- Uncomment the line below if you also wish to use an image logo -- >
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1><img src="logo.png" alt="StudyGo"></h1>
+        <h1><img src="logo.png" alt="StudyGo" class="lg1"></h1>
       </a>
       <nav id="navbar" class="navbar">
         <ul>
@@ -105,14 +107,14 @@ $list=$n->listpartenariat();
           <div class="row d-flex justify-content-center">
             <div class="col-lg-6 text-center">
               <h2>NOS OFFRES</h2>
-<p>Découvrez le monde et élargissez vos horizons grâce à nos offres exclusives d'études à l'étranger. Profitez d'une expérience éducative immersive dans des destinations prestigieuses, où vous pourrez vous plonger dans une nouvelle culture, acquérir une perspective internationale et vous connecter avec des étudiants du monde entier. Bénéficiez d'un enseignement de qualité, d'un encadrement personnalisé et de ressources académiques de premier plan pour vous aider à atteindre vos objectifs éducatifs. N'attendez plus, saisissez cette opportunité unique de vivre une aventure intellectuelle et culturelle inoubliable à l'étranger.</p>            </div>
+<p>Découvrez le monde et élargissez vos horizons grâce à nos offres exclusives d'études à l'étranger. </p>            </div>
           </div>
         </div>
       </div>
       <nav>
         <div class="container">
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html">acceuil</a></li>
             <li>offres</li>
           </ol>
         </div>
@@ -120,51 +122,46 @@ $list=$n->listpartenariat();
     </div><!-- End Breadcrumbs -->
 
     <!-- ======= Blog Section ======= -->
-    <?php 
-    foreach($list as $List): 
-     ?>
     <section id="blog" class="blog">
-      <div class="container" data-aos="fade-up">
+  <div class="container" data-aos="fade-up">
+    <div class="row gy-4 posts-list">
+      <?php foreach($list as $List): ?>
+      <div class="col-xl-4 col-md-6">
 
-        <div class="row gy-4 posts-list">
+        <article>
+         
+          <div class="post-img">
+            <img src="<?= $List['img'] ;?>" alt="" class="img-fluid">
+          </div>
+          <h2 class="title">
+            <p class="post-category"><?= $List['NomPart'] ;?></p>
+          </h2>
+          <p class="post-category"><h6><?= $List['domaine']  ;?></h6></p>
 
-          <div class="col-xl-4 col-md-6">
-            <article>
+          <p class="post-category"> <?= $List['programme']  ;?></p>
+        
+          <div class="post-footer">
+           
+            <div class="additional-info" style="display: none;">
+           <p class="post-category">Pays : <?= $List['pays']  ;?></p>
+            <p class="post-category">Ville :<?= $List['ville']  ;?></p>
+            <p class="post-category">Niveau récommandé :<?= $List['niveau']  ;?></p>
+            <p class="post-category">Type Baccalauréat :bac <?= $List['bac']  ;?></p>
+            <p class="post-category">Nombre de places disponible :<?= $List['NbPlace']  ;?></p>
+            <p class="post-category">Frais scolarité :<?= $List['frais'] ;?>DT</p>
+            <p class="post-category">Bourse :<?= $List['bourse']  ;?></p>
 
-              <div class="post-img">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFkZk9-GR2rflE19xK-rn1MmhRHFXsHdiCMg&s" alt="" class="img-fluid">
-              </div>
-<h2 class="title">
-              <p class="post-category"> <?= $List['NomPart'] ;?> </p>
-</h2>
-              
-              <p class="post-category">Pays : <?= $List['pays']  ;?> </p>
-              
-              <p class="post-category">Ville :<?= $List['ville']  ;?> </p>
-              
-
-              <div class="d-flex align-items-center">
-                <img src="assets/img/blog/blog-author.jpg" alt="" class="img-fluid post-author-img flex-shrink-0">
-                <div class="post-meta">
-                  <p class="post-author-list">@ <?= $List['EmailPart']  ;?></p>
-                  <p class="post-date">
-                    <time datetime="2022-01-01">Jan 1, 2022</time>
-                  </p>
-                </div>
-              </div>
-
-            </article>
-          </div><!-- End post list item -->
-
-      
-
-
-        </div><!-- End blog posts list -->
-
+              <p class="post-author-list">Contact : <?= $List['EmailPart']  ;?></p>
+          
+            </div>
+             <a href="#" class="btn btn-primary btn-view-more" onclick="showMore(event)">Voir plus</a>
+          </div>
+        </article>
+      </div><!-- End post list item -->
       <?php endforeach ; ?>
-
-      </div>
-    </section><!-- End Blog Section -->
+    </div><!-- End blog posts list -->
+  </div>
+</section><!-- End Blog Section -->
 
   </main><!-- End #main -->
 
@@ -175,7 +172,7 @@ $list=$n->listpartenariat();
       <div class="row gy-4">
         <div class="col-lg-5 col-md-12 footer-info">
           <a href="index.html" class="logo d-flex align-items-center">
-            <span>Impact</span>
+            <span><img src="logo.png" alt="StudyGo" class="lg"></span>
           </a>
           <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
           <div class="social-links d-flex mt-4">
@@ -258,3 +255,40 @@ $list=$n->listpartenariat();
 </body>
 
 </html>
+<style>
+   .btn-view-more {
+  position: relative;
+  margin-top: 5px;
+  padding-left: 0%;
+  background-color: transparent;
+  color: rgba(0, 0, 139, 0.5);
+  border: none;
+  font-size: small;
+  transition: color 0.3s ease; 
+  text-decoration: underline;
+  
+}
+
+.btn-view-more:hover {
+  color:  rgba(255, 165, 0, 2); 
+  background-color: transparent;
+
+  text-decoration: underline;
+}
+</style>
+<script>
+  function showMore(event) {
+    event.preventDefault();
+    var btn = event.target;
+    var additionalInfo = btn.previousElementSibling;
+
+
+    if (additionalInfo.style.display === "none") {
+      additionalInfo.style.display = "block";
+      btn.textContent = "Voir moins";
+    } else {
+      additionalInfo.style.display = "none";
+      btn.textContent = "Voir plus";
+    }
+  }
+</script>
