@@ -69,12 +69,12 @@ function confirmDelete() {
     <h6>Les gestions</h6>
     <div class="backend_1">
     <li><a href="users.php"><i class="lni lni-users"></i> Les clients</a></li>
-    <li><a href="education_back.php"><i class="lni lni-users"></i> Les Educations</a></li>
+    <li><a href="education_back.php"><i class="lni lni-book"></i> Les Educations</a></li>
+    <li><a href="diplome_back.php"><i class="lni lni-book"></i> Les diplomes</a></li>
     <li><a href="#"><i class="lni lni-layers"></i> Les offres</a></li>
     <li><a href="#"><i class="lni lni-book"></i> Formation linguistique</a></li>
     <li><a href="#"><i class="lni lni-bubble"></i> Reclamation & Réponse</a></li>
     <li><a href="login.php"></i>Log out</a></li>
-
 </ul>
         </ul>
     </div>

@@ -1,3 +1,49 @@
+<script>
+function validateForm() {
+
+ 
+    
+let photo = document.getElementById('profile-photo').value.trim();
+let emplacement = document.getElementById('emplacement').value.trim();
+let bac = document.getElementById('baccalaureat').value.trim();
+let etudiant = document.getElementById('etudiant').value.trim();
+let diplome = document.getElementById('diplome').value.trim();
+
+let isValid = true;
+
+
+if (photo === '') {
+    isValid = false;
+    setErrorFor(document.getElementById('profile-photo'), 'Le photo  ne doit pas etre vide');
+    
+} else
+{
+    setSuccessFor(document.getElementById('profile-photo'));
+}
+
+// Validation pour le emplacement 
+if (emplacement === 'Sélectionnez un emplacement') {
+    isValid = false;
+    setErrorFor(document.getElementById('emplacement'), 'Sélectionnez un emplacement !!!!');
+
+} 
+else{
+    setSuccessFor(document.getElementById('emplacement'));
+
+}
+if (diplome === '') {
+  isValid = false;
+  setErrorFor(document.getElementById('diplome'), 'Sélectionnez un diplome !!!!');
+
+} 
+else{
+  setSuccessFor(document.getElementById('diplome'));
+
+}
+return false;
+
+}
+</script>
 <?php
 require '../controler/educationc.php';
 require '../Model/education.php';
@@ -5,6 +51,12 @@ require '../Model/login.php';
 
 $conn = config::getConnexion();
  
+
+
+$user = $_GET['user'];
+$mdp = $_GET['mdp'];
+
+$mdp = str_replace('$', '', $mdp);
 
 
 
@@ -60,7 +112,7 @@ if(isset($_POST['enregistrer_education'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="profile.css">
     <link rel="stylesheet" href="education_css.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></>
     <script src="educationjs.js"></script>
     <link rel="icon" href="10.png">
     <title>StudyGo | Les clients</title>
@@ -92,7 +144,7 @@ if(isset($_POST['enregistrer_education'])) {
             <div class="navbar">
             </div>
             <div class="form-container">
-                <form method="POST"  enctype="multipart/form-data" id="test_ajouter" onsubmit="return validateForm() ">
+            <form method="POST" enctype="multipart/form-data" id="test_ajouter" onsubmit="return validateForm();" >
                     <div class="form-group">
                         <label for="profile-photo">Photo de profil:</label>
                         <input type="file" id="profile-photo" name="profile_photo" onchange="previewProfilePhoto(event)">
@@ -172,7 +224,7 @@ if(isset($_POST['enregistrer_education'])) {
 
         document.getElementById('ajouter-diplome-button').addEventListener('click', function() {
     // Load diplome.php
-    window.location.href = 'diplome.php';
+    window.location.href = 'diplome.php?user=<?php echo $user ?>&mdp=<?php echo $mdp ?>';
 });
     </script>
 </body>

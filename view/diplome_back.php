@@ -14,6 +14,11 @@ $list=$e->listdiplome();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="users2.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.11.4/i18n/French.json"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" href="10.png">
     <title>StudyGo|Les clients</title>
     <script>
@@ -48,6 +53,43 @@ function confirmDelete() {
        
     }
 
+</script>
+<script>
+$(document).ready(function() {
+    $('.my-table').DataTable({
+        "language": {
+            "sEmptyTable": "Aucune donnée disponible dans le tableau",
+            "sInfo": "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+            "sInfoEmpty": "Affichage de l'élément 0 à 0 sur 0 élément",
+            "sInfoFiltered": "(filtré à partir de _MAX_ éléments au total)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ",",
+            "sLengthMenu": "Afficher _MENU_ éléments",
+            "sLoadingRecords": "Chargement...",
+            "sProcessing": "Traitement...",
+            "sSearch": "Rechercher :",
+            "sZeroRecords": "Aucun élément correspondant trouvé",
+            "oPaginate": {
+                "sFirst": "Premier",
+                "sLast": "Dernier",
+                "sNext": "Suivant",
+                "sPrevious": "Précédent"
+            },
+            "oAria": {
+                "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+            },
+            "select": {
+                "rows": {
+                    "_": "%d lignes sélectionnées",
+                    "0": "Aucune ligne sélectionnée",
+                    "1": "1 ligne sélectionnée"
+                }
+            }
+        }
+
+    });
+});
 </script>
 
 </head>
@@ -87,10 +129,11 @@ function confirmDelete() {
         <div class="tables">
             
 
-            <table border='1'>
-                
-            <tr><th>ID_Diplome</th><th>nom</th><th>document</th><th>Moyenne</th><th>date_diplome</th><th>Modifier</th><th>Supprimer</th></tr>
-            <?php
+            <table border='1'class="my-table" id="my-table" >
+            <thead>
+            <tr><th>ID_Diplome</th><th>nom</th><th>document</th><th>Moyenne</th><th>date_diplome</th><th>Modifier</th><th>Supprimer</th></tr>  </thead>
+            <tbody>  
+           <?php
                     foreach ($list as $diplomec) {
                     ?>
                         <tr id="row_<?php echo $diplomec['ID_DIPLOME']; ?>">
@@ -116,6 +159,7 @@ function confirmDelete() {
                     <?php
                     }
                     ?>
+                      </tbody> 
             </table>
         </div>
     </div>

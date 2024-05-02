@@ -4,7 +4,7 @@ function showForm() {
   }
 
 
-  function validateForm() {
+  function validateFormd() {
 
  
     
@@ -14,7 +14,7 @@ function showForm() {
     let etudiant = document.getElementById('etudiant').value.trim();
     let diplome = document.getElementById('diplome').value.trim();
   
-
+    return false ;
     let isValid = true;
 
     
@@ -46,7 +46,7 @@ function showForm() {
       setSuccessFor(document.getElementById('diplome'));
 
   }
-   return isValid;
+   return false;
    
   }
 

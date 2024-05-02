@@ -131,7 +131,7 @@ $(document).ready(function() {
 
             <table border='1' id="my-table" class="my-table">
                 
-            <thead> <tr><th>ID_Education</th><th>photo</th><th>Etat</th><th>emplacement</th><th>diplome</th><th>Modifier</th><th>Supprimer</th></tr> </thead>
+            <thead> <tr><th>ID_Education</th><th>photo</th><th>Etat</th><th>emplacement</th><th>nom</th><th>date_diplome</th><th>Modifier</th><th>Supprimer</th></tr> </thead>
             <tbody>   
             <?php
                     foreach ($list as $educationc) {
@@ -141,7 +141,10 @@ $(document).ready(function() {
                             <td><?= substr($educationc['photo'], 0, 20); ?>...</td>
                             <td><?= $educationc['Etat']; ?></td>
                             <td><?= $educationc['emplacement']; ?></td>
-                            <td><?= $educationc['ID_Diplome_E']; ?></td>              
+        
+                            <td><?= $educationc['nom']; ?></td>   
+                             
+                            <td><?= $educationc['date_diplome']; ?></td>            
                             <td align="center">
                                 <form method="POST" action="">
 

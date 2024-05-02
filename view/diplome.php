@@ -20,9 +20,12 @@ if(isset($_POST['diplome_enregistrer']))
     $l->setMoyenne($Moyenne);
     $l->setdate_diplome($date);
 
-    $e->adddiplome($l->getNom() ,$l->getDocument(), $l->getMoyenne(), $l->getdate_diplome());
   
-   header("Location: userEducation.php?added_id=$nom");
+    $addedId = $e->adddiplome($l->getNom(), $l->getDocument(), $l->getMoyenne(), $l->getdate_diplome());
+    $user = $_GET['user'];
+    $mdp = $_GET['mdp'];
+    $mdp = str_replace('$', '', $mdp);
+   header("Location: userEducation.php?added_id=$addedId&user=$user&mdp=$mdp");
 }
 
  

@@ -1,0 +1,4 @@
+.tables {
+    max-height: 500px; /* Adjust this value based on your requirements */
+    overflow-y: auto;
+}

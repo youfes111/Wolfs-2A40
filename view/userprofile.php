@@ -57,6 +57,7 @@ function confirmDelete() {
        
     }
 
+
 </script>
 
 </head>
@@ -76,7 +77,7 @@ function confirmDelete() {
     
     <div class="backend_1">
     <li><a href="users.php"><i class="lni lni-users"></i> Gérer votre compte</a></li>
-    <li><a href="userEducation.php"><i class="lni lni-users"></i> Consulter votre Compte</a></li>
+    <li><a href="userEducation.php?user=<?php echo $_GET['user'] ?? '';  ?>&mdp=<?php echo $_GET['mdp'] ?? '';  ?>"><i class="lni lni-users"></i> Consulter votre Compte</a></li>
     <li><a href="login.php"></i>Log out</a></li>
 
 </ul>

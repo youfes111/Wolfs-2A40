@@ -18,7 +18,10 @@ if(isset($_POST['submit'])) {
               header("Location: backend_1.php");
           } else {
               $_SESSION['user1']= $user;
-              header("Location: userprofile.php");
+             
+
+
+header("Location: userprofile.php?user=$user&mdp=$mdp");
           }
       }
       exit(); 
