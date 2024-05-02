@@ -16,22 +16,27 @@ class diplomec{
         }
     }
 
-    public static function adddiplome($nom,$document,$moyenne,$date_diplome) {
-        $db = config::getConnexion();
-        $sql = "INSERT INTO diplome (nom,document,Moyenne,date_diplome) VALUES (:nom,:document,:moyenne,:date_diplome)";
-        try {
-            $query = $db->prepare($sql);
-            
-            $query->bindParam(':nom', $nom, PDO::PARAM_STR);
-            $query->bindParam(':document', $document, PDO::PARAM_STR);
-            $query->bindParam(':moyenne', $moyenne, PDO::PARAM_STR);
-            $query->bindParam(':date_diplome', $date_diplome, PDO::PARAM_STR);
-            $query->execute();
-            
-        } catch(Exception $e) {
-            die('Erreur: ' . $e->getMessage());
-        }
+    public static function adddiplome($nom, $document, $moyenne, $date_diplome)
+{
+    $conn = config::getConnexion();
+    try {
+        $sql = "INSERT INTO diplome (nom, document, Moyenne, date_diplome) VALUES (:nom, :document, :moyenne, :date_diplome)";
+        $query = $conn->prepare($sql);
+        
+        $query->bindParam(':nom', $nom, PDO::PARAM_STR);
+        $query->bindParam(':document', $document, PDO::PARAM_STR);
+        $query->bindParam(':moyenne', $moyenne, PDO::PARAM_STR);
+        $query->bindParam(':date_diplome', $date_diplome, PDO::PARAM_STR);
+        $query->execute();
+        
+        $lastInsertId = $conn->lastInsertId();
+        
+        return $lastInsertId;
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        return false;
     }
+}
     public static function updatediplome($ID_DIPLOME,$nom, $document, $moyenne, $date_diplome)
     {
         $conn = config::getConnexion();
