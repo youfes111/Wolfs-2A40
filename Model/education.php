@@ -6,14 +6,14 @@ class education{
     private string $photo;
     private string $Etat;
     private string $emplacement;
-    private string $ID_Diplome_E;
+    private int $ID_Diplome_E;
 
     public function  __construct() {
         $this->ID_EDUCATION=0;
         $this->photo="";
         $this->Etat="";
         $this->emplacement="";
-        $this->ID_Diplome_E="";
+        $this->ID_Diplome_E=0;
     }
     public function getID_EDUCATION() {return  $this->ID_EDUCATION;}
     public function setID_EDUCATION($n) {$this->ID_EDUCATION =$n ;}
