@@ -59,7 +59,7 @@ if(isset($_SESSION['user1']))
 
     <div class="contenu">
         <div class="navbar">
-            <h4>Bonjour Mr.<?php echo $user; ?></h4>
+            <h4> Mr.<?php echo $user; ?></h4>
         
         </div>
         <div class="tables">

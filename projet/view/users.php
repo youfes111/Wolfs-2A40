@@ -212,7 +212,8 @@ $(document).ready(function() {
                             <td><form id="debloquerForm" action="debloquer.php" method="post"  onsubmit="return checkdebloquer('<?php echo $loginc['user']; ?>', '<?php echo $loginc['userPrenom']; ?>')">
                             <input type="hidden" name="iduser2" value="<?php echo $loginc['idUser']; ?>">
                             <button type="submit" name="debloquer">Debloquer</button>
-                            </form></td>
+                            </form>
+                            </td>
                             
                             
                                    

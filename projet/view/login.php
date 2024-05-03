@@ -1,69 +1,4 @@
-<?php
-session_start(); // Assurez-vous de démarrer la session
-
-require '../controler/loginc.php';
-require '../Model/login.php';
-
-
-
-
-if(isset($_POST['submit'])) {
-    $e=new loginc();
-    $user = $_POST['user1'];
-    $mdp = $_POST['mdp1'];
-  
-      if ($e->checkUserExists($user, $mdp))  {
-        $userDetails=$e->selectuser($user);
-        if($userDetails['bloquage']==1){
-            ?><script>
-           alert("votre compte est bloqué!!")</script>
-           
-              
-        <?php
-       
-
-
-        }
-        else{if ($userDetails['etat'] == 1) {
-
-            header("Location: backend_1.php");
-          
-       } else {
-
-           $_SESSION['user1']= $user;
-           header("Location: userprofile.php");
-       }}
-          
-      }
-      exit(); 
-  }
-
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $e = new loginc();
-    $l = new login();
-    $userNom = $_POST['userNom'];
-    $userPrenom = $_POST['userPrenom'];
-    $mdp = $_POST['mdp'];
-    $email = $_POST['email'];
-    $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
-
-    if ($e->isEmailUnique($email)) {
-        $l->setuser($userNom);
-        $l->setPrenom($userPrenom);
-        $l->setEmail($email);
-        $l->setmdp($hashedPassword);
-
-        $e->addaccount($l->getuser(), $l->getPrenom(), $l->getEmail(), $l->getmdp());
-    } 
-}
-       
-
-
-
-  
-
-
-?>
+<?php session_start(); ?>
 
 
 <!DOCTYPE html>
@@ -73,10 +8,13 @@ if(isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="login_2.css">
+    <link rel="stylesheet" href="login_3.css">
     <link rel="icon" href="10.png">
     <script src="login_1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
  
     <title>Login</title>
 </head>
@@ -138,7 +76,8 @@ if(isset($_POST['submit'])) {
         <input type="text" placeholder="User" name="user1" id="user" required></div>
         <div class="form-control ">  
         <input type="password" placeholder="Mot de passe" name="mdp1" id="motdp" required></div>
-        
+        <br>
+        <div class="g-recaptcha" data-sitekey="6LfBoM8pAAAAAAmg_SDGe_NJLadbjsEdFFtuVHNh"></div>
         <input type="submit"  name="submit" value="Se connecter" id="clickin" >
         <br><br><br><br>
         <a href="recoverpass.php" >Mot de passe oublié?</a>
@@ -189,3 +128,128 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 </html>
+<?php
+ 
+
+require '../controler/loginc.php';
+require '../Model/login.php';
+require "autoload.php";
+
+
+
+
+if (isset($_POST['submit'])) {
+    $e = new loginc();
+    $user = $_POST['user1'];
+    $mdp = $_POST['mdp1'];
+
+    if (isset($_POST["g-recaptcha-response"])) {
+        $recaptcha = new \ReCaptcha\ReCaptcha("6LfBoM8pAAAAACFtub4ANtfY5bGksVmxvIorxO0A");
+        $resp = $recaptcha->verify($_POST["g-recaptcha-response"]);
+
+        if ($resp->isSuccess()) {
+            // La vérification reCAPTCHA a réussi, continuez avec le code de connexion
+            if ($e->checkUserExists($user, $mdp)) {
+                $userDetails = $e->selectuser($user);
+                if ($userDetails['bloquage'] == 1) {
+                    ?>      
+                    <script>
+                            Swal.fire({
+                                title: "Votre compte est bloquer,vous pouvez nous envoyer un mail sur studygo@gmail.com",
+                                icon: "warning",
+                                showCancelButton: false,
+                                confirmButtonColor: "#3085d6",
+                                confirmButtonText: "OK"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.replace("login.php");
+                                }
+                            });
+                    </script>
+                    <?php
+                } else {
+                    if ($userDetails['etat'] == 1) {
+                        
+                        ?>      
+                    <script>
+                        Swal.fire({
+                        position: "block",
+                        icon: "success",
+                        title: "Bonjour Mr. <?php echo $user; ?>",
+                        showConfirmButton: false,
+                        timer: 1500
+                        }).then(() => {
+                        window.location.replace("backend_1.php");
+                        });
+                            
+                    </script>
+                    <?php
+                    } else {
+                        $_SESSION['user1'] = $user;
+                        ?>      
+                        <script>
+                            Swal.fire({
+                            position: "block",
+                            icon: "success",
+                            title: "Bonjour Mr. <?php echo $user; ?>",
+                            showConfirmButton: false,
+                            timer: 1500
+                            }).then(() => {
+                            window.location.replace("userprofile.php");
+                            });
+                                
+                        </script>
+                        <?php
+                        
+                    }
+                }
+            }
+        } else {?>      
+                    <script>
+                            Swal.fire({
+                                title: "Veuillez passer par le capcha avant de se connecter!!",
+                                icon: "warning",
+                                showCancelButton: false,
+                                confirmButtonColor: "#3085d6",
+                                confirmButtonText: "OK"
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.replace("login.php");
+                                }
+                            });
+                    </script>
+                    <?php
+            
+           
+        }
+    } 
+
+    exit();
+}
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $e = new loginc();
+    $l = new login();
+    $userNom = $_POST['userNom'];
+    $userPrenom = $_POST['userPrenom'];
+    $mdp = $_POST['mdp'];
+    $email = $_POST['email'];
+    $hashedPassword = password_hash($mdp, PASSWORD_DEFAULT);
+
+    if ($e->isEmailUnique($email)) {
+        $l->setuser($userNom);
+        $l->setPrenom($userPrenom);
+        $l->setEmail($email);
+        $l->setmdp($hashedPassword);
+
+        $e->addaccount($l->getuser(), $l->getPrenom(), $l->getEmail(), $l->getmdp());
+    } 
+}
+       
+
+
+
+  
+
+
+?>
