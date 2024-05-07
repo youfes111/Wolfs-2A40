@@ -42,17 +42,9 @@ function validateForm() {
         setSuccessFor(document.getElementById('userPrenom'));
 
     }
-    // Validation pour le pays
-    if (mdp === '' ) {
-        isValid = false;
-        setErrorFor(document.getElementById('mdp'), 'Mot de passe ne doit pas etre vide');
-    } else if(!/^[a-zA-Z0-9 ]{1,30}$/.test(mdp)){
-        isValid = false;
-        setErrorFor(document.getElementById('mdp'), 'Mot de passe  doit contenir uniquement des lettres ,des chiffres et ne pas dépasser 30 caractères');
-    }
-    else {
-        setSuccessFor(document.getElementById('mdp'));
-    }
+    
+    
+
 
 
     // Validation pour l'email du partenaire
@@ -64,6 +56,16 @@ function validateForm() {
         setErrorFor(document.getElementById('email'), 'Email  invalide');
     } else {
         setSuccessFor(document.getElementById('email'));
+    }
+    // Validation pour le mot de passe
+    if (mdp === '') {
+        isValid = false;
+        setErrorFor(document.getElementById('mdp'), 'Mot de passe ne doit pas être vide');
+    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$/.test(mdp)) {
+        isValid = false;
+        setErrorFor(document.getElementById('mdp'), 'Le mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule, un chiffre et avoir une longueur minimale de 4 caractères');
+    } else {
+        setSuccessFor(document.getElementById('mdp'));
     }
 
     

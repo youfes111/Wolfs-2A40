@@ -151,9 +151,7 @@ class loginc{
             if ($rowCount === 0) {
                 return true;
             } else {
-                echo "<script>
-                        alert('L adresse e-mail existe déja.');
-                     </script>";
+                
                 return false;
             }
         } catch(PDOException $e) {

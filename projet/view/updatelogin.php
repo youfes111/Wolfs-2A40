@@ -13,7 +13,8 @@ if(isset($_GET['id'])) {
         $nom = $userDetails['user'];
         $prenom = $userDetails['userPrenom'];
         $email = $userDetails['email'];
-        $mdp = $userDetails['mdp'];
+        
+       
 
     } else {
         echo "User details not found";
@@ -31,56 +32,75 @@ if(isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="login_2.css">
-    
+    <title>Mis a jour du compte</title>
+    <link rel="stylesheet" href="login_5.css">
+    <link rel="icon" href="10.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 </head>
 <body>
  
-<div class="container" id="form-container" >
-        <div class="header">
-        <h1>Mis a jour du compte</h1>
-            
+<div class="container" id="form-container">
+    <div class="header">
+        <h1>Mis à jour du compte</h1>
 
-    <form id="updateForm" action="updateUser.php" method="post" onsubmit="return validateForm()">
-        <input type="hidden" name="id" id="id" value="<?= $id; ?>">
-        <div class="form-control ">
-        <input type="text" placeholder="Nom" id="userNom1" name="userNom" value="<?= $nom; ?>">
-        <i class="fas fa-check-circle"></i>
-        <i class="fas fa-exclamation"></i>
-        <br>
-        <small>Message d'erreur</small>
-        </div>
-        <div class="form-control ">
-        <input type="text" placeholder="Prénom" id="userPrenom1" name="userPrenom" value="<?= $prenom; ?>">
-        <i class="fas fa-check-circle"></i>
-        <i class="fas fa-exclamation"></i>
-        <br>
-        <small>Message d'erreur</small>
-        </div>
-        <div class="form-control ">
-        <input type="email" placeholder="StudyGo@exemple.com" id="email1" name="email" value="<?= $email; ?>">
-        <i class="fas fa-check-circle"></i>
-        <i class="fas fa-exclamation"></i>
-        <br>
-        <small>Message d'erreur</small>
-        </div>
-        <div class="form-control ">
-        <input type="password" placeholder="Mot de passe" id="mdp1" name="mdp" value="<?= $mdp; ?>" readonly>
-        <i class="fas fa-check-circle"></i>
-        <i class="fas fa-exclamation"></i>
-        <br>
-        <small>Message d'erreur</small>
-        </div>
-        
-        <input type="submit" name="submit" value="Mettre a jour client" id="btn">
-        <input type="button" value="Retouner" id="btn" onclick="window.location.href='users.php';">
-       
-        
-    </form>
-</div></div>
+        <form id="updateForm" action="updateUser.php" method="post" onsubmit="return validateForm()">
+            <input type="hidden" name="id" id="id" value="<?= $id; ?>">
+
+            <!-- Champ Nom -->
+            <div class="form-control">
+                <input type="text" placeholder="Nom" id="userNom1" name="userNom" value="<?= $nom; ?>">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation"></i>
+                <br>
+                <small></small>
+            </div>
+
+            <!-- Champ Prénom -->
+            <div class="form-control">
+                <input type="text" placeholder="Prénom" id="userPrenom1" name="userPrenom" value="<?= $prenom; ?>">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation"></i>
+                <br>
+                <small></small>
+            </div>
+
+            <!-- Champ Email -->
+            <div class="form-control">
+                <input type="email" placeholder="StudyGo@exemple.com" id="email1" name="email" value="<?= $email; ?>">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation"></i>
+                <br>
+                <small></small>
+            </div>
+
+            <!-- Champ Nouveau mot de passe -->
+            <div class="form-control">
+                <input type="password" placeholder="Nouveau mot de passe" id="mdp1" name="mdp" value="">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation"></i>
+                <br>
+                <small></small>
+            </div>
+
+            <!-- Champ Confirmer mot de passe -->
+            <div class="form-control">
+                <input type="password" placeholder="Confirmer mot de passe" id="mdp_confirm" name="mdp_confirm" value="">
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation"></i>
+                <br>
+                <small></small>
+            </div>
+
+            <!-- Bouton Mettre à jour client -->
+            <input type="submit" name="submit" value="Mettre à jour client" id="btn">
+            
+            <!-- Bouton Retourner -->
+            <input type="button" value="Retourner" id="btn" onclick="window.location.href='userprofile.php';">
+        </form>
+    </div>
+</div>
+
 <script>// document.getElementById('toggleButton').addEventListener('click', function() {
 //     var creationCompte = document.getElementById('creationCompte');
 //     var connexion = document.getElementById('connexion');
@@ -137,16 +157,15 @@ form.addEventListener('submit',(event)  => {
 
     }
     // Validation pour le pays
-    if (mdp === '' ) {
-        event.preventDefault();
-        setErrorFor(document.getElementById('mdp1'), 'Mot de passe ne doit pas etre vide');
-    } else if(!preg_match('/^(1|200)$/', $mdp)) {
-        event.preventDefault();
-        setErrorFor(document.getElementById('mdp1'), 'Mot de passe  doit contenir uniquement des lettres ,des chiffres et ne pas dépasser 30 caractères');
-    }
-    else {
-        setSuccessFor(document.getElementById('mdp1'));
-    }
+    if (mdp === '') {
+    event.preventDefault();
+    setErrorFor(document.getElementById('mdp1'), 'Mot de passe ne doit pas être vide');
+} else if (!/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{4,}$/.test(mdp)) {
+    event.preventDefault();
+    setErrorFor(document.getElementById('mdp1'), 'Le mot de passe doit contenir au moins 4 caractères, dont au moins une lettre et un chiffre');
+} else {
+    setSuccessFor(document.getElementById('mdp1'));
+}
 
 
     // Validation pour l'email du partenaire

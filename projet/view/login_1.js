@@ -39,21 +39,22 @@ form.addEventListener('submit',(event)  => {
 
     }
     // Validation pour le pays
-    if (mdp === '' ) {
-        event.preventDefault();
-        setErrorFor(document.getElementById('mdp'), 'Mot de passe ne doit pas etre vide');
-    } else if(!/^[a-zA-Z0-9 ]{1,30}$/.test(mdp)){
-        event.preventDefault();
-        setErrorFor(document.getElementById('mdp'), 'Mot de passe  doit contenir uniquement des lettres ,des chiffres et ne pas dépasser 30 caractères');
-    }
-    else {
-        setSuccessFor(document.getElementById('mdp'));
-    }
+    // Validation pour le mot de passe
+if (mdp === '') {
+    event.preventDefault();
+    setErrorFor(document.getElementById('mdp'), 'Mot de passe ne doit pas être vide');
+} else if (!/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{4,}$/.test(mdp)) {
+    event.preventDefault();
+    setErrorFor(document.getElementById('mdp'), 'Le mot de passe doit contenir au moins 4 caractères, dont au moins une lettre et un chiffre');
+} else {
+    setSuccessFor(document.getElementById('mdp'));
+}
+
 
 
     // Validation pour l'email du partenaire
     if (email === '') {
-        ievent.preventDefault();
+        event.preventDefault();
         setErrorFor(document.getElementById('email'), 'Email ne peut pas être vide');
     } else if (!isValidEmail(email)) {
         event.preventDefault();

@@ -52,7 +52,20 @@
                                 <label for="password" class="col-md-4 col-form-label text-md-right">Nouveau mot de passe</label>
                                 <div class="col-md-6">
                                     <input type="password" id="password" class="form-control" name="password" required autofocus>
+                                    <span style="position: absolute; top: 50%; right: 30px; transform: translateY(-50%);">
                                     <i class="bi bi-eye-slash" id="togglePassword"></i>
+                                    </span>
+                                    <span id="passwordError" class="text-danger" style="position: absolute; top: calc(100% + 5px); right: 30px;"></span>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="form-group row">
+                                <label for="confirm_password" class="col-md-4 col-form-label text-md-right">Confirmez le nouveau mot de passe</label>
+                                <div class="col-md-6">
+                                    <input type="password" id="confirm_password" class="form-control" name="confirm_password" required>
+                                    <span style="position: absolute; top: 50%; right: 30px; transform: translateY(-50%);">
+                                    <i class="bi bi-eye-slash" id="toggleConfirmPassword"></i>
+
                                 </div>
                             </div>
 
@@ -76,12 +89,28 @@
         require '../Model/login.php'; 
 
         $psw = $_POST["password"];
+        $confirm_password = $_POST["confirm_password"];
 
         $token = $_SESSION['token'];
         $Email = $_SESSION['email'];
 
         $hash = password_hash( $psw , PASSWORD_DEFAULT );
-
+        if ($psw!== $confirm_password) {
+            ?>
+            <script>
+                Swal.fire({
+                    title: "Les mots de passe ne correspondent pas",
+                    icon: "error",
+                    showCancelButton: false,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "OK"
+                });
+            </script>
+            <?php
+            // Arrêter le script si les mots de passe ne correspondent pas
+            exit();
+        }
+    
         $l=new loginc();
         $etat=$l->selectemail($Email);
 
@@ -117,15 +146,54 @@
 
 ?>
 <script>
-    const toggle = document.getElementById('togglePassword');
-    const password = document.getElementById('password');
+  document.addEventListener("DOMContentLoaded", function() {
+        const togglePassword = document.getElementById('togglePassword');
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm_password');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
 
-    toggle.addEventListener('click', function(){
-        if(password.type === "password"){
-            password.type = 'text';
-        }else{
-            password.type = 'password';
-        }
-        this.classList.toggle('bi-eye');
+        togglePassword.addEventListener('click', function(){
+            if(password.type === "password"){
+                password.type = 'text';
+            }else{
+                password.type = 'password';
+            }
+            this.classList.toggle('bi-eye');
+        });
+
+        toggleConfirmPassword.addEventListener('click', function(){
+            if(confirmPassword.type === "password"){
+                confirmPassword.type = 'text';
+            }else{
+                confirmPassword.type = 'password';
+            }
+            this.classList.toggle('bi-eye');
+        });
+
+        
+function validatePassword() {
+    const passwordValue = password.value.trim();
+
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{4,}$/;
+
+    if (passwordValue.length < 5) {
+        passwordError.textContent = "Le mot de passe doit comporter au moins 4 caractères.";
+        return false;
+    } else if (!regex.test(passwordValue)) {
+        passwordError.textContent = "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre";
+        return false;
+    } else {
+        passwordError.textContent = "";
+        return true;
+    }
+}
+
+        document.querySelector('form[name="login"]').addEventListener('submit', function(event) {
+            if (!validatePassword()) {
+                event.preventDefault();
+            }
+        });
     });
 </script>

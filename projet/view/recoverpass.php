@@ -106,20 +106,71 @@ Formulaire de connexion</title>
             $mail->Password='Youssef135798642';
 
             // send by h-hotel email
-            $mail->setFrom('youssef.dhib@esprit.tn', 'Password Reset');
+            $mail->setFrom('youssef.dhib@esprit.tn', 'Reinitialisation du mot de passe');
             // get email from input
             $mail->addAddress($_POST["email"]);
 
             // HTML body
             $mail->isHTML(true);
-            $mail->Subject = "Récupération de votre mot de passe";
-            $mail->Body = '<b>Cher utilisateur</b>
-                           <h3>Nous avons reçu une demande de réinitialisation de votre mot de passe.</h3>
-                           <p>Veuillez cliquer sur le lien ci-dessous pour réinitialiser votre mot de passe</p>
-                           <a href="http://localhost/projet/view/reset_psw.php">Réinitialiser votre mot de passe</a>
-                           <br><br>
-                           <p>Cordialement,</p>
-                           <b>Programming with Lam</b>';
+            $mail->Subject = "Recuperation de votre mot de passe";
+            $mail->Body = '<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reinitialisation du mot de passe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333333;
+        }
+        p {
+            color: #555555;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <img src="http://localhost/projet/view/10.png" alt="Votre logo" style="display: block; margin: 0 auto 20px; max-width: 200px;">
+
+        <h1>Reinitialisation du mot de passe</h1>
+        <p>Cher utilisateur,</p>
+        <p>Nous avons recu une demande de reinitialisation de votre mot de passe.</p>
+        <p>Veuillez cliquer sur le bouton ci-dessous pour reinitialiser votre mot de passe :</p>
+        <a href="http://localhost/projet/view/reset_psw.php">Reinitialiser votre mot de passe</a>
+        <br><br>
+        <p>Cordialement,</p>
+        <b>StudyGo</b>
+    </div>
+</body>
+</html>';
 
             if(!$mail->send()){
                 ?>
