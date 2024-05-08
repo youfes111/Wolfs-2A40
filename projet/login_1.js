@@ -22,21 +22,21 @@ function validateForm() {
     } else if(!/^[a-zA-Z]{1,30}$/.test(nom)) {
         isValid = false;
 
-        setErrorFor(document.getElementById('userNom'), 'Le nom partenaire doit commencer par une lettre majuscule et ne pas dépasser 30 caractères');
+        setErrorFor(document.getElementById('userNom'), 'Le nom  doit commencer par une lettre majuscule et ne pas dépasser 30 caractères');
 
     }
     else{
         setSuccessFor(document.getElementById('userNom'));
     }
 
-    // Validation pour le nom du partenaire
+    // Validation pour le prenom 
     if (prenompart === '') {
         isValid = false;
-        setErrorFor(document.getElementById('userPrenom'), 'Prenom partenaire ne doit pas etre vide');
+        setErrorFor(document.getElementById('userPrenom'), 'Prenom ne doit pas etre vide');
 
     } else if(!/^[a-zA-Z]{1,30}$/.test(prenompart)){
         isValid = false;
-        setErrorFor(document.getElementById('userPrenom'), 'Prenom partenaire doit contenir uniquement des lettres et ne pas dépasser 30 caractères');
+        setErrorFor(document.getElementById('userPrenom'), 'Prenom doit contenir uniquement des lettres et ne pas dépasser 30 caractères');
     }
     else{
         setSuccessFor(document.getElementById('userPrenom'));

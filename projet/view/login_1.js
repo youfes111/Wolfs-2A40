@@ -32,7 +32,7 @@ form.addEventListener('submit',(event)  => {
 
     } else if(!/^[a-zA-Z]{1,30}$/.test(prenompart)){
         event.preventDefault();
-        setErrorFor(document.getElementById('userPrenom'), 'Prenom partenaire doit contenir uniquement des lettres et ne pas dépasser 30 caractères');
+        setErrorFor(document.getElementById('userPrenom'), 'Prenom  doit contenir uniquement des lettres et ne pas dépasser 30 caractères');
     }
     else{
         setSuccessFor(document.getElementById('userPrenom'));

@@ -226,6 +226,39 @@ class loginc{
             
         }
     }
+    function totalusers() {
+        
+        try {
+            $sql = "SELECT COUNT(*) FROM login";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;     
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+    function totalusersbloquer() {
+        
+        try {
+            $sql = "SELECT COUNT(*) FROM login where bloquage=1";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;     
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+
 
 
 }

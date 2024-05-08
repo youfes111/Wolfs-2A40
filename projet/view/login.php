@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="login_6.css">
+    <link rel="stylesheet" href="login_7.css">
     <link rel="icon" href="10.png">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
     <script src="../login_1.js"></script>
@@ -24,6 +24,11 @@
 <div id="creationCompte" style="display: none;">  
 <div class="container creationCompte-container" id="form-container" >
         <div class="header">
+        <a href="index.php" class="return-button">
+                <button type="button" class="transparent-button">
+                    <span class="icon"><i class="fas fa-arrow-left"></i></span>
+                </button>
+            </a>
            
         <img src="Fichier 3 1.png" alt="">            
 
@@ -62,14 +67,19 @@
         
     
         <hr>
-        <h3>Connectez-vous à votre espace</h3>
-        <button type="button" id="btnConnexion">Se connecter</button>
+        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: #4CAF50; background: #132A3E; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Connectez-vous a votre espace</h3>
+        <button type="button" id="btnConnexion">Se connecter <span class="icon"><i class="fas fa-user"></i></span></button>
     </form>
 </div></div></div>
 
 <div id="connexion" style="display: flex;">
 <div class="container" id="form-container" >
         <div class="header">
+        <a href="index.php" class="return-button">
+                <button type="button" class="transparent-button">
+                    <span class="icon"><i class="fas fa-arrow-left"></i></span>
+                </button>
+            </a>
         <img src="Fichier 3 1.png" alt="">
         <br>
     <form action="" method="post" name="form" id="form" onsubmit="return checkdelete()">
@@ -89,8 +99,8 @@
        
         <br>
         <hr>
-        <h3>Devenez membre dès maintenant</h3>
-        <button type="button" id="btnCreation">Créer un compte</button>
+        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: #4CAF50; background: #132A3E; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Devenez membre dès maintenant</h3>
+        <button type="button" id="btnCreation">Créer un compte <span class="icon"><i class="fas fa-user-plus"></i></span></button>
     </form>
 </div></div></div>
 
@@ -220,10 +230,6 @@ if (isset($_POST['submit'])) {
                     showCancelButton: false,
                     confirmButtonColor: "#3085d6",
                     confirmButtonText: "OK"
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.replace("login.php");
-                    }
                 });
             </script>
             <?php

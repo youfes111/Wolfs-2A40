@@ -1,0 +1,252 @@
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  background: linear-gradient(135deg, #132A3E, #ffffff, #132A3E); 
+  background-size: 400% 400%;
+  animation: gradientAnimation 8s linear infinite alternate;
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+
+.container {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+  background: linear-gradient(135deg, #132A3E, rgb(226, 226, 226), #132A3E); 
+  /* background-size: 400% 400%; */
+  animation: slideIn 0.5s ease;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(19, 42, 62, 0.5);
+  /* animation: pulseAnimation 2s ease-in-out infinite; */
+  /* height: 600px; Ajustez la hauteur selon vos besoins */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* animation: slideIn 0.5s ease; */
+
+
+
+}
+
+
+.header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+
+}
+
+
+.header img {
+  max-width: 130px;
+  max-height: 100px;
+}
+
+.g-recaptcha {
+  background-color: transparent ;
+}
+
+@keyframes pulseAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+h1 {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 40px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+h1 span {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.form-control {
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease 0.7s forwards;
+}
+
+.form-control label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-control input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.form-control input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.form-control.success input {
+  border-color: #2ecc71;
+}
+
+.form-control.error input {
+  border-color: #e74c3c;
+}
+
+.form-control i {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: inherit;
+  visibility: hidden;
+}
+
+/* .form-control.success i.fa-check-circle {
+  color: #2ecc71;
+}
+
+.form-control.error i.fa-exclamation {
+  color: #e74c3c;
+} */
+
+/* .form-control.success small,
+.form-control.error small {
+  display: block;
+  color: inherit;
+  visibility: hidden;
+} */
+
+/* .form-control.success.small-visible small,
+.form-control.error.small-visible small {
+  visibility: visible;
+} */
+
+input[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  background: #132A3E; 
+color: white;
+font-size: 16px;
+font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.5s ease 0.9s forwards;
+}
+input[type="submit"]:hover {
+  background: linear-gradient(135deg, #132A3E, #E78D1E); /* Dégradé de #132A3E à blanc */
+
+}
+
+
+input[type="button"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  opacity: 0;
+  animation: fadeIn 0.5s ease 0.9s forwards;
+}
+
+
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+#btnConnexion,
+#btnCreation {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color:transparent;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  animation: fadeIn 0.5s ease 0.9s forwards;
+}
+
+#btnConnexion:hover,
+#btnCreation:hover {
+color:#132A3E;}
+.transparent-button {
+  background: transparent;
+  border: none;
+  color: white;  
+  position: absolute;
+  top: 4%;
+  left: 36%; 
+  font-size: 16px;
+}

@@ -163,9 +163,7 @@ $(document).ready(function() {
     </div>
 
     <div class="contenu">
-        <div class="navbar">
-        
-        </div>
+       
         <div class="tables">
             
 
