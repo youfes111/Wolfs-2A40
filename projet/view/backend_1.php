@@ -19,26 +19,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <link rel="icon" href="10.png">
-    <script>// Définir une variable pour stocker l'ID du délai
+    <script>
 let timeoutId;
 
-// Fonction pour rediriger vers la page de connexion
+
 function redirectToLoginPage() {
     window.location.href = 'login.php';
 }
 
-// Fonction pour réinitialiser le délai
+
 function resetTimeout() {
-    clearTimeout(timeoutId); // Effacer le délai existant
-    timeoutId = setTimeout(redirectToLoginPage, 30000); // Redéfinir le délai
+    clearTimeout(timeoutId); 
+    timeoutId = setTimeout(redirectToLoginPage, 30000); 
 }
 
-// Écouter les événements de la souris pour réinitialiser le délai
 document.addEventListener('mousemove', resetTimeout);
-document.addEventListener('mousedown', resetTimeout); // Click de souris
-document.addEventListener('keypress', resetTimeout); // Pression de touche
+document.addEventListener('mousedown', resetTimeout); 
+document.addEventListener('keypress', resetTimeout); 
 
-// Déclencher la redirection après 5 secondes d'inactivité
 resetTimeout();
 </script>
 

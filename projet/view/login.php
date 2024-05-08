@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="login_7.css">
+    <link rel="stylesheet" href="login_8.css">
     <link rel="icon" href="10.png">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" rel="stylesheet">
     <script src="../login_1.js"></script>
@@ -67,7 +67,7 @@
         
     
         <hr>
-        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: #4CAF50; background: #132A3E; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Connectez-vous a votre espace</h3>
+        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: #4CAF50; background:  #E78D1E; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Connectez-vous a votre espace<br><i class="fas fa-arrow-down"></i></h3>
         <button type="button" id="btnConnexion">Se connecter <span class="icon"><i class="fas fa-user"></i></span></button>
     </form>
 </div></div></div>
@@ -90,7 +90,7 @@
         <span style="position: absolute; top: 226px; right: 40%; transform: translateY(-50%);">
             <i class="bi bi-eye-slash" id="togglePassword"></i>
         </span>       
-        <a href="recoverpass.php" >Mot de passe oublié?</a>
+        <a href="recoverpass.php" style="color:#E78D1E;">Mot de passe oublié?</a>
         <br>
         <br>
         <div class="g-recaptcha" data-sitekey="6LfBoM8pAAAAAAmg_SDGe_NJLadbjsEdFFtuVHNh"></div>
@@ -99,7 +99,8 @@
        
         <br>
         <hr>
-        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: #4CAF50; background: #132A3E; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Devenez membre dès maintenant</h3>
+        <h3 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: #4CAF50; background: #E78D1E; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Devenez membre dès maintenant <br><i class="fas fa-arrow-down"></i></h3>
+        
         <button type="button" id="btnCreation">Créer un compte <span class="icon"><i class="fas fa-user-plus"></i></span></button>
     </form>
 </div></div></div>
@@ -202,7 +203,7 @@ if (isset($_POST['submit'])) {
                                 showConfirmButton: false,
                                 timer: 1500
                             }).then(() => {
-                                window.location.replace("userprofile.php");
+                                window.location.replace("front/offres.php");
                             });
                         </script>
                         <?php

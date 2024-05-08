@@ -33,7 +33,7 @@ if(isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis a jour du compte</title>
-    <link rel="stylesheet" href="login_5.css">
+    <link rel="stylesheet" href="login_8.css">
     <link rel="icon" href="10.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -42,11 +42,15 @@ if(isset($_GET['id'])) {
  
 <div class="container" id="form-container">
     <div class="header">
-        <h1>Mis à jour du compte</h1>
+        <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: #4CAF50; background: #E78D1E; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Mis à jour du compte</h1>
 
         <form id="updateForm" action="updateUser.php" method="post" onsubmit="return validateForm()">
             <input type="hidden" name="id" id="id" value="<?= $id; ?>">
-
+            <a href="userprofile.php" class="return-button">
+                <button type="button" class="transparent-button">
+                    <span class="icon"><i class="fas fa-arrow-left"></i></span>
+                </button>
+            </a>
             <!-- Champ Nom -->
             <div class="form-control">
                 <input type="text" placeholder="Nom" id="userNom1" name="userNom" value="<?= $nom; ?>">
@@ -93,10 +97,8 @@ if(isset($_GET['id'])) {
             </div>
 
             <!-- Bouton Mettre à jour client -->
-            <input type="submit" name="submit" value="Mettre à jour client" id="btn">
+            <input type="submit" name="submit" value="Valider" id="btn">
             
-            <!-- Bouton Retourner -->
-            <input type="button" value="Retourner" id="btn" onclick="window.location.href='userprofile.php';">
         </form>
     </div>
 </div>

@@ -1,216 +1,45 @@
-.wrapper {
-    display: flex;
-    height: 100vh;
-    width: 1150px;
-  }
-  
-  .sidebar {
-    /* position: fixed; */
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 200px;
-    background-color: rgb(224, 131, 9);
-    color: #fff;
-    transition: transform 0.3s ease-in-out;
-    transform: translateX(0);
-  }
-  
-  .contenu {
-    /* display: flex; */
-    height: 100vh;
-    width: 1170px;
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
-.tables{
-    flex-grow: 1;
-    background-color:white;
-    padding: 20px;
-    height: 90%;
-    width: 1166px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.navbar{
-    flex-grow: 1;
-    background-color:#1E4C68;
-    padding: 20px;
-    height: 10%;
-    width:1166px;
-    display: flex;
-    justify-content:right;
-    align-items: right;
-    /* flex-direction: column; */
 
+.custom-table th,
+.custom-table td {
+  padding: 15px;
+  text-align: left;
 }
-#overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: none;
-  align-items: center;
-  justify-content: center;
+
+.custom-table th {
+  background-color: #E78D1E;
+  color: #fff;
+  font-weight: 600;
 }
-#overlay2 {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: none;
-  align-items: center;
-  justify-content: center;
+
+.custom-table td {
+  background-color: #F5F5F5;
+  color: #333;
+  font-weight: 400;
 }
-#form-container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  position: relative;
+
+.custom-table tr:nth-child(even) td {
+  background-color: #EFEFEF;
 }
-#close-form {
-position: absolute;
-top: 5px;
-right: 5px;
-font-size: 26px;
-cursor: pointer;
-color: rgb(4, 6, 26);
+
+.custom-table tr:hover td {
+  background-color: #D4D4D4;
+  color: black;
 }
-#close-form2 {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 26px;
+
+.custom-table input[type="button"] {
+  background-color: #132A3E;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
   cursor: pointer;
-  color:  rgb(4, 6, 26);
-  }
-
-  #close-form2:hover {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      font-size: 30px;
-      cursor: pointer;
-      color: #132A3E;
-      }
-      #close-form:hover {
-          position: absolute;
-          top: 5px;
-          right: 5px;
-          font-size: 30px;
-          cursor: pointer;
-          color:  #132A3E;;
-          }
-
-.contenu table {
-    margin: 0 auto;
-}
-  
-.sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-.sidebar-toggle {
-    background-color: transparent;
-    border: none;
-    color: #fff;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.sidebar-nav {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-h6{
-    color: grey;
-   
-    
-    
-}
-
-.sidebar-nav li {
-    padding: 10px 20px;
-}
-
-.sidebar-nav li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.sidebar-nav li a:hover {
-    position: relative;
-  }
-  
- .sidebar-nav li a:hover::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px; /* Ajustez l'épaisseur de la ligne */
-    background-color: #132A3E; /* Choisissez la couleur de la ligne */
-  }
-
-.sidebar.collapsed {
-    transform: translateX(-70%);
-}
-.sidebar-toggle img {
-    width: 150px; /* Ajustez la taille de l'image selon vos besoins */
-    height: 100px;
-}
-table {
-    border-collapse: collapse;
-    width: 700px;
-    font-family: Arial, sans-serif;
-  }
-  
-  th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #E78D1E;
-    color: white;
-  }
-  
-  tr:hover {
-    background-color: #f5f5f5;
-  }
-  /* Bouton Supprimer */
-button[name="delete"] {
-    background-color: #ff4d4d; /* Rouge */
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  /* Bouton Modifier */
-  input[value="Update"] {
-    background-color: #4CAF50; /* Vert */
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
