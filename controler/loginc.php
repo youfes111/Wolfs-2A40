@@ -12,14 +12,12 @@ class loginc{
     
             $login = $query->fetch(PDO::FETCH_ASSOC);
     
-            if ($login && $mdp === $login['mdp']) {
-                
-                return true; 
-            } else if ($login && $mdp !== $login['mdp']) {
+            if ($login && password_verify($mdp, $login['mdp'])) {
+                return true;
+            } else if ($login && !password_verify($mdp, $login['mdp'])) {
                 echo 'Mot de passe incorrect';
                 return false;
             } else {
-                
                 echo 'L\'utilisateur n\'existe pas dans la base de données';
                 return false;
             }
@@ -97,7 +95,7 @@ class loginc{
     {
         $conn = config::getConnexion();
   try {
-    $query = $conn->prepare("SELECT * from login where user!='admin'");
+    $query = $conn->prepare("SELECT * from login where etat=0");
     $query->execute();
     $result = $query->fetchAll();
   } catch (PDOException $e) {
@@ -129,7 +127,7 @@ class loginc{
             $sql = "SELECT * FROM login WHERE user = :user";
             $conn = config::getConnexion();
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':user', $user, PDO::PARAM_INT);
+            $stmt->bindParam(':user', $user, PDO::PARAM_STR);
             $stmt->execute();
     
             $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -140,6 +138,128 @@ class loginc{
             return false;
         }
     }
+    public function isEmailUnique($email) {
+        try {
+            $sql = "SELECT * FROM login WHERE email = :email";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            $rowCount = $stmt->rowCount();
+    
+            if ($rowCount === 0) {
+                return true;
+            } else {
+                
+                return false;
+            }
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            // return false;
+        }
+    }
+    function selectemail($email) {
+        
+        try {
+            $sql = "SELECT * FROM login WHERE email = :email";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+    
+             $rowCount = $stmt->rowCount();
+
+             if( $rowCount > 0){
+              return true;
+             }else{
+               return false;
+             }          
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+    function updatepass($pass,$email) {
+        
+        try {
+            $sql =  "UPDATE login SET mdp='$pass' WHERE email='$email'";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+                    
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+    function updatebloque($id) {
+        
+        try {
+            $sql ="UPDATE login SET bloquage=1 WHERE idUser='$id'";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+                    
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+    function updatedebloque($id) {
+        
+        try {
+            $sql ="UPDATE login SET bloquage=0 WHERE idUser='$id'";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+                    
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+    function totalusers() {
+        
+        try {
+            $sql = "SELECT COUNT(*) FROM login";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;     
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+    function totalusersbloquer() {
+        
+        try {
+            $sql = "SELECT COUNT(*) FROM login where bloquage=1";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+    
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result;     
+             
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+
+
 
 }
 
