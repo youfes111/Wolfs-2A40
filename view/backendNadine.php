@@ -7,10 +7,21 @@ require_once '../Model/niveau.php';
 require_once '../config.php';
 
 $formationC = new formationC();
-$listsforms = $formationC->list_formations() ;
-
+$listsforms = $formationC->getFormationByEtat("nonsuprime") ;
+$listsforms2 = $formationC->getFormationByEtat1("suprime") ;
 $niveauC = new niveauC();
 $listsNiveau = $niveauC->ListNiveaux() ;
+
+$formationController = new formationC();
+
+// Generate formation statistics
+$formationStatistics = $formationController->generateFormationStatistics();
+
+// Convert formation statistics data to JSON format for JavaScript charting
+$formationCountByLanguageJSON = json_encode($formationStatistics['formation_count_by_language']);
+$totalDurationByLanguageJSON = json_encode($formationStatistics['total_duration_by_language']);
+$averagePriceByLanguageJSON = json_encode($formationStatistics['average_price_by_language']);
+
 
 // Vérification si le formulaire est soumiss
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -252,11 +263,45 @@ overlay.style.display = "flex";
                 
             </div>
             <div class="tables">
-                <form action="ajouterFormation.php" method="post" >
-                    <button type="submit" id="btnAjouter">Ajouter formation</button>
+            <form action="ajouterFormation.php" method="post" >
+                    <button type="submit" id="btnAjouter">Ajouter </button>        
+<form action="ajouterNiveau.php" method="post" >
+                    
+                </form>
+                <div class="titre"><h2>Recently deleted Items</h2></div>
+                    
+                    <table id="tableFormation">
+                        <thead>
+                            
+                        </thead>
+                        <tbody>
+                            <?php
+                            
+                            echo $listsforms2 ;
+                            
+                            ?>
+                        </tbody>
+                    </table>
+                
                 </form>
             <div class="titre"><h2>Les formations</h2></div>
-                    
+            <div id="log-popup" class="log-popup">
+                      <div class="log-content" id="log-content">
+                          <!-- Log history will be displayed here -->
+                          <?php
+                          $VOYY = new formationC();
+                          $log_entries = $VOYY->fetchLogEntries();
+                          if ($log_entries) {
+                              foreach ($log_entries as $log_entry) {
+                                  echo "<p>{$log_entry['operation']} item with ID {$log_entry['item_id']} at {$log_entry['timestamp']}</p>";
+                              }
+                          } else {
+                              echo "Failed to fetch log entries.";
+                          }
+                          ?>
+                      </div>
+                      <button id="close-btn">Close</button>
+                  </div>
                 <table id="tableFormation">
                     <thead>
                         
@@ -274,7 +319,7 @@ overlay.style.display = "flex";
 <br>
 <br>
 <form action="ajouterNiveau.php" method="post" >
-                    <button type="submit" id="btnAjouter">Ajouter Niveau</button>
+                    <button type="submit" id="btnAjouter">Ajouter</button>
                 </form>
                 <div class="titre"><h2>Les Niveaux</h2></div>
                     
@@ -289,7 +334,9 @@ overlay.style.display = "flex";
                             ?>
                         </tbody>
                     </table>
-                
+
+                    
+
 
     <div id="overlay">
 
@@ -412,5 +459,144 @@ overlay.style.display = "flex";
     overlay.style.display = 'none'; 
     });
     </script>
+   <script>
+    document.getElementById('log-btn').addEventListener('click', function() {
+        document.getElementById('log-popup').style.display = 'block';
+    });
+
+    document.getElementById('close-btn').addEventListener('click', function() {
+        document.getElementById('log-popup').style.display = 'none';
+    });
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation Statistics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div style="width: 50%; margin: auto;">
+        <!-- Display count of formations by language as a bar chart -->
+        <h2>Count of Formations by Language</h2>
+        <canvas id="formationCountChart"></canvas>
+
+        <!-- Display total duration of formations by language as a bar chart -->
+        <h2>Total Duration of Formations by Language</h2>
+        <canvas id="totalDurationChart"></canvas>
+
+        <!-- Display average price of formations by language as a bar chart -->
+        <h2>Average Price of Formations by Language</h2>
+        <canvas id="averagePriceChart"></canvas>
+    </div>
+
+    <script>
+        // Sample formation statistics data (replace with actual data)
+        var formationCountData = {
+            labels: ['English', 'French', 'Spanish', 'German'],
+            datasets: [{
+                label: 'Count of Formations',
+                data: [10, 20, 15, 25],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        var totalDurationData = {
+            labels: ['English', 'French', 'Spanish', 'German'],
+            datasets: [{
+                label: 'Total Duration (hours)',
+                data: [50, 60, 45, 70],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        var averagePriceData = {
+            labels: ['English', 'French', 'Spanish', 'German'],
+            datasets: [{
+                label: 'Average Price (USD)',
+                data: [100, 120, 90, 150],
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        // Create charts
+        var formationCountChart = new Chart(document.getElementById('formationCountChart').getContext('2d'), {
+            type: 'bar',
+            data: formationCountData
+        });
+
+        var totalDurationChart = new Chart(document.getElementById('totalDurationChart').getContext('2d'), {
+            type: 'bar',
+            data: totalDurationData
+        });
+
+        var averagePriceChart = new Chart(document.getElementById('averagePriceChart').getContext('2d'), {
+            type: 'bar',
+            data: averagePriceData
+        });
+    </script>
+    <script>   
+  th = document.getElementsByTagName('th');
+
+for(let c=0; c < th.length; c++){
+
+    th[c].addEventListener('click',item(c))
+}
+
+
+function item(c){
+
+    return function(){
+      console.log(c)
+      sortTable(c)
+    }
+}
+
+
+function sortTable(c) {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("formationTab");
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[c];
+      y = rows[i + 1].getElementsByTagName("TD")[c];
+      //check if the two rows should switch place:
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+</script>
+</body>
+</html>
+
 </body>
 </html>
