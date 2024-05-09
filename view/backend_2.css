@@ -31,6 +31,7 @@
     cursor: pointer;
     border-radius: 5px;
 }
+.navbar button:hover {}
 
 
 

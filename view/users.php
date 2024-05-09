@@ -4,6 +4,8 @@ require '../controler/loginc.php';
 $e=new loginc();
 $list=$e->listlogin();
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,43 +14,125 @@ $list=$e->listlogin();
     <meta name=viewport content="width=device-width", initial-scale="1.0">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="users2.css">
+    <link rel="stylesheet" href="users5.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.11.4/i18n/French.json"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+
     <link rel="icon" href="10.png">
     <title>StudyGo|Les clients</title>
     <script>
-   function deleteUser(idUser) {
-    if (confirm("Are you sure you want to delete this user?")) {
-        // Supprimer la ligne du tableau HTML
-        var row = document.getElementById("row_" + idUser);
-        row.parentNode.removeChild(row);
+        
+        
+        function checkdelete(userName, userPrenom) {
+    Swal.fire({
+        title: 'Confirmation',
+        text: 'Êtes-vous sûr de vouloir supprimer ' + userName.toUpperCase() + ' ' + userPrenom.toUpperCase() + ' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Oui, supprimer !',
+        cancelButtonText: 'Non, annuler',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('deleteForm').submit();
+        }
+    });
 
-       
-    }
-
+    return false; // Empêche la soumission du formulaire par défaut
 }
-function confirmDelete() {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Si l'utilisateur confirme, le formulaire est soumis normalement
-                return true;
-            } else {
-                // Si l'utilisateur annule, le formulaire n'est pas soumis
-                return false;
-            }
-        });
-       
-    }
+
+
 
 </script>
+<script>
+    function checkbloquer(userName, userPrenom) {
+    Swal.fire({
+        title: 'Confirmation',
+        text: 'Êtes-vous sûr de vouloir bloquer ' + userName.toUpperCase() + ' ' + userPrenom.toUpperCase() + ' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Oui, bloquer !',
+        cancelButtonText: 'Non, annuler',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var selectedTd = document.querySelector('column-to-color');
+            if (selectedTd) {
+                selectedTd.style.color = 'red';
+            }
+            document.getElementById('bloquerForm').submit();
+            
+        }
+    });
+
+    return false; // Empêche la soumission du formulaire par défaut
+}
+</script>
+<script>
+    function checkdebloquer(userName, userPrenom) {
+    Swal.fire({
+        title: 'Confirmation',
+        text: 'Êtes-vous sûr de vouloir debloquer ' + userName.toUpperCase() + ' ' + userPrenom.toUpperCase() + ' ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Oui, debloquer !',
+        cancelButtonText: 'Non, annuler',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            
+            document.getElementById('debloquerForm').submit();
+            
+        }
+    });
+
+    return false; // Empêche la soumission du formulaire par défaut
+}
+</script>
+<script>
+$(document).ready(function() {
+    $('.my-table').DataTable({
+        "language": {
+            "sEmptyTable": "Aucune donnée disponible dans le tableau",
+            "sInfo": "Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments",
+            "sInfoEmpty": "Affichage de l'élément 0 à 0 sur 0 élément",
+            "sInfoFiltered": "(filtré à partir de _MAX_ éléments au total)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ",",
+            "sLengthMenu": "Afficher _MENU_ éléments",
+            "sLoadingRecords": "Chargement...",
+            "sProcessing": "Traitement...",
+            "sSearch": "Rechercher :",
+            "sZeroRecords": "Aucun élément correspondant trouvé",
+            "oPaginate": {
+                "sFirst": "Premier",
+                "sLast": "Dernier",
+                "sNext": "Suivant",
+                "sPrevious": "Précédent"
+            },
+            "oAria": {
+                "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
+            },
+            "select": {
+                "rows": {
+                    "_": "%d lignes sélectionnées",
+                    "0": "Aucune ligne sélectionnée",
+                    "1": "1 ligne sélectionnée"
+                }
+            }
+        }
+
+    });
+});
+</script>
+
+
 
 </head>
 <body>
@@ -69,60 +153,80 @@ function confirmDelete() {
     <h6>Les gestions</h6>
     <div class="backend_1">
     <li><a href="users.php"><i class="lni lni-users"></i> Les clients</a></li>
-    <li><a href="education_back.php"><i class="lni lni-book"></i> Les Educations</a></li>
-    <li><a href="diplome_back.php"><i class="lni lni-book"></i> Les diplomes</a></li>
     <li><a href="#"><i class="lni lni-layers"></i> Les offres</a></li>
     <li><a href="#"><i class="lni lni-book"></i> Formation linguistique</a></li>
     <li><a href="#"><i class="lni lni-bubble"></i> Reclamation & Réponse</a></li>
     <li><a href="login.php"></i>Log out</a></li>
+
 </ul>
         </ul>
     </div>
 
     <div class="contenu">
-        <div class="navbar">
-        
-        </div>
+       
         <div class="tables">
             
 
-            <table border='1'>
+            <table border='1' class="my-table" id="my-table" >
                 
-            <tr><th>Iduser</th><th>Nom</th><th>Prenom</th><th>Email</th><th>Mot de passe</th><th>Modifier</th><th>Supprimer</th></tr>
-            <?php
+            <thead>
+        <tr>
+            <th data-column="nom" data-order="desc">Nom</th>
+            <th data-column="prenom" data-order="desc">Prenom</th>
+            <th data-column="email" data-order="desc">Email</th>
+            <th>Supprimer</th>
+            <th>Bloquer</th>
+            <th>Debloquer</th>
+            
+        </tr>
+    </thead>  
+    <tbody>   
+                <?php
                     foreach ($list as $loginc) {
                     ?>
                         <tr id="row_<?php echo $loginc['idUser']; ?>">
-                            <td><?= $loginc['idUser']; ?></td>
-                            <td><?= $loginc['user']; ?></td>
-                            <td><?= $loginc['userPrenom']; ?></td>
-                            <td><?= $loginc['email']; ?></td>
-                            <td><?= str_repeat('*', strlen($loginc['mdp'])); ?></td>                            
-                            <td align="center">
-                                <form method="POST" action="">
-                                <!-- <a href="updatelogin.php?id=<?= $loginc['idUser']; ?>">update</a>   -->
-                                <input type="button" value="Update" onclick="window.location.href='updatelogin.php?id=<?= $loginc['idUser']; ?>'">
-                                </form>
-                            </td>
+                            <!-- <td><?= $loginc['idUser']; ?></td> -->
+                            <td id="column-to-color"><?= $loginc['user']; ?></td>
+                            <td id="column-to-color"><?= $loginc['userPrenom']; ?></td>
+                            <td id="column-to-color"><?= $loginc['email']; ?></td>
+                            <!-- <td?= str_repeat('*', strlen($loginc['mdp'])); ?></td>                             -->
+                            
                             <td>
-                            <form action="deleteUser.php" method="post" onsubmit="return confirmDelete()">
-                            <input type="hidden" name="id_user" value="<?php echo $loginc['idUser']; ?>">
-                             <button type="submit" name="delete">Delete</button>
+                            
+                            <form id="deleteForm" action="deleteUser.php" method="post"  onsubmit="return checkdelete('<?php echo $loginc['user']; ?>', '<?php echo $loginc['userPrenom']; ?>')">
+                            <input type="hidden" name="id_user" id="id_user" data-id="<?php echo $loginc['idUser']; ?>"value="<?php echo $loginc['idUser']; ?>">
+                            <button type="submit" name="delete">Supprimer</button>
                             </form>
 
-                            </td>                
+                            </td> 
+                            
+                            
+                            <td><form id="bloquerForm" action="bloquer.php" method="post"  onsubmit="return checkbloquer('<?php echo $loginc['user']; ?>', '<?php echo $loginc['userPrenom']; ?>')">
+                            <input type="hidden" name="iduser1" value="<?php echo $loginc['idUser']; ?>">
+                            <button type="submit" name="delete">Bloquer</button>
+                            </form></td>
+
+
+                            <td><form id="debloquerForm" action="debloquer.php" method="post"  onsubmit="return checkdebloquer('<?php echo $loginc['user']; ?>', '<?php echo $loginc['userPrenom']; ?>')">
+                            <input type="hidden" name="iduser2" value="<?php echo $loginc['idUser']; ?>">
+                            <button type="submit" name="debloquer">Debloquer</button>
+                            </form>
+                            </td>
+                            
+                            
+                                   
                         </tr>
                     <?php
                     }
                     ?>
-            </table>
+                    </tbody> 
+                </table>
         </div>
     </div>
  </div>
 
 </body>
 </html>
-
 
 
 
