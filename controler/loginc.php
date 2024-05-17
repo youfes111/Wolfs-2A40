@@ -1,5 +1,5 @@
 <?php
-require '../config.php';
+require 'C:/xampp/htdocs/projet_v5/config.php';
 class loginc{
     function checkUserExists($user, $mdp) {
         $sql = "SELECT * FROM LOGIN WHERE user = :username";
@@ -52,23 +52,42 @@ class loginc{
             die('Erreur: ' . $e->getMessage());
         }
     }
-    public static function updateUser($id,$nom, $prenom, $email, $mdp)
+    public static function updateUser($id, $nom, $prenom, $email, $mdp_hash, $id_education, $photoString, $Etat, $emplacement, $id_diplome, $nom_diplome, $documentString, $Moyenne, $date)
     {
         $conn = config::getConnexion();
-    try {
-
-        $query = $conn->prepare("UPDATE login SET user=:nom,
-       userPrenom=:prenom,email=:email,mdp=:dob  where idUser=:id");
-       $query->bindParam(':id', $id, PDO::PARAM_STR);
-       $query->bindParam(':nom', $nom, PDO::PARAM_STR);
-       $query->bindParam(':prenom', $prenom, PDO::PARAM_STR);
-       $query->bindParam(':email', $email, PDO::PARAM_STR);
-       $query->bindParam(':dob', $mdp, PDO::PARAM_STR);
-
-        $query->execute();
-    } catch (Exception $e) {
-        echo $e->getMessage();
-    }
+      
+            try {
+                $query = $conn->prepare("
+                    UPDATE education AS e
+                    JOIN login AS l ON l.idUser = e.ID_USER_E
+                    JOIN diplome AS d ON e.ID_Diplome_E = d.ID_DIPLOME
+                    SET l.user = :nom, l.userPrenom = :prenom, l.email = :email, l.mdp = :dob,
+                        e.photo = :photo, e.Etat = :Etat, e.emplacement = :emplacement,
+                        d.nom = :nom_diplome, d.document = :document, d.Moyenne = :Moyenne, d.date_diplome = :date_diplome
+                    WHERE  l.idUser = :id 
+                     
+                ");
+    //e.ID_Education = :id_education    AND e.ID_Diplome_E = :id_diplome  AND
+ 
+             //   $query->bindParam(':id_education', $id_education, PDO::PARAM_INT);
+              //  $query->bindParam(':id_diplome', $id_diplome, PDO::PARAM_INT);
+                $query->bindParam(':id', $id, PDO::PARAM_INT);
+                $query->bindParam(':nom', $nom, PDO::PARAM_STR);
+                $query->bindParam(':prenom', $prenom, PDO::PARAM_STR);
+                $query->bindParam(':email', $email, PDO::PARAM_STR);
+                $query->bindParam(':dob', $mdp_hash, PDO::PARAM_STR);
+                $query->bindParam(':photo', $photoString, PDO::PARAM_STR);
+                $query->bindParam(':Etat', $Etat, PDO::PARAM_STR);
+                $query->bindParam(':emplacement', $emplacement, PDO::PARAM_STR);
+                $query->bindParam(':nom_diplome', $nom_diplome, PDO::PARAM_STR);
+                $query->bindParam(':document', $documentString, PDO::PARAM_STR);
+                $query->bindParam(':Moyenne', $Moyenne, PDO::PARAM_STR);
+                $query->bindParam(':date_diplome', $date, PDO::PARAM_STR);
+        
+                $query->execute();
+            } catch (Exception $e) {
+                echo $e->getMessage();
+            }
     }
     public static function checkadmin($userName)
 {
@@ -95,7 +114,13 @@ class loginc{
     {
         $conn = config::getConnexion();
   try {
-    $query = $conn->prepare("SELECT * from login where etat=0");
+    $query = $conn->prepare("
+    SELECT l.*, e.* ,d.*
+    FROM login l
+    JOIN education e ON l.idUser = e.ID_USER_E
+    JOIN diplome d ON e.ID_Diplome_E = d.ID_DIPLOME
+    WHERE l.etat = 0
+");
     $query->execute();
     $result = $query->fetchAll();
   } catch (PDOException $e) {
@@ -105,9 +130,13 @@ class loginc{
  return $result;
     }
     function selectLogin($userId) {
-        
+      
         try {
-            $sql = "SELECT * FROM login WHERE idUser = :userId";
+            $sql = "SELECT l.*, d.*,e.*
+            FROM login l
+            JOIN education e ON l.idUser = e.ID_USER_E
+            JOIN diplome d ON e.ID_Diplome_E = d.ID_DIPLOME
+            WHERE l.idUser = :userId";
             $conn = config::getConnexion();
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
@@ -122,6 +151,30 @@ class loginc{
         }
     }
     public static function selectuser($user) {
+        
+        try {
+            $sql = "
+            SELECT l.*, e.Etat,e.emplacement, d.nom,d.date_diplome
+            FROM login l
+            JOIN education e ON l.idUser = e.ID_USER_E
+            JOIN diplome d ON e.ID_Diplome_E = d.ID_DIPLOME
+            WHERE l.user=:user ";
+        
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':user', $user, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $userDetails;
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    public static function selectuser1($user) {
         
         try {
             $sql = "SELECT * FROM login WHERE user = :user";
@@ -260,7 +313,50 @@ class loginc{
     }
 
 
-
+    public static function selectPDF($user) {
+        
+        try {
+            $sql = "
+            SELECT l.*, e.*, d.*
+            FROM login l
+            JOIN education e ON l.idUser = e.ID_USER_E
+            JOIN diplome d ON e.ID_Diplome_E = d.ID_DIPLOME
+            WHERE l.user=:user ";
+        
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':user', $user, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            $userDetails = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            return $userDetails;
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    public static function selectoffre($user) {
+        try {
+            $sql = "SELECT o.NomPart, o.programme,o.domaine ,x.ETAT FROM offre_user x
+                    JOIN offre o ON o.IDoffre = x.ID_OFFRE
+                    JOIN login l ON l.idUser = x.ID_USER
+                    WHERE l.user=:user";
+            $conn = config::getConnexion();
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':user', $user, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            $userDetails = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            return $userDetails;
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+    
 }
 
    
