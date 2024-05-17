@@ -347,14 +347,18 @@ color: rgb(4, 6, 26);
    /* Déplace l'élément à 50% de la hauteur de la page */
     left: 45%; /* Déplace l'élément à 50% de la largeur de la page */
     transform: translate(-60%, 90%);
-        border-radius: 4px;
+        border-radius: 10px;
         border: none;
         margin-bottom: 5px;
         width: 100px;
         height: 32px;
         background-color: #edb302;
+        font-size: 17px;
+        font-weight: bold;
+         color:rgba(10, 22, 52, 0.8);
     }
     #btnAjouter:hover{
+       
         background-color: #dfa804;
     }
     #btnAjouter2{
@@ -387,14 +391,70 @@ color: rgb(4, 6, 26);
     /* Modifier l'emplacement du bouton */
 
     a {
-        color: #050430; /* Couleur rouge pour les liens */
-        /* Vous pouvez remplacer #FF0000 par n'importe quelle couleur CSS valide */
-        /* Par exemple, vous pouvez utiliser des noms de couleur comme 'red', 'blue', 'green', etc. */
-        /* Ou des valeurs RGB, HSL, HEX, etc. */
+        color: #050430; 
     }
     a :hover{
-        color: #f4810e; /* Couleur rouge pour les liens */
-        /* Vous pouvez remplacer #FF0000 par n'importe quelle couleur CSS valide */
-        /* Par exemple, vous pouvez utiliser des noms de couleur comme 'red', 'blue', 'green', etc. */
-        /* Ou des valeurs RGB, HSL, HEX, etc. */
+        color: #f4810e; 
     }
+
+/* search input */
+    .search-box{
+        position:absolute; /* Changement de position fixe pour que la barre de recherche reste fixe lors du défilement */
+        top: 212px; /* Position verticale à partir du haut de la page */
+    right:220px; 
+        width: fit-content;
+        height: fit-content;
+      }
+      .input-search{
+        
+        height: 35px;
+        width: 35px;
+        border-style: none;
+        padding: 10px;
+        font-size: 18px;
+        letter-spacing: 2px;
+        outline: none;
+        border-radius: 25px;
+        transition: all .5s ease-in-out;
+        background-color: #edb302;
+        padding-right: 25px;
+        color:#060823;
+      }
+      .input-search::placeholder{
+        color:rgba(14, 8, 42, 0.5);
+        font-size: 18px;
+        letter-spacing: 2px;
+        font-weight: 100;
+      }
+      .btn-search{
+        width: 35px;
+        height: 35px;
+        border-style: none;
+        font-size: 20px;
+        font-weight: bold;
+        outline: none;
+        cursor: pointer;
+        border-radius: 50%;
+        position: absolute;
+        right: 0px;
+        color:#080a2a ;
+        background-color:transparent;
+        pointer-events: painted;  
+      }
+      .btn-search:focus ~ .input-search{
+        width: 300px;
+        border-radius: 0px;
+        background-color: transparent;
+        border-bottom:1px solid rgba(7, 1, 37, 0.5);
+        transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+      }
+      .input-search:focus{
+        width: 300px;
+        border-radius: 0px;
+        background-color: transparent;
+        border-bottom:1px solid rgba(2, 9, 37, 0.5);
+        transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
+      }
+      
+      
+      

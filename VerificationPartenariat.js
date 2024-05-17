@@ -1,7 +1,7 @@
 function validateForm() {
     let nompart = document.getElementById('nompart').value.trim();
     let pays = document.getElementById('pays').value.trim();
-    let ville = document.getElementById('ville').value.trim();
+    let adresse = document.getElementById('adresse').value.trim();
     let emailpart = document.getElementById('emailpart').value.trim();
 
     let isValid = true;
@@ -36,15 +36,12 @@ function validateForm() {
     }
 
     // Validation pour la ville
-    if (ville === '') {
+    if (adresse === '') {
         isValid = false;
-        setErrorFor(document.getElementById('ville'), 'Ville ne doit pas etre vide');
-    }else if(!/^[a-zA-Z ]{1,30}$/.test(ville)){
-        isValid = false;
-        setErrorFor(document.getElementById('ville'), 'Ville doit contenir uniquement des lettres et ne pas dépasser 30 caractères');
-    } 
+        setErrorFor(document.getElementById('adresse'), 'Adresse ne doit pas etre vide');
+    }
     else {
-        setSuccessFor(document.getElementById('ville'));
+        setSuccessFor(document.getElementById('adresse'));
     }
 
     // Validation pour l'email du partenaire

@@ -3,7 +3,7 @@
 require("C:/xampp/htdocs/PROJET WEB NOUHA/config/connexion.php");
 
 // Fonction de validation du formulaire
-function validateForm($nompart, $pays, $ville, $emailpart)
+function validateForm($nompart, $pays, $adresse, $emailpart)
 {
     $errors = array();
 
@@ -18,8 +18,8 @@ function validateForm($nompart, $pays, $ville, $emailpart)
     }
 
     // Validation du champ Ville
-    if (empty($ville)) {
-        $errors[] = "Le champ Ville est obligatoire.";
+    if (empty($adresse)) {
+        $errors[] = "Le champ Adresse est obligatoire.";
     }
 
     // Validation du champ Email partenaire
@@ -38,19 +38,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $idpart = $_POST['idpart'];
     $nompart = $_POST['nompart'];
     $pays = $_POST['pays'];
-    $ville = $_POST['ville'];
+    $adresse = $_POST['adresse'];
     $emailpart = $_POST['emailpart'];
 
     // Validation du formulaire
-    $errors = validateForm($nompart, $pays, $ville, $emailpart);
+    $errors = validateForm($nompart, $pays, $adresse, $emailpart);
 
     // Si aucune erreur de validation n'est détectée, procéder à la mise à jour dans la base de données
     if (empty($errors)) {
         // Effectuer la mise à jour dans la base de données
-        $query = $access->prepare('UPDATE partenariat SET NomPart = :nompart, pays = :pays, ville = :ville, EmailPart = :emailpart WHERE IDpart = :idpart');
+        $query = $access->prepare('UPDATE partenariat SET NomPart = :nompart, pays = :pays, adresse = :adresse, EmailPart = :emailpart WHERE IDpart = :idpart');
         $query->bindValue(':nompart', $nompart);
         $query->bindValue(':pays', $pays);
-        $query->bindValue(':ville', $ville);
+        $query->bindValue(':adresse', $adresse);
         $query->bindValue(':emailpart', $emailpart);
         $query->bindValue(':idpart', $idpart);
         $query->execute();

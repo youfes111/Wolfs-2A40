@@ -21,7 +21,7 @@ $list=$n->listoffre();
   <title>Impact Bootstrap Template - Blog</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
+  
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -30,7 +30,7 @@ $list=$n->listoffre();
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -48,7 +48,52 @@ $list=$n->listoffre();
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-  <style></style>
+  <style>
+
+.post-category2 {
+  color:rgba(10, 22, 52, 0.8); /* Couleur par défaut */
+        text-decoration: underline; 
+        font-size: 13px;
+      }
+
+    .post-category2:hover {
+    color:  rgb(224, 131, 9); /* Couleur lorsque survolé */
+    }
+
+    .icon-location {
+        margin-left: 5px; /* Espacement entre l'icône et le texte */
+        font-size: 16px; /* Taille de l'icône */
+        color:rgb(224, 131, 9); /* Couleur de l'icône */
+    }
+  </style>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7PHny92wTTur-X9nqljkWZyyCXt0t6ek"></script>
+
+<script>
+function initMap(adresse) {
+    // Convertissez l'adresse en latitude et longitude si nécessaire
+    // Vous pouvez supposer que l'adresse est déjà une latitude et longitude dans votre cas
+
+    var parties = adresse.split(','); // Séparer l'adresse en parties
+    var lat = parseFloat(parties[0]); // Extraire la latitude
+    var lng = parseFloat(parties[1]); // Extraire la longitude
+
+    // Créez les coordonnées à partir de la latitude et de la longitude
+    var coords = { lat: lat, lng: lng };
+
+    // Initialisez la carte avec les coordonnées spécifiées
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15, // Zoom par défaut
+        center: coords // Centre de la carte sur les coordonnées spécifiées
+    });
+
+    // Créez un marqueur pour marquer l'adresse sur la carte
+    var marker = new google.maps.Marker({
+        position: coords,
+        map: map,
+        title: 'Adresse'
+    });
+}
+</script>
 </head>
 
 <body>
@@ -57,8 +102,8 @@ $list=$n->listoffre();
   <section id="topbar" class="topbar d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
       <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
-        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:nouha.hadjbrahim@esprit.tn">nouha.hadjbrahim@esprit.tn</a></i>
+        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+216 42281952</span></i>
       </div>
       <div class="social-links d-none d-md-flex align-items-center">
         <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
@@ -73,8 +118,7 @@ $list=$n->listoffre();
 
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
       <a href="index.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -- >
-        <!-- <img src="assets/img/logo.png" alt=""> -->
+      
         <h1><img src="logo.png" alt="StudyGo" class="lg1"></h1>
       </a>
       <nav id="navbar" class="navbar">
@@ -123,8 +167,12 @@ $list=$n->listoffre();
 
     <!-- ======= Blog Section ======= -->
     <section id="blog" class="blog">
+      
   <div class="container" data-aos="fade-up">
+    
     <div class="row gy-4 posts-list">
+      
+    <?php $counter = 1; ?>
       <?php foreach($list as $List): ?>
       <div class="col-xl-4 col-md-6">
 
@@ -144,27 +192,59 @@ $list=$n->listoffre();
            
             <div class="additional-info" style="display: none;">
            <p class="post-category">Pays : <?= $List['pays']  ;?></p>
-            <p class="post-category">Ville :<?= $List['ville']  ;?></p>
+           
             <p class="post-category">Niveau récommandé :<?= $List['niveau']  ;?></p>
             <p class="post-category">Type Baccalauréat :bac <?= $List['bac']  ;?></p>
             <p class="post-category">Nombre de places disponible :<?= $List['NbPlace']  ;?></p>
             <p class="post-category">Frais scolarité :<?= $List['frais'] ;?>DT</p>
             <p class="post-category">Bourse :<?= $List['bourse']  ;?></p>
 
-              <p class="post-author-list">Contact : <?= $List['EmailPart']  ;?></p>
+              <p class="post-author-list"  id="openmail<?= $counter ?>"> <?= $List['EmailPart']  ;?></p>
+            <p class="post-category2" id="openMap<?= $counter ?>" > <i class="fas fa-map-marker-alt"></i><?= $List['adresse'] ?></p>
           
             </div>
              <a href="#" class="btn btn-primary btn-view-more" onclick="showMore(event)">Voir plus</a>
           </div>
         </article>
       </div><!-- End post list item -->
+      <?php $counter++; ?>
       <?php endforeach ; ?>
     </div><!-- End blog posts list -->
   </div>
 </section><!-- End Blog Section -->
-
+<div id="mapModal" class="modal">
+  <div class="modal-content">
+    <!-- Bouton de fermeture de la boîte modale -->
+    <span class="close">&times;</span>
+    <!-- Conteneur pour afficher la carte -->
+    <div id="map"></div>
+  </div>
+</div>
   </main><!-- End #main -->
 
+
+
+
+<!-- emai l -->
+<div id="emailModal" class="modal">
+  <div class="modal-content">
+  <form   method="POST" class="form" id="form" onsubmit="msg()"> 
+    <!-- Bouton de fermeture de la boîte modale -->
+    <span class="close">&times;</span>
+    <label for="">Email:</label>
+    <input type="text" id="email"  name="email" ></br>
+    <label for="">Obj:</label>
+    <input type="text" id="obj"  name="obj" ></br>
+    <label for="">Message:</label>
+    <input type="text" id="message"  name="message" ></br>
+    <button type="submit"> Envoyer</button>
+  </form>
+  </div>
+</div>
+
+
+
+  </main><!-- End #main -->
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
 
@@ -291,4 +371,80 @@ $list=$n->listoffre();
       btn.textContent = "Voir plus";
     }
   }
+
+
+
+  document.addEventListener("DOMContentLoaded", function() {
+  // Récupérer les éléments nécessaires
+  var mapModal = document.getElementById("mapModal");
+  var closeModals = document.getElementsByClassName("close");
+  
+  // Ajouter des gestionnaires d'événements à chaque adresse
+  var openMapElements = document.querySelectorAll("[id^='openMap']");
+ 
+  openMapElements.forEach(function(element) {
+    element.addEventListener("click", function() {
+      mapModal.style.display = "block";
+      
+      var adresse = element.innerText.trim();
+            // Utiliser la valeur de l'adresse comme nécessaire
+            console.log(adresse);
+            initMap(adresse);
+    });
+  });
+  
+ 
+  // Ajouter des gestionnaires d'événements pour fermer la boîte modale
+  for (var i = 0; i < closeModals.length; i++) {
+    closeModals[i].addEventListener("click", function() {
+      mapModal.style.display = "none";
+    });
+  }
+  
+  // Fermer la boîte modale si l'utilisateur clique en dehors de celle-ci
+  window.onclick = function(event) {
+    if (event.target == mapModal) {
+      mapModal.style.display = "none";
+    }
+  }
+});
+document.addEventListener("DOMContentLoaded", function() {
+  // Récupérer les éléments nécessaires
+  var emailModal = document.getElementById("emailModal");
+  var closeModals = document.getElementsByClassName("close");
+  
+  // Ajouter des gestionnaires d'événements à chaque adresse
+  var openMapElements = document.querySelectorAll("[id^='openmail']");
+ 
+  openMapElements.forEach(function(element) {
+    element.addEventListener("click", function() {
+      emailModal.style.display = "block";
+      
+      var adresse = element.innerText.trim();
+            // Utiliser la valeur de l'adresse comme nécessaire
+            console.log(adresse);
+            var emailInput = document.getElementById("email");
+
+// Changez la valeur de l'élément input
+            emailInput.value = adresse;
+    });
+  });
+
+  // Ajouter des gestionnaires d'événements pour fermer la boîte modale
+  for (var i = 0; i < closeModals.length; i++) {
+    closeModals[i].addEventListener("click", function() {
+      emailModal.style.display = "none";
+    });
+  }
+  
+  // Fermer la boîte modale si l'utilisateur clique en dehors de celle-ci
+  window.onclick = function(event) {
+    if (event.target == emailModal) {
+      emailModal.style.display = "none";
+    }
+  }
+});
+// Initialiser la carte (vous devez inclure votre propre code pour afficher une carte)
+
+
 </script>

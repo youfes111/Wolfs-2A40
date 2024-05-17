@@ -18,7 +18,7 @@ echo '  showConfirmButton: false,';
 echo '  timer: 1500';
 echo '});';
 echo '</script>';
-    header('location:backendNouha.php');
+    header('location:backendOffre.php');
     exit; // Assurez-vous de terminer l'exécution du script après la redirection
 }
 ?>

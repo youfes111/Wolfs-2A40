@@ -10,7 +10,31 @@ require_once "C:/xampp/htdocs/PROJET WEB NOUHA/model/offree.php";
 
 $n=new Partenariat();
 $list=$n->listpartenariat();
+if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
+    // Récupération des données du formulaire
+    echo"";
+    $nompart = $_POST["nompart"];
+    $pays = $_POST["pays"];
+    $adresse = $_POST["adresse"];
+    $emailpart = $_POST["emailpart"];
+  
 
+    // Création de l'objet Employe avec les données du formulaire
+    $partenaireC = new Partenariat();
+    
+    $partenaireC->setNomPart($nompart);
+    $partenaireC->setPays($pays);
+    $partenaireC->setAdresse($adresse);
+    $partenaireC->setEmailPart($emailpart);
+
+
+  // Création de l'objet EmployeC pour afficher les informations avec la méthode show()
+ 
+    ajouter($partenaireC->getNomPart(),$partenaireC->getPays(),$partenaireC->getAdresse(), $partenaireC->getEmailPart());
+
+
+
+}
 if(isset($_GET['sup'])){
     echo'
     <script>
@@ -24,63 +48,8 @@ if(isset($_GET['sup'])){
       </script>';
 }
 // Vérification si le formulaire est soumiss
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["form_submit"])) {
-    // Récupération des données du formulaire
-    $nompart = $_POST["nompart"];
-    $pays = $_POST["pays"];
-    $ville = $_POST["ville"];
-    $emailpart = $_POST["emailpart"];
-
-    // Création de l'objet Employe avec les données du formulaire
-    $partenaireC = new Partenariat();
-    
-    $partenaireC->setNomPart($nompart);
-    $partenaireC->setPays($pays);
-    $partenaireC->setVille($ville);
-    $partenaireC->setEmailPart($emailpart);
-
-  // Création de l'objet EmployeC pour afficher les informations avec la méthode show()
-  $partenaireS = new PartenariatC();
-ajouter($partenaireC->getNomPart(),$partenaireC->getPays(),$partenaireC->getVille(), $partenaireC->getEmailPart());
 
 
-
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["form2_submit"])) {
-    // Récupération des données du formulaire
-    $programme = $_POST["programme"];
-    $domaine = $_POST["domaine"];
-    $niveau = $_POST["niveau"];
-    $bac = $_POST["bac"];
-    $nbplace = $_POST["nbplace"];
-   
-    $frais = $_POST["frais"];
-    $bourse = $_POST["bourse"];
-    $idpart = $_POST["idpart"];
-
-    $img = $_POST["img"];
-    // Création de l'objet Employe avec les données du formulaire
-    $offreC = new offre();
-    
-    $offreC->setProgramme($programme);
-    $offreC->setDomaine($domaine);
-    $offreC->setNiveau($niveau);
-    $offreC->setBac($bac);
-    $offreC->setNbPlace($nbplace);
-    $offreC->setFrais($frais);
-    $offreC->setBourse($bourse);
-    $offreC->setIDpart($idpart);
-
-    $offreC->setImg($img);
-
-  // Création de l'objet EmployeC pour afficher les informations avec la méthode show()
-  $partenaireS = new PartenariatC();
-ajouter2($offreC->getProgramme(),$offreC->getDomaine(),$offreC->getNiveau(), $offreC->getBac(),$offreC->getNbPlace(),$offreC->getFrais(),$offreC->getBourse(),$offreC->getIDpart(), $offreC->getImg());
-
-
-
-}
 
 //modification
 if(isset($_GET['id'])){
@@ -146,8 +115,8 @@ if(isset($_GET['id'])){
                 <input type="text" id="pays" name="pays" value="'.$partnerData['pays'].'">
             </div>
             <div class="form-control">
-                <label for="ville">Ville</label>
-                <input type="text" id="ville" name="ville" value="'.$partnerData['ville'].'">
+                <label for="adresse">Adresse</label>
+                <input type="text" id="adresse" name="adresse" value="'.$partnerData['adresse'].'">
             </div>
             <div>
                 <label for="emailpart">Email partenaire</label>
@@ -165,135 +134,6 @@ if(isset($_GET['id'])){
 
 
 
-//modification
-if(isset($_GET['id2'])){
-    
-    // Récupérer l'ID du partenaire depuis les paramètres de requête
-    $id = $_GET['id2'];
-
-    // Récupérer les données du partenaire à partir de l'ID
-    // Utilisez votre propre logique pour récupérer les données du partenaire à partir de la base de données
-    $query = $access->prepare('SELECT * FROM offre WHERE IDoffre = :id');
-    $query->bindValue(':id', $id);
-    $query->execute();
-    $offreData = $query->fetch(PDO::FETCH_ASSOC);
-    
-    // Afficher le formulaire de modification avec les données du partenaire
-    echo '
-    
-    <div class="wrapper">
-    
-    <div class="sidebar">
-            <div class="sidebar-header">
-                <!-- <h3>Menu</h3> -->
-                <button class="sidebar-toggle">
-                <img src="logo.png" alt="StudyGo">
-                                </button>
-            </div>
-            
-            <ul class="sidebar-nav">
-                <hr>
-                <ul class="sidebar-nav">
-        <li><a href="backend_1.php"><i class="lni lni-dashboard"></i> Dashboard</a></li>
-        <hr>
-        <h6>Les gestions</h6>
-        <div class="backend_1">
-        <li><a href="#"><i class="lni lni-users"></i> Les clients</a></li>
-        <li><a href="backendNouha.php"><i class="lni lni-layers"></i> Les offres</a></li>
-        <li><a href="#"><i class="lni lni-book"></i> Formation linguistique</a></li>
-        <li><a href="#"><i class="lni lni-bubble"></i> Reclamation & Réponse</a></li>
-        <li><a href="login.php"></i>Log out</a></li>
-    
-    </ul>
-            </ul>
-        </div>
-        <div class="contenu">
-            <div class="navbar">
-                
-            </div>
-            <div class="tables">
-
-    <div id="overlay4">
-
-    <div class="container" id="form-container" >
-        <h2>Modifier l offre</h2>
-
-        <form method="POST" class="form2" id="form2" action="update_offre.php">
-            <input type="hidden" name="idoffre" value="'.$offreData['IDoffre'].'">
-            <div class="form-control2">
-                <label for="programme">Le programme</label>
-                <input type="text" id="programme" name="programme" value="'.$offreData['programme'].'">
-            </div>
-            <div class="form-control2">
-                <label for="domaine">Domaine d\'étude</label>
-                <input type="text" id="domaine" name="domaine" value="'.$offreData['domaine'].'">
-            </div>
-            <div class="form-control2">
-                        <label for="niveau">Niveau recommandé</label>
-                        <select id="niveau" name="niveau">
-                            <option value="Bac">Bac</option>
-                            <option value="Bac+2">Bac+2</option>
-                            <option value="Bac+3">Bac+3</option>
-                            <option value="Bac+4">Bac+4</option>
-                            <option value="Bac+5">Bac+5</option>
-                        </select>
-                        
-            </div>
-            
-            <div class="form-control2">
-                <label for="">Le type de Baccalauréat</label>
-                <select id="bac" name="bac">
-                    <option value="scientifique">scientifique</option>
-                    <option value="littéraire">littéraire</option>
-                    <option value="économique et social">économique et social</option>
-                </select>
-            </div>
-            
-            <div class="form-control2">
-                <label for="nbplace">places disponibles</label>
-                <input type="text" id="nbplace" name="nbplace" value="'.$offreData['NbPlace'].'">
-            </div>
-            <div class="form-control2">
-            <label for="frais">Frais scolarité</label>
-            <input type="text" id="frais" name="frais" value="'.$offreData['frais'].'">
-        </div>
-        <div class="form-control2">
-                <label for="">Bourse</label>
-                <select id="bourse" name="bourse">
-                    <option value="aucun">aucun</option>
-                    <option value="disponible">disponible</option>
-                </select>
-                <i class="fas fa-check-circle"></i>
-                <i class="fas fa-exclamation"></i>
-        </div>
-
-        <input type="hidden" name="idpart" value="'.$offreData['IDpart'].'">
-        
-        <div class="form-control2">
-            <label for="img">image</label>
-            <input type="text" id="img" name="img" value="'.$offreData['img'].'">
-        </div>
-
-
-
-            <button type="submit" id="bouton_modifier">Valider</button>
-        </form> </div></div></div></div></div>
-    ';
-    echo '      <script>var overlay = document.getElementById("overlay4");
-    overlay.style.display = "flex";
-
-    var valeurParDefaut = "'.$offreData['bac'].'";
-    document.getElementById("bac").value = valeurParDefaut;
-
-    var valeurParDefaut2 = "'.$offreData['bourse'].'";
-    document.getElementById("bourse").value = valeurParDefaut2;
-    
-    
-    var valeurParDefaut3 = "'.$offreData['niveau'].'";
-    document.getElementById("niveau").value = valeurParDefaut3;
-
-    </script>  ';
-}
 
 
 
@@ -312,18 +152,105 @@ if(isset($_GET['id2'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des offres</title>
-    <link rel="stylesheet" href="awesome/css/all.min.css">
     <link rel="stylesheet" href="partenariatcss.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="backend_2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="10.png">
-
+    <!--  -->
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.11.4/i18n/French.json"></script>
     <script src="VerificationPartenariat.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    var searchInput = document.getElementById("searchInput");
+    var table = document.getElementById("tablePartenariat");
+    var rows = table.getElementsByTagName("tr");
 
+    searchInput.addEventListener("keyup", function(event) {
+        if (event.key === "Enter") {
+            var filter = searchInput.value.toUpperCase();
+            for (var i = 0; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName("td");
+                var rowDisplayed = false; // Indique si la ligne doit être affichée ou non
+                for (var j = 0; j < cells.length; j++) {
+                    var txtValue = cells[j].textContent || cells[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        rowDisplayed = true;
+                        break; // Si la cellule correspond, passer à la ligne suivante
+                    }
+                }
+                // Afficher ou masquer la ligne en fonction du résultat de la recherche
+                rows[i].style.display = rowDisplayed ? "" : "none";
+            }
+        }
+    });
+});
+</script>
+<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var sortIdIcon = document.getElementById("sortIdIcon");
+            var sortNomIcon = document.getElementById("sortNomIcon");
+            var sortPaysIcon = document.getElementById("sortPaysIcon");
+            var sortAdresseIcon = document.getElementById("sortAdresseIcon");
+            var sortEmailIcon = document.getElementById("sortEmailIcon");
+
+            var ascendantId = true;
+            var ascendantNom = true;
+            var ascendantPays = true;
+            var ascendantAdresse = true;
+            var ascendantEmail = true;
+
+            function sortTable(columnIndex, ascending) {
+                // Récupérer toutes les lignes du tableau sauf la première (l'en-tête)
+                var table = document.getElementById("tablePartenariat");
+                var rows = Array.from(table.getElementsByTagName("tr")).slice(1);
+
+                // Trier les lignes en fonction du contenu de la colonne
+                rows.sort(function(a, b) {
+                    var aVal = a.cells[columnIndex].innerText.toLowerCase();
+                    var bVal = b.cells[columnIndex].innerText.toLowerCase();
+                    return ascending ? (aVal > bVal ? 1 : -1) : (aVal < bVal ? 1 : -1);
+                });
+
+                // Mettre à jour le tableau avec les lignes triées
+                rows.forEach(function(row) {
+                    table.appendChild(row);
+                });
+            }
+
+            sortIdIcon.addEventListener("click", function() {
+                sortTable(0, ascendantId);
+                ascendantId = !ascendantId;
+                sortIdIcon.className = ascendantId ? "fas fa-sort-up" : "fas fa-sort-down";
+            });
+
+            sortNomIcon.addEventListener("click", function() {
+                sortTable(1, ascendantNom);
+                ascendantNom = !ascendantNom;
+                sortNomIcon.className = ascendantNom ? "fas fa-sort-up" : "fas fa-sort-down";
+            });
+
+            sortPaysIcon.addEventListener("click", function() {
+                sortTable(2, ascendantPays);
+                ascendantPays = !ascendantPays;
+                sortPaysIcon.className = ascendantPays ? "fas fa-sort-up" : "fas fa-sort-down";
+            });
+
+            sortAdresseIcon.addEventListener("click", function() {
+                sortTable(3, ascendantAdresse);
+                ascendantAdresse = !ascendantAdresse;
+                sortAdresseIcon.className = ascendantAdresse ? "fas fa-sort-up" : "fas fa-sort-down";
+            });
+
+            sortEmailIcon.addEventListener("click", function() {
+                sortTable(4, ascendantEmail);
+                ascendantEmail = !ascendantEmail;
+                sortEmailIcon.className = ascendantEmail ? "fas fa-sort-up" : "fas fa-sort-down";
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -347,7 +274,8 @@ if(isset($_GET['id2'])){
         <h6>Les gestions</h6>
         <div class="backend_1">
         <li><a href="#"><i class="lni lni-users"></i> Les clients</a></li>
-        <li><a href="backendNouha.php"><i class="lni lni-layers"></i> Les offres</a></li>
+        <li><a href="backendOffre.php"><i class="lni lni-layers"></i> Les offres</a></li>
+        <li><a href="backendNouha.php"><i class="lni lni-graduation"></i> Les partenaires</a></li>
         <li><a href="#"><i class="lni lni-book"></i> Formation linguistique</a></li>
         <li><a href="#"><i class="lni lni-bubble"></i> Reclamation & Réponse</a></li>
         <li><a href="login.php"></i>Log out</a></li>
@@ -366,29 +294,37 @@ if(isset($_GET['id2'])){
 
             <button id="btnAjouter">Ajouter</button>
             <div class="titre"><h2>Les partenaires</h2></div>
+            <div class="search-box">
+                <button class="btn-search"><i class="fas fa-search"></i></button>
+                <input type="text" class="input-search" id="searchInput" placeholder="Rechercher...">
+            </div>
+            
 
 <table id="tablePartenariat">
     <thead>
+     <?php  
+                 echo "<tr>";
+                echo "<th>IDpart  <i id='sortIdIcon' class='fas fa-sort'> </i></th>";
+                echo "<th>Partenaire<i id='sortNomIcon' class='fas fa-sort'></i></th>";
+                echo "<th>Pays <i id='sortPaysIcon' class='fas fa-sort'></i> </th>";
+                echo "<th>Adresse <i id='sortAdresseIcon' class='fas fa-sort'></i> </th>";
+                echo "<th>Email partenaire <i id='sortEmailIcon' class='fas fa-sort'></i>  </th>";
+                echo "</tr>";
+    ?>
     </thead>
     <tbody>
         <?php
         
             // Récupération des données de la table "partenariat"
             $query = $access->query('SELECT * FROM partenariat');
-             echo "<tr>";
-                echo "<td>IDpart</td>";
-                echo "<td>NomPart</td>";
-                echo "<td>Pays</td>";
-                echo "<td>Ville</td>";
-                echo "<td>Email partenaire</td>";
-                echo "</tr>";
+             
             while ($row = $query->fetch()) {
                
                 echo "<tr>";
                 echo "<td>".$row['IDpart']."</td>";
                 echo "<td>".$row['NomPart']."</td>";
                 echo "<td>".$row['pays']."</td>";
-                echo "<td>".$row['ville']."</td>";
+                echo "<td>".$row['adresse']."</td>";
                 echo "<td>".$row['EmailPart']."</td>";
 
                 echo '<td> <a href="?id='.$row['IDpart'].'"> <i class="fas fa-edit icon"" ></i> </a> </td>';
@@ -402,176 +338,6 @@ if(isset($_GET['id2'])){
 </table>
 
    
-<!-- table offre -->
-
-<button id="btnAjouter2">Ajouter</button>
-<div class="titre2"><h2>Les offres</h2></div>
-
-<table id="tablePartenariat2">
-    <thead>
-    </thead>
-    <tbody>
-        <?php
-        
-            // Récupération des données de la table "partenariat"
-            $query = $access->query('SELECT * FROM offre');
-             echo "<tr>";
-                echo "<td>IDoffre</td>";
-                echo "<td>programme</td>";
-                echo "<td>domaine</td>";
-                echo "<td>niveau recommandé</td>";
-                echo "<td>type bac</td>";
-                echo "<td>places disponibles</td>";
-                echo "<td>frais scolarité</td>";
-                echo "<td>bourse</td>";
-                echo "<td>IDpart</td>";
-                echo "</tr>";
-            while ($row = $query->fetch()) {
-               
-                echo "<tr>";
-                echo "<td>".$row['IDoffre']."</td>";
-                echo "<td>".$row['programme']."</td>";
-                echo "<td>".$row['domaine']."</td>";
-                echo "<td>".$row['niveau']."</td>";
-                echo "<td>".$row['bac']."</td>";
-                echo "<td>".$row['NbPlace']."</td>";
-                echo "<td>".$row['frais']."DT</td>";
-                echo "<td>".$row['bourse']."</td>";
-                echo "<td>".$row['IDpart']."</td>";
-
-
-                echo '<td> <a href="?id2='.$row['IDoffre'].'"> <i class="fas fa-edit icon"" ></i> </a> </td>';
-
-                echo '<td> <a href="delete_offre.php?id='.$row['IDoffre'].'"> <i class="fas fa-trash-alt icon" ></i> </a> </td>';
-            }
-                    
-        ?>
-        
-    </tbody>
-</table>
-
-<!-- ajout offre -->
-    <div id="overlay3">
-        <div class="container" id="form-container" >
-            <div class="header">
-                <h2>Ajouter un offre</h2>
-                <span id="close-form3">&times;</span>
-        <!-- Reste du formulaire -->
-            </div>
-                <form  method="POST" class="form2" id="form2" onsubmit="return validateForm2()">
-                        
-                  
-                    <div class="form-control2">
-                            <label for="">description de programme</label>
-                            <input type="text" id="programme"  name="programme" placeholder="ecrire la descrition du programme">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation"></i>
-                            <br>
-                            <small>Message d'erreur</small>
-                            
-                    </div>
-
-                    <div class="form-control2">
-                            <label for="">Domaine</label>
-                            <input type="text" id="domaine"  name="domaine" placeholder="domaine d'étude">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation"></i>
-                            <br>
-                            <small>Message d'erreur</small>
-                    </div>
-
-                    <div class="form-control2">
-                        <label for="niveau">Niveau recommandé</label>
-                        <select id="niveau" name="niveau">
-                            <option value="Bac">Bac</option>
-                            <option value="Bac+2">Bac+2</option>
-                            <option value="Bac+3">Bac+3</option>
-                            <option value="Bac+4">Bac+4</option>
-                            <option value="Bac+5">Bac+5</option>
-                        </select>
-                        <i class="fas fa-check-circle"></i>
-                        <i class="fas fa-exclamation"></i>
-                        <br>
-                        <small>Message d'erreur</small>
-                    </div>
-
-
-                    <div class="form-control2">
-                        <label for="">Le type de Baccalauréat</label>
-                        <select id="bac" name="bac">
-                            <option value="scientifique">scientifique</option>
-                            <option value="littéraire">littéraire</option>
-                            <option value="économique et social">économique et social</option>
-                         
-                        </select>
-                        <i class="fas fa-check-circle"></i>
-                        <i class="fas fa-exclamation"></i>
-                        <br>
-                        <small>Message d'erreur</small>
-                    </div>
-                    
-                    <div class="form-control2">
-                            <label for="">Nombre de places disponibles</label>
-                            <input type="text" id="nbplace"  name="nbplace" placeholder="">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation"></i>
-                            <br>
-                            <small>Message d'erreur</small>
-                    
-                    
-                        </div>
-
-                    <div class="form-control2">
-                            <label for="">Frais scolarité</label>
-                            <input type="text" id="frais"  name="frais" placeholder="">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation"></i>
-                            <br>
-                            <small>Message d'erreur</small>
-                    </div>
-
-                    <div class="form-control2">
-                        <label for="">Bourse</label>
-                        <select id="bourse" name="bourse">
-                            <option value="aucun">aucun</option>
-                            <option value="disponible">disponible</option>
-                        </select>
-                        <i class="fas fa-check-circle"></i>
-                        <i class="fas fa-exclamation"></i>
-                    </div>
-
-                    <div class="form-control2">
-                        <label for="">ID partenaire</label>
-                        <select id="idpart" name="idpart">
-                            <?php foreach($list as $List): ?>
-                                <option value="<?= $List['IDpart'];?>"><?= $List['IDpart'];?></option>
-                            <?php endforeach ; ?>
-                        </select>
-                        <i class="fas fa-check-circle"></i>
-                        <i class="fas fa-exclamation"></i>
-                    </div>
-
-                  
-                    <div class="form-control2">
-                            <label for="">image</label>
-                            <input type="text" id="img"  name="img" placeholder="adresse de l'image">
-                            <i class="fas fa-check-circle"></i>
-                            <i class="fas fa-exclamation"></i>
-                            <br>
-                            <small>Message d'erreur</small>
-                    </div>
-
-
-
-
-
-
-                    <button type="submit"  name="form2_submit"> <i class="fas fa-user-plus"></i> Ajouter</button>
-
-                </form>
-        </div>
-    </div>
-<!-- ajout partenaire -->
 <div id="overlay">
         <div class="container" id="form-container" >
             <div class="header">
@@ -579,7 +345,7 @@ if(isset($_GET['id2'])){
                 <span id="close-form">&times;</span>
         <!-- Reste du formulaire -->
             </div>
-                <form  class="form" id="form" onsubmit="return validateForm()">
+                <form   method="POST" class="form" id="form" onsubmit="return validateForm()">
                         
                   
                     <div class="form-control">
@@ -601,8 +367,8 @@ if(isset($_GET['id2'])){
                     </div>
 
                     <div class="form-control">
-                            <label for="">Ville</label>
-                            <input type="text" id="ville"  name="ville" placeholder="Ville">
+                            <label for="">Adresse</label>
+                            <input type="text" id="adresse"  name="adresse" placeholder="adresse">
                             <i class="fas fa-check-circle"></i>
                             <i class="fas fa-exclamation"></i>
                             
@@ -619,7 +385,7 @@ if(isset($_GET['id2'])){
                         <small>Message d'erreur</small>
                     </div>
                     
-                    <button type="submit"  > <i class="fas fa-user-plus"></i> Ajouter</button>
+                    <button type="submit"  name="form_submit" id="form_submit"> <i class="fas fa-user-plus"></i> Ajouter</button>
 
                 </form>
         </div>
@@ -643,28 +409,20 @@ if(isset($_GET['id2'])){
         btnAjouter.addEventListener('click', function() {
             overlay.style.display = 'flex';
         });
-        //fonction button ajout pour afficher la formulaire
-        var btnAjouter2 = document.getElementById('btnAjouter2');
-        var overlay3 = document.getElementById('overlay3');
-        btnAjouter2.addEventListener('click', function() {
-            overlay3.style.display = 'flex';
-        });       
+          
     //close button
     var closeForm = document.getElementById('close-form');
     closeForm.addEventListener('click', function() {
     overlay.style.display = 'none'; 
     });
-    //close button
-    var closeForm = document.getElementById('close-form3');
-    closeForm.addEventListener('click', function() {
-    overlay3.style.display = 'none'; 
-    });
+
     var closeForm = document.getElementById('close-form2');
     closeForm.addEventListener('click', function() {
     overlay2.style.display = 'none'; 
   
     });
     
+   
     </script>
 </body>
 </html>

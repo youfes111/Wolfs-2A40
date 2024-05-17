@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query->execute();
 
         // Rediriger vers la page principale ou afficher un message de succès
-        header('Location: backendNouha.php?sup');
+        header('Location: backendOffre.php?sup');
         exit();
     } else {
         // Afficher les erreurs de validation
