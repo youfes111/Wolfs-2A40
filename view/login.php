@@ -164,7 +164,7 @@ if (isset($_POST['submit'])) {
         if ($resp->isSuccess()) {
             // La vérification reCAPTCHA a réussi, continuez avec le code de connexion
             if ($e->checkUserExists($user, $mdp)) {
-                $userDetails = $e->selectuser($user);
+                $userDetails = $e->selectuser1($user);
                 if ($userDetails['bloquage'] == 1) {
                     ?>      
                     <script>
@@ -204,6 +204,31 @@ if (isset($_POST['submit'])) {
                                 timer: 1500
                             }).then(() => {
                                 window.location.replace("front/offres.php");
+                                if ("Notification" in window){
+      if (Notification.permission === "granted"){
+        notify();
+      }else{
+        Notification.requestPermission().then((res)=> {
+          if (res === "granted"){
+  
+          }else if (res === "denied"){
+            console.log("Notifications acess denied");
+          }else if (res === "default"){
+            console.log("Notifications permission not given");
+          }
+        })
+      }
+    }
+    else{
+      console.error("not not supported") };
+  
+  function notify(){
+    new Notification("Study Go",{
+      body: "Votre réclamation est repondue",
+     icon: "10.png",
+    }
+    );
+  }
                             });
                         </script>
                         <?php

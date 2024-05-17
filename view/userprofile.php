@@ -8,12 +8,16 @@ require '../controler/loginc.php';
 if(isset($_SESSION['user1']))
 {   
     $user=$_SESSION['user1'];
-   
+
+    //$nomPart=$_SESSION['nomPart'];
+    //$domaine=$_SESSION['domaine'];
+    //var_dump($nomPart);
+    //var_dump($domaine);
     }
     $e=new loginc();
     $list=$e->selectuser($user);
-    
-    
+    $list2=$e->selectoffre($user);
+   
     
 
 
@@ -27,7 +31,7 @@ if(isset($_SESSION['user1']))
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="profile2.css">
    
-    <link href="main.css" rel="stylesheet">
+    <link href="main1.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -38,12 +42,12 @@ if(isset($_SESSION['user1']))
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  
+  <link rel="stylesheet1" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" href="10.png">
     <title>StudyGo|Gérer votre compte</title>
-
-
+   
+ 
 </head>
 <body>
 <div class="wrapper">
@@ -72,19 +76,24 @@ if(isset($_SESSION['user1']))
 
   <br><br><br>  
  <section id="blog" class="blog">
-  <div class="container" data-aos="fade-up">
+  <div class="container">
     <div class="row gy-4 posts-list">
     <table border='1' class="custom-table">
                 
-            <tr><th>Nom</th><th>Prenom</th><th>Email</th><th>Modifier</th></tr>
+            <tr><th>Nom</th><th>Prenom</th><th>Email</th><th>Etat</th><th>Emplacement</th><th>nom</th><th>date_diplome</th><th>Modifier</th><th>PDF</th></tr>
             <?php   
                     
                    
                     ?>
+                            
                         <tr id="row_<?php echo $list['idUser']; ?>">
                             <td><?= $list['user']; ?></td>
                             <td><?= $list['userPrenom']; ?></td>
                             <td><?= $list['email']; ?></td>
+                            <td><?= $list['Etat']; ?></td>
+                            <td><?= $list['emplacement']; ?></td>
+                            <td><?= $list['nom']; ?></td>   
+                            <td><?= $list['date_diplome']; ?></td>  
                                                        
                             <td align="center">
                                 <form method="POST" action="">
@@ -92,12 +101,49 @@ if(isset($_SESSION['user1']))
                                 <input type="button" value="Mis a jour" onclick="window.location.href='updatelogin.php?id=<?= $list['idUser']; ?>'">
                                 </form>
                             </td>
+                            <td align="center">
+                                
+  <button type="button" class="pdf-button" onclick="window.location.href='generatePDF.php'">
+    <i class="fas fa-file-pdf" style="stylesheet1"></i>
+  </button>
+                            </td>
                                       
                         </tr>
                    
             </table>
     </div><!-- End blog posts list -->
   </div>
+
+  <!--  -->
+  <section id="blog" class="blog">
+  <div class="container">
+    <div class="row gy-4 posts-list">
+    <table border='1' class="custom-table">
+                
+            <tr><th>Université</th><th>programme</th><th>domaine</th><th>réponse</th></tr>
+            <?php   
+                    foreach ($list2 as $loginc) {
+                   
+                    ?>
+                            
+                        <tr>
+                            <td><?= $loginc['NomPart']; ?></td>
+                            <td><?= $loginc['programme']; ?></td>
+                            <td><?= $loginc['domaine']; ?></td>
+                            <td><?= $loginc['ETAT']; ?></td>
+                       
+                                                       
+                           
+                                      
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                   
+            </table>
+    </div><!-- End blog posts list -->
+  </div>
+  <!--  -->
   <br>
   <br>
   <br>

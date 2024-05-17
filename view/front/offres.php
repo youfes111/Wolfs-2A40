@@ -1,10 +1,56 @@
-
 <?php
 session_start();
 
-$langue = $_SESSION['selected_language'];
+
+require_once 'C:/xampp/htdocs/projet_v5/controler/educationc.php';
+require_once 'C:/xampp/htdocs/projet_v5/Model/education.php';
+require_once 'C:/xampp/htdocs/projet_v5/Model/login.php';
+require("C:/xampp/htdocs/projet_v5/config/connexion.php");
+
+require_once "C:/xampp/htdocs/projet_v5/controler/PartenariatC.php";
+require_once "C:/xampp/htdocs/projet_v5/Model/partenariat.php";
+require_once "C:/xampp/htdocs/projet_v5/Model/offree.php";
+
+
+$conn = config::getConnexion();
+$e=new educationc();
+$list1=$e->listeducation();
+
+$n=new Offre();
+$list=$n->listoffre();
+
+
+
+if(isset($_GET['id']))
+{
+  $ID_OFFRE = strval($_GET['id']);
+  $ID_OFFRE = trim($ID_OFFRE, "'");
+  $ID_OFFRE = intval($ID_OFFRE);
+  $ID_USER=$_SESSION['idUser'];
+  $ETAT='en attente';
+  $e1 = new educationc();
+   $e1->addoffre_user($ID_OFFRE,$ID_USER,$ETAT);
+   
+}
+
+
+
+$nom=$_SESSION['user1'];
+
+$query = $conn->prepare("SELECT idUser FROM login WHERE user =:user ");
+
+$query->bindParam(':user', $nom);
+$query->execute();
+$result = $query->fetchAll();
+
+$idUser = $result[0]['idUser'];
+$_SESSION['idUser']=$idUser;
+$e = new educationc();
+$educationExists = $e->checkIfEducationExists($idUser);
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,9 +76,10 @@ $langue = $_SESSION['selected_language'];
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Template Main CSS File -->
-  <link href="../main.css" rel="stylesheet">
+  <link href="../main1.css" rel="stylesheet">
 
  
   <style>
@@ -54,7 +101,84 @@ $langue = $_SESSION['selected_language'];
     }
   </style>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7PHny92wTTur-X9nqljkWZyyCXt0t6ek"></script>
+  <script>
+  // Fonction de déconnexion
+  function logout(event) {
+    // Afficher une alerte
+    event.preventDefault();
+    Swal.fire({
+    title: 'Êtes-vous sûr de vouloir vous déconnecter?',
+    text: "Vous serez redirigé vers la page de connexion.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Oui, déconnexion',
+    cancelButtonText: 'Annuler'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Rediriger vers la page de déconnexion
+      window.location.href = "../login.php";
+    }
+  });
+  }
+  function completer_compte(event) {
+    // Afficher une alerte
+    event.preventDefault();
+    Swal.fire({
+    title: 'Vous devez completer votre compte!',
+    icon: 'warning',
+    showCancelButton: false,
+    confirmButtonText: "D'accord",
+    
+  });
+  }
+  function verifier_compte(event) {
+    // Afficher une alerte
+    event.preventDefault();
+    Swal.fire({
+    title: "Vous devez completer votre compte pour s'inscrire ",
+    icon: 'warning',
+    showCancelButton: false,
+    confirmButtonText: "D'accord",
+    
+  });
+  }
+</script>
+<script>document.addEventListener("DOMContentLoaded", function() {
+  // Récupérer les éléments nécessaires
+  var emailModal = document.getElementById("emailModal");
+  var closeModals = document.getElementsByClassName("close");
+  
+  // Ajouter des gestionnaires d'événements à chaque adresse
+  var openMapElements = document.querySelectorAll("[id^='openmail']");
+ 
+  openMapElements.forEach(function(element) {
+    element.addEventListener("click", function() {
+      emailModal.style.display = "block";
+      
+      var adresse = element.innerText.trim();
+            // Utiliser la valeur de l'adresse comme nécessaire
+            console.log(adresse);
+            var emailInput = document.getElementById("email");
 
+// Changez la valeur de l'élément input
+            emailInput.value = adresse;
+    });
+  });
+
+  // Ajouter des gestionnaires d'événements pour fermer la boîte modale
+  for (var i = 0; i < closeModals.length; i++) {
+    closeModals[i].addEventListener("click", function() {
+      emailModal.style.display = "none";
+    });
+  }
+  
+  // Fermer la boîte modale si l'utilisateur clique en dehors de celle-ci
+  window.onclick = function(event) {
+    if (event.target == emailModal) {
+      emailModal.style.display = "none";
+    }
+  }
+});</script>
 <script>
 function initMap(adresse) {
     // Convertissez l'adresse en latitude et longitude si nécessaire
@@ -80,89 +204,64 @@ function initMap(adresse) {
         title: 'Adresse'
     });
 }
+
+
+</script>
+
+<script>
+
+ function mod(a,b)
+ {
+  alert(a);
+  
+ }
 </script>
 </head>
 
 <body>
-<style>
-    /* Hide the Google Translate bar and the surrounding div */
-    .goog-te-banner-frame, #google_translate_element {
-        display: none !important;
-    }
-</style>
 
-<span>
-    <div class="translate" id="google_translate_element"></div>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement(
-                { pageLanguage: 'en', includedLanguages: '', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
-                'google_translate_element'
-            );
-
-            // Get the selected language from PHP variable
-            var selectedLanguage = '<?php echo $langue; ?>';
-
-            // Set the selected language in the translation element
-            var translateElement = document.getElementById('google_translate_element');
-            translateElement.querySelector(':scope .goog-te-combo').value = selectedLanguage;
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</span>
-</script>
-<script
-src="https://www.chatbase.co/embed.min.js"
-chatbotId="jNFrPacHuBO0YyqNyMhPJ"
-domain="www.chatbase.co"
-defer>
-</script>      
-<!-- ======= Header ======= -->
-<section id="topbar" class="topbar d-flex align-items-center">
-  <div class="container d-flex justify-content-center justify-content-md-between">
-    <div class="contact-info d-flex align-items-center">
-      <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
-      <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+  <!-- ======= Header ======= -->
+  <section id="topbar" class="topbar d-flex align-items-center">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center">
+        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:studygo@gmail.com">studygo@gmail.com</a></i>
+        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+21694141491</span></i>
+      </div>
+      <div class="social-links d-none d-md-flex align-items-center">
+        <!-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a> -->
+        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+        <!-- <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a> -->
+      </div>
     </div>
-    <div class="social-links d-none d-md-flex align-items-center">
-      <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-      <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-      <a href="/projet_v3/projet/view/setting.php" class="settings"><i class="bi bi-gear-fill"></i></a>
-      <!-- <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a> -->
-    </div>
-  </div>
-</section><!-- End Top Bar -->
-
+  </section><!-- End Top Bar -->
 
   <header id="header" class="header d-flex align-items-center">
-
-    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
-      
-        <h1><img src="logo.png" alt="StudyGo" class="lg1"></h1>
-      </a>
-      <nav id="navbar" class="navbar">
-        <ul>
-          
-          <li><a href="#">Formations linguistiques</a></li>
-
-          <li><a href="offres.php">Offres</a></li>
-
-          <li><a href="#">Reclamation</a></li>
-       
-          <li><a href="#">Contact</a></li>
-          <li>
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+    <a href="../index.php" class="logo d-flex align-items-center">
+      <h1><img src="../fichier 3 1.png" alt="StudyGo" class="lg1"></h1>
+    </a>
+    <nav id="navbar" class="navbar">
+      <ul>
+        <li><a href="frontnadine.php">Formations linguistiques</a></li>
+        <li><a href="offres.php">Offres</a></li>
+        <li><a href="../recfront.php">Reclamation</a></li>
+        <li>
           <div class="dropdown">
-  <button onclick="toggleDropdown()" class="dropbtn">Mon profile <i class="fas fa-chevron-down"></i></button>
-  <div id="profile-dropdown" class="dropdown-content">
-    <a href="../userprofile.php">Gérer mon compte</a>
-    <a href="#">Completer votre compte</a>
-    
-  </div>
-</div></li>
-        </ul>
-
-      </nav><!-- .navbar -->
+            <button onclick="toggleDropdown()" class="dropbtn">Mon profile <i class="fas fa-chevron-down"></i></button>
+            <div id="profile-dropdown" class="dropdown-content">
+              <?php if ($educationExists) { ?>
+                <a href="../userprofile.php">Gérer mon compte</a>
+              <?php } else { ?>
+                <a href="../userprofile.php" onclick="completer_compte(event)">Gérer mon compte </a>
+                <a href="../userEducation.php">Compléter votre compte</a>
+              <?php } ?>
+              <a href="../login.php" onclick="logout(event)">Se déconnecter</a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </nav><!-- .navbar -->
 
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
@@ -208,12 +307,19 @@ defer>
             <img src="<?= $List['img'] ;?>" alt="" class="img-fluid">
           </div>
           <h2 class="title">
-            <p class="post-category"><?= $List['NomPart'] ;?></p>
+            <p class="post-category" ><?= $List['NomPart'] ;?></p>
           </h2>
-          <p class="post-category"><h6><?= $List['domaine']  ;?></h6></p>
+          <p class="post-category" id="nomcomplexe"><h6><?= $List['domaine']  ;?></h6></p>
 
           <p class="post-category"> <?= $List['programme']  ;?></p>
-        
+          <?php if ($educationExists) { ?>
+            
+            <a href="?id='<?php echo $List['IDoffre'] ; ?>'"><button >S'inscrire</button>      </a>
+                    <?php } else { ?>
+                <button id="inscri<?= $counter ?>" onclick="verifier_compte(event)">S'inscrire</button>
+              <?php } ?>
+         
+
           <div class="post-footer">
            
             <div class="additional-info" style="display: none;">
@@ -225,8 +331,9 @@ defer>
             <p class="post-category">Frais scolarité :<?= $List['frais'] ;?>DT</p>
             <p class="post-category">Bourse :<?= $List['bourse']  ;?></p>
 
-              <p class="post-author-list">Contact : <?= $List['EmailPart']  ;?></p>
+            <p class="post-author-list"  id="openmail<?= $counter ?>"> <?= $List['EmailPart']  ;?></p>
             <p class="post-category2" id="openMap<?= $counter ?>" > <i class="fas fa-map-marker-alt"></i><?= $List['adresse'] ?></p>
+            
           
             </div>
              <a href="#" class="btn btn-primary btn-view-more" onclick="showMore(event)">Voir plus</a>
@@ -246,77 +353,80 @@ defer>
     <div id="map"></div>
   </div>
 </div>
+<!-- email -->
+<div id="emailModal" class="modal">
+  <div class="modal-content">
+  <form   method="POST" class="form" id="form" onsubmit="msg()"> 
+    <!-- Bouton de fermeture de la boîte modale -->
+    <span class="close">&times;</span>
+    <label for="">Email:</label>
+    <input type="text" id="email"  name="email" ></br>
+    <label for="">Obj:</label>
+    <input type="text" id="obj"  name="obj" ></br>
+    <label for="">Message:</label>
+    <input type="text" id="message"  name="message" ></br>
+    <button type="submit"> Envoyer</button>
+  </form>
+  </div>
+</div>
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
-
-    <div class="container">
-      <div class="row gy-4">
-        <div class="col-lg-5 col-md-12 footer-info">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span><img src="logo.png" alt="StudyGo" class="lg"></span>
-          </a>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-          <div class="social-links d-flex mt-4">
-            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-6 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-6 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-          <h4>Contact Us</h4>
-          <p>
-            A108 Adam Street <br>
-            New York, NY 535022<br>
-            United States <br><br>
-            <strong>Phone:</strong> +1 5589 55488 55<br>
-            <strong>Email:</strong> info@example.com<br>
-          </p>
-
-        </div>
-
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-5 col-md-12 footer-info">
+        <a href="../index.php" class="logo d-flex align-items-center">
+          <span><img src="../Fichier 3 1.png" alt="StudyGo" class="lg"></span>
+        </a>
+        <p>Si vous souhaitez accomplir des études complètes à l'étranger,
+                Veuillez-vous renseigner directement auprès de StudyGo</p>
+      </div>
+      <div class="col-lg-2 col-6 footer-links">
+        <h4>Liens Utiles</h4>
+        <ul>
+          <li><a href="#">Accueil</a></li>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Conditions d'utilisation</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-2 col-6 footer-links">
+        <h4>Nos Services</h4>
+        <ul>
+          <li><a href="#">Web Design</a></li>
+          <li><a href="#">Développement Web</a></li>
+          <li><a href="#">Gestion de Produit</a></li>
+          <li><a href="#">Marketing</a></li>
+          <li><a href="#">Design Graphique</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+        <h4>Contactez-nous</h4>
+        <p>
+        Immeuble Graiet, 4ème étage, Bureau 44, Sfax.<br>Immeuble Nessrine, 2ème étage, Bureau G13, Avenue de l'Union du Maghreb Arabe La Soukra, 2036 Ariana. <br><br>
+          <strong>Téléphone :</strong> +216 94 141 491<br>
+          <br>
+          <strong>Email :</strong> studygo@gmail.com<br>
+        </p>
       </div>
     </div>
-
-    <div class="container mt-4">
-      <div class="copyright">
-        &copy; Copyright <strong><span>Impact</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/impact-bootstrap-business-website-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
+  </div>
+  <div class="container mt-4">
+    <div class="copyright">
+      &copy; Droits d'auteur <strong><span>Impact</span></strong>. Tous droits réservés.
     </div>
+    <div class="credits">
+      <!-- Tous les liens dans le pied de page doivent rester intacts. -->
+      <!-- Vous pouvez supprimer les liens uniquement si vous avez acheté la version pro. -->
+      <!-- Informations sur la licence : https://bootstrapmade.com/license/ -->
+      <!-- Achetez la version pro avec un formulaire de contact PHP/AJAX fonctionnel : https://bootstrapmade.com/impact-bootstrap-business-website-template/ -->
+      Conçu par <a href="https://bootstrapmade.com/">StudyGo</a>
+    </div>
+  </div>
+</footer>
 
-  </footer><!-- End Footer -->
   <!-- End Footer -->
 
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

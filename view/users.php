@@ -14,7 +14,8 @@ $list=$e->listlogin();
     <meta name=viewport content="width=device-width", initial-scale="1.0">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="users5.css">
+    <link rel="stylesheet" href="users7.css">
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -25,6 +26,8 @@ $list=$e->listlogin();
 
     <link rel="icon" href="10.png">
     <title>StudyGo|Les clients</title>
+    
+
     <script>
         
         
@@ -131,6 +134,26 @@ $(document).ready(function() {
     });
 });
 </script>
+<script>
+  // Fonction de déconnexion
+  function logout(event) {
+    // Afficher une alerte
+    event.preventDefault();
+    Swal.fire({
+    title: 'Êtes-vous sûr de vouloir vous déconnecter?',
+    text: "Vous serez redirigé vers la page de connexion.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Oui, déconnexion',
+    cancelButtonText: 'Annuler'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Rediriger vers la page de déconnexion
+      window.location.href = "login.php";
+    }
+  });
+  }
+</script>
 
 
 
@@ -148,15 +171,16 @@ $(document).ready(function() {
         <ul class="sidebar-nav">
             <hr>
             <ul class="sidebar-nav">
-    <li><a href="backend_1.php"><i class="lni lni-dashboard"></i> Dashboard</a></li>
+    <li><a href="backend_1.php"><i class="lni lni-dashboard"></i>Dashboard</a></li>
     <hr>
     <h6>Les gestions</h6>
     <div class="backend_1">
     <li><a href="users.php"><i class="lni lni-users"></i> Les clients</a></li>
-    <li><a href="#"><i class="lni lni-layers"></i> Les offres</a></li>
-    <li><a href="#"><i class="lni lni-book"></i> Formation linguistique</a></li>
-    <li><a href="#"><i class="lni lni-bubble"></i> Reclamation & Réponse</a></li>
-    <li><a href="login.php"></i>Log out</a></li>
+        <li><a href="backendOffre.php"><i class="lni lni-layers"></i> Les offres</a></li>
+        <li><a href="backendNouha.php"><i class="lni lni-graduation"></i> Les partenaires</a></li>
+        <li><a href="backendNadine.php"><i class="lni lni-book"></i> Formation linguistique</a></li>
+        <li><a href="#"><i class="lni lni-bubble"></i> Reclamation & Réponse</a></li>   
+        <li><a href="login.php" onclick="logout(event)">Log out</a></li>
 
 </ul>
         </ul>
@@ -174,6 +198,10 @@ $(document).ready(function() {
             <th data-column="nom" data-order="desc">Nom</th>
             <th data-column="prenom" data-order="desc">Prenom</th>
             <th data-column="email" data-order="desc">Email</th>
+            <th data-column="Etat" data-order="desc">Etat</th>
+            <th data-column="Emplacement" data-order="desc">Emplacement</th>
+            <th data-column="nom" data-order="desc">nom</th>
+            <th data-column="date_diplome" data-order="desc">date_diplome</th>
             <th>Supprimer</th>
             <th>Bloquer</th>
             <th>Debloquer</th>
@@ -189,6 +217,10 @@ $(document).ready(function() {
                             <td id="column-to-color"><?= $loginc['user']; ?></td>
                             <td id="column-to-color"><?= $loginc['userPrenom']; ?></td>
                             <td id="column-to-color"><?= $loginc['email']; ?></td>
+                            <td><?= $loginc['Etat']; ?></td>
+                            <td><?= $loginc['emplacement']; ?></td>
+                            <td><?= $loginc['nom']; ?></td>   
+                            <td><?= $loginc['date_diplome']; ?></td>  
                             <!-- <td?= str_repeat('*', strlen($loginc['mdp'])); ?></td>                             -->
                             
                             <td>
@@ -227,10 +259,3 @@ $(document).ready(function() {
 
 </body>
 </html>
-
-
-
-
-
-
-

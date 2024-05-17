@@ -8,7 +8,7 @@ require "../config.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="10.png">
-    <link rel="stylesheet" href="4.css">
+    <link rel="stylesheet" href="5.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -88,28 +88,28 @@ require "../config.php";
                         </div>
                     </div>
                     <div class="propos" id="x">
-                        <div class="eclipse"><img src="ellipse 2" alt=""></div>
-                        <div class="tunis"><img src="map tunisie 1" alt=""></div>
+                        <div class="eclipse"><img src="ellipse 2.png" alt=""></div>
+                        <div class="tunis"><img src="map tunisie 1.png" alt=""></div>
                         <div class="vector13">
-                            <img src="Vector 13" alt="">
+                            <img src="Vector 13.png" alt="">
                             <class class="tooltip">Gafsa , StadyGo   ,37.280483, 9.869084.</class>
                         </div>
                         <div class="vector12">
-                            <img src="Vector 12" alt="">
+                            <img src="Vector 12.png" alt="">
                             <class class="tooltip1">StudyGo , Bizerte ,37.280483, 9.869084.</class>
 
                         </div>
                         <div class="vector11">
-                            <img src="Vector 11" alt="">
+                            <img src="Vector 11.png" alt="">
                             <class class="tooltip2">Nabel , mrezga , StudyGo , 001B620,H60,F332</class>
                         </div>
                         <div class="vector10">
-                            <img src="Vector 10" alt="">
+                            <img src="Vector 10.png" alt="">
                             <class class="tooltip3">Sfax , sakiat el zit , StudyGo ,37.280483, 9.869084.</class>
 
                         </div>
                         <div class="vector9">
-                            <img src="Vector 9" alt="">
+                            <img src="Vector 9.png" alt="">
                             <class class="tooltip4">Djerba , houmet souk , StudyGo .Mednine , StudyGo ,37.280483, 9.86084.</class>
 
                         </div>
@@ -165,7 +165,7 @@ require "../config.php";
                     <div class="ph2">
                     <div class="doora1"><img src="folder_11971048 2.png" alt=""></div>
                     <h2 id="contact">LE CHOIX DU PROGRAMME ET DOSSIER DE CANDIDATURE</h2>
-                        <p id="prise">StudyGo vous accompagnera dans l’élaboration des lettres de recommandation et la constitution des dossiers de candidature des universités. Pour certains programmes, nous vous aiderons à passer un test linguistique, ainsi qu’un entretien en ligne ou présentiel avec l’un des membres de l’école.</p>
+                        <p id="prise">StudyGo vous accompagnera dans l’élaboration des lettres de recommandation et la constitution des dossiers de candidature des universités.Pour certains programmes, nous vous aiderons à passer un test linguistique, ainsi qu’un entretien en ligne ou présentiel avec l’un des membres de l’école.</p>
 
                     </div>
                 </div>
@@ -173,7 +173,7 @@ require "../config.php";
                     <div class="services3">
                         <div class="doora1"><img src="document_4547469 1.png" alt=""></div>
                     <h2 id="contact">DEMANDE D’ADMISSION</h2>
-                        <p id="prise">Pour faire une demande d’admission dans une Université à l’étranger, il est indispensable de définir vos besoins et vos objectifs bien avant d’acquérir la documentation et les formulaires d’admission, afin de trouver l’école qui offre un programme correspondant à vos aspirations et attentes. StudyGo vous aidera à faire une demande d’admissions avec ses différentes étapes comme :</p>
+                        <p id="prise">Pour faire une demande d’admission dans une Université à l’étranger, il est indispensable de définir vos besoins et vos objectifs bien avant d’acquérir la documentation et les formulaires d’admission, afin de trouver l’école qui offre un programme correspondant à vos aspirations et attentes.StudyGo vous aidera à faire une demande d’admissions avec ses différentes étapes comme :</p>
                         <div class="list">
                                     <ul>
                                         <li class="partie-gauche">Choisir un programme</li>
@@ -227,7 +227,7 @@ require "../config.php";
     <footer>
         <div class="foufou">
             <div class="cadre1">
-                <div class="taswira"><img src="Fichier 3 1" alt=""></div>
+                <div class="taswira"><img src="Fichier 3 1.png" alt=""></div>
                 <p>Si vous souhaitez accomplir des études complètes à l'étranger,
                 Veuillez-vous renseigner directement auprès de StudyGo.</p>
                 <h3>Suivez-nous:</h3>
@@ -263,7 +263,7 @@ require "../config.php";
             <div class="cadre4">
                     <h2>CONTACT</h2>
                 <ul>
-                    <div class="adres"><li>Immeuble Graiet, 4ème étage, Bureau 44, Sfax.  Immeuble Nessrine, 2ème étage, Bureau G13, Avenue de l'Union du Maghreb Arabe La Soukra, 2036 Ariana.</li></div>
+                    <div class="adres"><li>Immeuble Graiet, 4ème étage, Bureau 44, Sfax.Immeuble Nessrine, 2ème étage, Bureau G13, Avenue de l'Union du Maghreb Arabe La Soukra, 2036 Ariana.</li></div>
                     <div class="tel"><li>+216 94 141 491</li></div>
                     <div class="mail"><li>studygo@gmail.com</li></div>
                 </ul>

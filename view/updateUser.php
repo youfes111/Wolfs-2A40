@@ -49,10 +49,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $prenom = $_POST['userPrenom'];
     $email = $_POST['email'];
     $mdp = $_POST['mdp'];
+
+    $photoString='';
+    $id_education= $_POST['id_diplome'];
+    $Etat = $_POST['etat'];
+    $emplacement = $_POST['emplacement'];
+    //$diplome = $_POST['diplome'];
+   $id_diplome = $_POST['id_diplome'];
+    $nom_diplome = $_POST['nom_diploma'];
+    /*$document = $_FILES['document']['tmp_name'];
+    $photodocument = file_get_contents($document);
+    $documentString = base64_encode($photodocument);*/
+    $documentString='';
+    $Moyenne = $_POST['moyenne'];    
+    $date = $_POST['date_obtention'];     
+
     
     $mdp_hash = password_hash($mdp, PASSWORD_DEFAULT);
     
-    $l->updateUser($id, $nom, $prenom, $email, $mdp_hash);
+    $l->updateUser($id, $nom, $prenom, $email, $mdp_hash,$id_education,$photoString,$Etat,$emplacement,$id_diplome,$nom_diplome,$documentString,$Moyenne,$date);
     ?>      
                         <script>
                             Swal.fire({

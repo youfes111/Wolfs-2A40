@@ -1,4 +1,21 @@
-<?php  require '../controler/loginc.php';?>
+<?php  require '../controler/loginc.php';
+require("C:/xampp/htdocs/projet_v5/config/commandes.php");
+require("C:/xampp/htdocs/projet_v5/config/connexion.php");
+
+require_once "C:/xampp/htdocs/projet_v5/controler/PartenariatC.php";
+require_once "C:/xampp/htdocs/projet_v5/model/partenariat.php";
+
+require_once "C:/xampp/htdocs/projet_v5/model/offree.php";?>
+ <?php
+    $labels = [];
+    $counts = [];
+    $query_stats = $access->query('SELECT bac, COUNT(*) AS count FROM offre GROUP BY bac');
+    while ($row = $query_stats->fetch()) {
+        $labels[] = $row['bac'];
+        $counts[] = $row['count'];
+    }
+    ?>
+
 
 
 <!DOCTYPE html>
@@ -16,29 +33,54 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="backend_3.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <link rel="icon" href="10.png">
     <script>
-let timeoutId;
-
+  let timeoutId;
 
 function redirectToLoginPage() {
-    window.location.href = 'login.php';
+  window.location.href = 'login.php';
+  history.replaceState(null, '', 'login.php');
+  history.replaceState(null, '', 'login.php');
+  history.replaceState(null, '', 'login.php'); // Remplacer l'URL de la page actuelle avec login.php
 }
 
-
 function resetTimeout() {
-    clearTimeout(timeoutId); 
-    timeoutId = setTimeout(redirectToLoginPage, 30000); 
+  clearTimeout(timeoutId);
+  timeoutId = setTimeout(redirectToLoginPage, 60000);
 }
 
 document.addEventListener('mousemove', resetTimeout);
-document.addEventListener('mousedown', resetTimeout); 
-document.addEventListener('keypress', resetTimeout); 
+document.addEventListener('mousedown', resetTimeout);
+document.addEventListener('keypress', resetTimeout);
 
 resetTimeout();
+
 </script>
+<script>
+  // Fonction de déconnexion
+  function logout(event) {
+    // Afficher une alerte
+    event.preventDefault();
+    Swal.fire({
+    title: 'Êtes-vous sûr de vouloir vous déconnecter?',
+    text: "Vous serez redirigé vers la page de connexion.",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Oui, déconnexion',
+    cancelButtonText: 'Annuler'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Rediriger vers la page de déconnexion
+      window.location.href = "login.php";
+    }
+  });
+  }
+</script>
+
 
 </head>
 <body>
@@ -61,10 +103,11 @@ resetTimeout();
         <h6>Les gestions</h6>
         <div class="backend_1">
         <li><a href="users.php"><i class="lni lni-users"></i> Les clients</a></li>
-        <li><a href="#"><i class="lni lni-layers"></i> Les offres</a></li>
-        <li><a href="#"><i class="lni lni-book"></i> Formation linguistique</a></li>
-        <li><a href="#"><i class="lni lni-bubble"></i> Reclamation & Réponse</a></li>
-        <li><a href="login.php"></i>Log out</a></li>
+        <li><a href="backendOffre.php"><i class="lni lni-layers"></i> Les offres</a></li>
+        <li><a href="backendNouha.php"><i class="lni lni-layers"></i> Les partenerias</a></li>
+        <li><a href="backendNadine.php"><i class="lni lni-book"></i> Formation linguistique</a></li>
+        <li><a href="backendTalel.php"><i class="lni lni-bubble"></i> Reclamation & Réponse</a></li>
+        <li><a href="login.php" onclick="logout(event)">Log out</a></li>
     
     </ul>
             </ul>
@@ -166,7 +209,12 @@ resetTimeout();
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
+                                        <canvas id="myChart" width="200" height="100"></canvas> 
+
+
+   
+    
+
                                     </div>
                                 </div>
                             </div>
@@ -216,6 +264,37 @@ resetTimeout();
                     </div>          </div>
         </div>
      </div>
-
+     <script>// Création du diagramme avec Chart.js
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: <?php echo json_encode($labels); ?>,
+            datasets: [{
+                label: 'Nombre d\'offres',
+                data: <?php echo json_encode($counts); ?>,
+                backgroundColor: [
+                    'rgba(224, 131, 9,0.5)',
+                    'rgba(7, 1, 37, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    // Ajoutez plus de couleurs si nécessaire
+                ],
+                borderColor: [
+                    'rgba(224, 131, 9,1)',
+                    'rgba(7, 1, 37, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    // Ajoutez plus de couleurs si nécessaire
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });</script>
 </body>
 </html>
